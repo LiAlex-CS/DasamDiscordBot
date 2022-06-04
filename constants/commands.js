@@ -8,7 +8,7 @@ const PREFIX = "$smurf ";
     setSmurf: 'setSmurf',
 }
 
-const ALL_COMMANDS = 'help\nhelp <command>\nranks\nrank <player name> <tagline>\ncredentials <player name> <tagline>\nsetSmurf <player name> <tagline> <username> <password>'; 
+const ALL_COMMANDS = 'Here is a list of all commands:\nhelp\nhelp <command>\nranks\nrank <player name> <tagline>\ncredentials <player name> <tagline>\nsetSmurf <player name> <tagline> <username> <password>'; 
 
 const UNKNOWN_COMMAND = 'is a unknown commmand, type: "$smurf help" for a list of all commands or type: "$smurf help <command>" for a description of the command'
 
@@ -31,4 +31,6 @@ const COMMAND_DESCRIPTIONS = {
     setSmurf: 'setSmurf: This command sets a new smurf account into the database, type: "$smurf setSmurf <player name> <tagline> <username> <password>". Ex. $smurf setSmurf nugnug 6135 AlexUsername AlexPassword123. Please only add valid accounts.',
 }
 
-module.exports = { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS }
+const RANKS_INTRO = "Here is a list of all accounts and their ranks:";
+
+module.exports = { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS, RANKS_INTRO }

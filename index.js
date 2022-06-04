@@ -1,7 +1,9 @@
-const { JSONHasValue, stringArrToString } = require('./services');
-const { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS } = require("./constants/commands");
+const { JSONHasValue, stringArrToString, mmrDataToString } = require('./services');
+const { getRankedData, getUserData, getRankedDataByPUUIDs } = require("./fetching/fetching");
+const { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS, RANKS_INTRO } = require("./constants/commands");
 const Discord = require("discord.js");
 const config = require("./config.json");
+const db = require("./data/smurfCreds.json");
 const fs = require("fs");
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
@@ -42,11 +44,18 @@ client.on("messageCreate", (message) => {
     }
     else if (command === COMMANDS.getAllRanks) {
         if (!args.length) {
-            
-
+            let reply = RANKS_INTRO;
+            getRankedDataByPUUIDs(db.user_credentials.map((user) => user.puuid))
+                .then((data) => {
+                    console.log(mmrDataToString(data)); 
+                    reply = reply + mmrDataToString(data);
+                    message.reply(reply);
+                }).catch((err)=>{
+                    message.reply('error: ' + err);
+                });
         }
         else {
-            message.reply(`"${command} ` + stringArrToString(args) + '" ' + COMMAND_ERRORS.getCommands)
+            message.reply(`"${command} ` + stringArrToString(args) + '" ' + COMMAND_ERRORS.getAllRanks_invalidArgs)
         }
     }
     else if (command === COMMANDS.getRankPlayer) {
