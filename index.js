@@ -1,4 +1,4 @@
-const { JSONHasValue, stringArrToString, mmrDataToString } = require('./services');
+const { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag } = require('./services');
 const { getRankedData, getUserData, getRankedDataByPUUIDs } = require("./fetching/fetching");
 const { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS, RANKS_INTRO } = require("./constants/commands");
 const Discord = require("discord.js");
@@ -46,10 +46,10 @@ client.on("messageCreate", (message) => {
         if (!args.length) {
             let reply = RANKS_INTRO;
             getRankedDataByPUUIDs(db.user_credentials.map((user) => user.puuid))
-                .then((data) => {
-                    console.log(mmrDataToString(data)); 
+                .then((data) => { 
                     reply = reply + mmrDataToString(data);
                     message.reply(reply);
+                    updateNameAndTag(data);
                 }).catch((err)=>{
                     message.reply('error: ' + err);
                 });
