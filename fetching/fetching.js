@@ -4,9 +4,10 @@ const getRankedData = async (name, id) => {
     );
     const data = await resp.json();
     return data.data;
-  };
+};
   
-  
-  getRankedData("nugnug", "6135").then((data) => {
-    console.log(data);
-  });
+module.exports = { getRankedData }
+
+  // getRankedData("nugnug", "6135").then((data) => {
+  //   console.log(data);
+  // });
