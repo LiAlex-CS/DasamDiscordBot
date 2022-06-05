@@ -2,7 +2,7 @@ const { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag, mmrD
 const { getRankedData, getUserData, getRankedDataByPUUIDs } = require("./fetching/fetching");
 const { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS, RANKS_INTRO, HAS_SPACES_REMINDER, SET_SMURF_SUCCESS } = require("./constants/commands");
 const Discord = require("discord.js");
-const config = require("./config.json");
+const config = require("./token");
 const db = require("./data/smurfCreds.json");
 const fs = require("fs");
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
