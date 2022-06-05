@@ -6,16 +6,23 @@ const JSONHasValue = (value, json) => {
 }
 
 const stringArrToString = (strArr) => {
+
+    if (!strArr || !strArr.length) return '';
+
     return strArr.reduce((prev, newVal) => (prev + ' ' + newVal));
 }
 
 const mmrDataToString = (dataArr) => {
     let reply = '';
-    dataArr.forEach((newData)=>{
+    dataArr.forEach((newData) => {
         reply = reply + `\n\n     Account Name: ${newData.data.name}, Tagline: ${newData.data.tag}, Rank: ${newData.data.currenttierpatched}`;
     });
 
     return reply;
+}
+
+const mmrDataSingleToString = (data) => {
+    return `Account Name: ${data.data.name}, Tagline: ${data.data.tag}, Rank: ${data.data.currenttierpatched}`;
 }
 
 const updateNameAndTag = (dataArr) => {
@@ -24,21 +31,21 @@ const updateNameAndTag = (dataArr) => {
 
     let hasChanged = false;
 
-    dataArr.forEach((data, index)=>{
-        if(userData.user_credentials[index].name !== data.data.name){
+    dataArr.forEach((data, index) => {
+        if (userData.user_credentials[index].name !== data.data.name) {
             userData.user_credentials[index].name = data.data.name;
             hasChanged = true;
         }
-        if(userData.user_credentials[index].tag !== data.data.tag){
+        if (userData.user_credentials[index].tag !== data.data.tag) {
             userData.user_credentials[index].tag = data.data.tag;
             hasChanged = true;
         }
     });
 
-    if(hasChanged){
+    if (hasChanged) {
         fs.writeFileSync('./data/smurfCreds.json', JSON.stringify(userData));
     }
 
 }
 
-module.exports = { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag }
+module.exports = { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag, mmrDataSingleToString }

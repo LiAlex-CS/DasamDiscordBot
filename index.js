@@ -1,4 +1,4 @@
-const { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag } = require('./services');
+const { JSONHasValue, stringArrToString, mmrDataToString, updateNameAndTag, mmrDataSingleToString } = require('./services');
 const { getRankedData, getUserData, getRankedDataByPUUIDs } = require("./fetching/fetching");
 const { PREFIX, COMMANDS, ALL_COMMANDS, UNKNOWN_COMMAND, COMMAND_ERRORS, COMMAND_DESCRIPTIONS, RANKS_INTRO } = require("./constants/commands");
 const Discord = require("discord.js");
@@ -59,7 +59,25 @@ client.on("messageCreate", (message) => {
         }
     }
     else if (command === COMMANDS.getRankPlayer) {
-
+        if (args.length === 2) {
+            getRankedData(args[0], args[1])
+                .then((data) => { 
+                    if(data.status === 404){
+                        throw data;
+                    }
+                    message.reply(mmrDataSingleToString(data));
+                }).catch((err)=>{
+                    if(err.status === 404){
+                        message.reply(stringArrToString(args) + '" ' + COMMAND_ERRORS.getRankPlayer);
+                    }
+                    else{
+                        message.reply('error: ' + err);
+                    }
+                });
+        }
+        else {
+            message.reply(`"${command} ` + stringArrToString(args) + '" ' + COMMAND_ERRORS.getRankPlayer_invalidArgs)
+        }
     }
     else if (command === COMMANDS.getSmurfCred) {
 
