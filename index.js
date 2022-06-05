@@ -83,6 +83,7 @@ client.on("messageCreate", (message) => {
     }
     else if (command === COMMANDS.getSmurfCred) {
         const modifiedArgs = getModifiedArguments(argsAsString);
+        console.log(modifiedArgs);
         if (modifiedArgs.length >= 2) {
             const name = stringArrToString(modifiedArgs.slice(0, -1));
             const tag = modifiedArgs[modifiedArgs.length - 1];
