@@ -12,11 +12,11 @@ const ALL_COMMANDS =
   "Here is a list of all commands:\nhelp\nhelp <command>\nranks\nrank <player name> <tagline>\ncredentials <player name> <tagline>\nsetSmurf <player name> <tagline> <username> <password>";
 
 const UNKNOWN_COMMAND =
-  'is a unknown commmand, type: "$smurf help" for a list of all commands or type: "$smurf help <command>" for a description of the command';
+  'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help <command>" for a description of the command';
 
 const COMMAND_ERRORS = {
   getCommands:
-    'is not a valid command, for all commands "type: $smurf help", for explination on a command type: "$smurf help <command>"',
+    'is not a valid command, for all commands "type: $smurf help", for explanation on a command type: "$smurf help <command>"',
   getRankPlayer:
     'is not a valid account, type: "$smurf rank <player name> <tagline>" to get the rank of your account',
   getRankPlayer_privateAccount:
@@ -28,11 +28,11 @@ const COMMAND_ERRORS = {
   getAllRanks_invalidArgs:
     "has invalid arguments, this command takes no arguments",
   getRankPlayer_invalidArgs:
-    "has invalid arguments, this command takes the argumnets <player name> <tagline>",
+    "has invalid arguments, this command takes the arguments <player name> <tagline>",
   getSmurfCred_invalidArgs:
-    "has invalid arguments, this command takes the argumnets <player name> <tagline>",
+    "has invalid arguments, this command takes the arguments <player name> <tagline>",
   setSmurf_invalidArgs:
-    'has invalid arguments, this command takes the argumnets "<player name>" <tagline> <username> "<password>"',
+    'has invalid arguments, this command takes the arguments "<player name>" <tagline> <username> "<password>"',
 };
 
 const COMMAND_DESCRIPTIONS = {
@@ -49,12 +49,12 @@ const COMMAND_DESCRIPTIONS = {
 };
 
 const SET_SMURF_SUCCESS =
-  "You have successfully added accound credentials to the database. Please note that this account and its credentials are now accessable to anyone who uses this bot.";
+  "You have successfully added account credentials to the database. Please note that this account and its credentials are now accessible to anyone who uses this bot.";
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:";
 
 const HAS_SPACES_REMINDER =
-  'If any arguments have spaces, remeber to add quotation marks around them. Ex. <player name>: "nug nug"';
+  'If any arguments have spaces, remember to add quotation marks around them. Ex. <player name>: "nug nug"';
 
 module.exports = {
   PREFIX,
