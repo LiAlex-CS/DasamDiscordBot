@@ -37,15 +37,15 @@ const COMMAND_ERRORS = {
 
 const COMMAND_DESCRIPTIONS = {
   getCommands:
-    ':question:**help**: This command gives some support on using this discord bot, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command. Ex. ```$smurf help ranks```',
+    ':question: **help**: This command gives some support on using this discord bot, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command. Ex. ```$smurf help ranks```',
   getAllRanks:
-    ":medal:**ranks**: This command gives the ranks of all accounts within the database",
+    ":medal: **ranks**: This command gives the ranks of all accounts within the database",
   getRankPlayer:
-    ':medal:**rank**: This command gives the rank of the player requested, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account. Ex. ```$smurf rank nugnug 6135```',
+    ':medal: **rank**: This command gives the rank of the player requested, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account. Ex. ```$smurf rank nugnug 6135```',
   getSmurfCred:
-    ':pencil:**credentials**: This command gives the credentials to the requested account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ex. ```$smurf credentials nugnug 6135```',
+    ':pencil: **credentials**: This command gives the credentials to the requested account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ex. ```$smurf credentials nugnug 6135```',
   setSmurf:
-    ':pencil2:**setSmurf**: This command sets a new smurf account into the database, type: \n"$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`". Ex. ```$smurf setSmurf "nugnug" 6135 AlexUsername "Alex Password123"```Please only add valid accounts.',
+    ':pencil2: **setSmurf**: This command sets a new smurf account into the database, type: \n"$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`". Ex. ```$smurf setSmurf "nugnug" 6135 AlexUsername "Alex Password123"```Please only add valid accounts.',
 };
 
 const SET_SMURF_SUCCESS =
