@@ -16,23 +16,23 @@ const UNKNOWN_COMMAND =
 
 const COMMAND_ERRORS = {
   getCommands:
-    'is not a valid command, for all commands "type: $smurf help", for explanation on a command type: "$smurf help <command>"',
+    'is not a valid command, for all commands "type: $smurf help", for explanation on a command type: "$smurf help `<command>`"',
   getRankPlayer:
-    'is not a valid account, type: "$smurf rank <player name> <tagline>" to get the rank of your account',
+    'is not a valid account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account',
   getRankPlayer_privateAccount:
-    'is a private account, this bot cannot retrieve data, type: "$smurf rank <player name> <tagline>" to get the rank of your account',
+    'is a private account, this bot cannot retrieve data, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account',
   getSmurfCred:
-    'is not a valid account in the database, type: "$smurf credentials <player name> <tagline>" to get the credentials to your account',
+    'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account',
   setSmurf:
-    'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf "<player name>" <tagline> <username> "<password>""',
+    'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`"',
   getAllRanks_invalidArgs:
     "has invalid arguments, this command takes no arguments",
   getRankPlayer_invalidArgs:
-    "has invalid arguments, this command takes the arguments <player name> <tagline>",
+    "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`",
   getSmurfCred_invalidArgs:
-    "has invalid arguments, this command takes the arguments <player name> <tagline>",
+    "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`",
   setSmurf_invalidArgs:
-    'has invalid arguments, this command takes the arguments "<player name>" <tagline> <username> "<password>"',
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`',
 };
 
 const COMMAND_DESCRIPTIONS = {
