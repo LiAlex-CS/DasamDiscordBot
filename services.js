@@ -4,6 +4,8 @@ const {
   updateAccountTagByPuuid,
 } = require("./data/mongoDb");
 
+const { RANK_EMOJIS } = require("./constants/commands");
+
 const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
 };
@@ -14,12 +16,36 @@ const stringArrToString = (strArr) => {
   return strArr.reduce((prev, newVal) => prev + " " + newVal);
 };
 
-const mmrDataToString = (dataArr) => {
+const mmrDataToString = (dataArr, accountData) => {
   let reply = "";
-  dataArr.forEach((newData) => {
+
+  const startingPrivateText = "```\n";
+  const endingPrivateText = "\n```";
+  const startingPublicText = "```fix\n";
+  const endingPublicText = "\n```";
+
+  dataArr.forEach((newData, index) => {
+    const rankData =
+      "Account Name: " +
+      newData.data.name +
+      ", Tagline: " +
+      newData.data.tag +
+      ", Rank: " +
+      newData.data.currenttierpatched;
+
+    const tier = newData.data.currenttierpatched
+      .split(/(\s+)/)
+      .filter(function (e) {
+        return e.trim().length > 0;
+      })[0];
+
+    const tierEmoji = RANK_EMOJIS[tier];
+
     reply =
       reply +
-      `\n\n     Account Name: ${newData.data.name}, Tagline: ${newData.data.tag}, Rank: ${newData.data.currenttierpatched}`;
+      (accountData[index].private
+        ? `\n${tierEmoji}  ${startingPrivateText}${rankData}${endingPrivateText}`
+        : `\n${tierEmoji}  ${startingPublicText}${rankData}${endingPublicText}`);
   });
 
   return reply;

@@ -23,6 +23,8 @@ const COMMAND_ERRORS = {
     'is a private account, this bot cannot retrieve data, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account',
   getSmurfCred:
     'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account',
+  getSmurfCred_privateAccount:
+    "is a private account, you cannot access the credentials of this account. Public accounts are labeled in yellow, while private accounts are labeled in white.",
   setSmurf:
     'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`"',
   getAllRanks_invalidArgs:
@@ -51,10 +53,21 @@ const COMMAND_DESCRIPTIONS = {
 const SET_SMURF_SUCCESS =
   "has and its credentials has been added to the database.  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
 
-const RANKS_INTRO = "Here is a list of all accounts and their ranks:";
+const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
 const HAS_SPACES_REMINDER =
   'If any arguments have spaces, remember to add quotation marks around them. Ex. <player name>: "nug nug"';
+
+const RANK_EMOJIS = {
+  Radiant: ":sparkels:",
+  Immortal: ":congratulations:",
+  Diamond: ":gem:",
+  Platinum: ":shield:",
+  Gold: ":first_place:",
+  Silver: ":second_place:",
+  Bronze: ":third_place:",
+  Iron: ":gear:",
+};
 
 module.exports = {
   PREFIX,
@@ -66,4 +79,5 @@ module.exports = {
   RANKS_INTRO,
   HAS_SPACES_REMINDER,
   SET_SMURF_SUCCESS,
+  RANK_EMOJIS,
 };

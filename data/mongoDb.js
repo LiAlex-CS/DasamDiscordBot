@@ -30,6 +30,7 @@ const addToCollection = async (data, cb) => {
     puuid: data.puuid,
     username: data.username,
     password: data.password,
+    private: data.private,
   });
 
   NewAccount.save((err, account) => {
