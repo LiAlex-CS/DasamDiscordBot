@@ -9,7 +9,7 @@ const COMMANDS = {
 };
 
 const ALL_COMMANDS =
-  "Here is a list of all commands:\nhelp\nhelp <command>\nranks\nrank <player name> <tagline>\ncredentials <player name> <tagline>\nsetSmurf <player name> <tagline> <username> <password>";
+  "Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:medal: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:pencil: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `<player name>` `<tagline>` `<username>` `<password>`";
 
 const UNKNOWN_COMMAND =
   'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help <command>" for a description of the command';
