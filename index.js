@@ -20,7 +20,8 @@ const {
   COMMAND_DESCRIPTIONS,
   RANKS_INTRO,
   HAS_SPACES_REMINDER,
-  SET_SMURF_SUCCESS,
+  SET_SMURF_PRIVATE_SUCCESS,
+  SET_SMURF_PUBLIC_SUCCESS,
 } = require("./constants/commands");
 const {
   getAccounts,
@@ -195,7 +196,13 @@ client.on("messageCreate", (message) => {
                 private: private,
               },
               (name, tag) => {
-                message.reply(`${name} #${tag} ${SET_SMURF_SUCCESS}`);
+                message.reply(
+                  `${name} #${tag} ${
+                    private
+                      ? SET_SMURF_PRIVATE_SUCCESS
+                      : SET_SMURF_PUBLIC_SUCCESS
+                  }`
+                );
               }
             );
           }
