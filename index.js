@@ -4,7 +4,6 @@ const {
   mmrDataToString,
   updateNameAndTag,
   mmrDataSingleToString,
-  searchDbByNameAndTag,
   getModifiedArguments,
 } = require("./services");
 const {
@@ -23,11 +22,28 @@ const {
   HAS_SPACES_REMINDER,
   SET_SMURF_SUCCESS,
 } = require("./constants/commands");
+const {
+  getAccounts,
+  getAccountByNameAndTag,
+  addToCollection,
+  ServerApiVersion,
+} = require("./data/mongoDb");
 const Discord = require("discord.js");
 const config = require("./token");
-const db = require("./data/smurfCreds.json");
-const fs = require("fs");
+
+const mongoose = require("mongoose");
+const { uri } = require("./constants/mongodb_consts");
+
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
+
+const database = mongoose.connection;
+database.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
@@ -39,7 +55,7 @@ client.on("messageCreate", (message) => {
   const argsAsString = message.content.slice(
     PREFIX.length + command.length + 1
   );
-
+  // help command
   if (command === COMMANDS.getCommands) {
     if (!args.length) {
       message.reply(ALL_COMMANDS);
@@ -63,18 +79,25 @@ client.on("messageCreate", (message) => {
           COMMAND_ERRORS.getCommands
       );
     }
+    // ranks command
   } else if (command === COMMANDS.getAllRanks) {
     if (!args.length) {
       let reply = RANKS_INTRO;
-      getRankedDataByPUUIDs(db.user_credentials.map((user) => user.puuid))
-        .then((data) => {
-          reply = reply + mmrDataToString(data);
-          message.reply(reply);
-          updateNameAndTag(data);
-        })
-        .catch((err) => {
-          message.reply("error: " + err);
-        });
+      getAccounts().then((data, err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          getRankedDataByPUUIDs(data.map((user) => user.puuid))
+            .then((data) => {
+              reply = reply + mmrDataToString(data);
+              message.reply(reply);
+              updateNameAndTag(data);
+            })
+            .catch((err) => {
+              message.reply("error: " + err);
+            });
+        }
+      });
     } else {
       message.reply(
         `"${command} ` +
@@ -83,6 +106,7 @@ client.on("messageCreate", (message) => {
           COMMAND_ERRORS.getAllRanks_invalidArgs
       );
     }
+    // rank command
   } else if (command === COMMANDS.getRankPlayer) {
     if (args.length >= 2) {
       getRankedData(stringArrToString(args.slice(0, -1)), args[args.length - 1])
@@ -116,20 +140,22 @@ client.on("messageCreate", (message) => {
           COMMAND_ERRORS.getRankPlayer_invalidArgs
       );
     }
+    // credentials command
   } else if (command === COMMANDS.getSmurfCred) {
     const modifiedArgs = getModifiedArguments(argsAsString);
     if (modifiedArgs.length >= 2) {
       const name = stringArrToString(modifiedArgs.slice(0, -1));
       const tag = modifiedArgs[modifiedArgs.length - 1];
 
-      const data = searchDbByNameAndTag(name, tag, db.user_credentials);
-      if (Object.keys(data).length) {
-        message.reply(
-          `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
-        );
-      } else {
-        message.reply(`User: ${name} #${tag} ` + COMMAND_ERRORS.getSmurfCred);
-      }
+      getAccountByNameAndTag(name, tag).then((data) => {
+        if (Object.keys(data).length) {
+          message.reply(
+            `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
+          );
+        } else {
+          message.reply(`User: ${name} #${tag} ` + COMMAND_ERRORS.getSmurfCred);
+        }
+      });
     } else {
       message.reply(
         `"${command} ` +
@@ -138,27 +164,27 @@ client.on("messageCreate", (message) => {
           COMMAND_ERRORS.getSmurfCred_invalidArgs
       );
     }
+    // setSmurf command
   } else if (command === COMMANDS.setSmurf) {
     const modifiedArgs = getModifiedArguments(argsAsString);
     if (modifiedArgs.length === 4) {
-      let userData = db;
       getUserData(modifiedArgs[0], modifiedArgs[1])
         .then((data) => {
           if (data.status !== 200) {
             throw data;
           } else {
-            userData.user_credentials.push({
-              name: modifiedArgs[0],
-              tag: modifiedArgs[1],
-              puuid: data.data.puuid,
-              username: modifiedArgs[2],
-              password: modifiedArgs[3],
-            });
-            fs.writeFileSync(
-              "./data/smurfCreds.json",
-              JSON.stringify(userData)
+            addToCollection(
+              {
+                name: modifiedArgs[0],
+                tag: modifiedArgs[1],
+                puuid: data.data.puuid,
+                username: modifiedArgs[2],
+                password: modifiedArgs[3],
+              },
+              (name, tag) => {
+                message.reply(`${name} #${tag} ${SET_SMURF_SUCCESS}`);
+              }
             );
-            message.reply(SET_SMURF_SUCCESS);
           }
         })
         .catch((err) => {
@@ -180,6 +206,7 @@ client.on("messageCreate", (message) => {
       );
       message.reply(HAS_SPACES_REMINDER);
     }
+    // unknown command
   } else {
     message.reply(`"${command}" ` + UNKNOWN_COMMAND);
   }

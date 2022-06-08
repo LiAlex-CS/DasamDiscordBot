@@ -1,4 +1,4 @@
-const fetch = require('node-fetch-commonjs');
+const fetch = require("node-fetch-commonjs");
 
 const getRankedData = async (name, id) => {
   const resp = await fetch(
@@ -25,13 +25,15 @@ const getRankedDataByPUUID = async (puuid) => {
 };
 
 const getRankedDataByPUUIDs = async (puuids) => {
-  const data = await Promise.all(puuids.map((data => getRankedDataByPUUID(data))));
+  const data = await Promise.all(
+    puuids.map((data) => getRankedDataByPUUID(data))
+  );
   return data;
-}
+};
 
-
-module.exports = { getRankedData, getUserData, getRankedDataByPUUID, getRankedDataByPUUIDs }
-
-  // getRankedData("nugnug", "6135").then((data) => {
-  //   console.log(data);
-  // });
+module.exports = {
+  getRankedData,
+  getUserData,
+  getRankedDataByPUUID,
+  getRankedDataByPUUIDs,
+};
