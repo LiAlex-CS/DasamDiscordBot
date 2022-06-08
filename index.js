@@ -59,7 +59,10 @@ client.on("messageCreate", (message) => {
   if (command === COMMANDS.getCommands) {
     if (!args.length) {
       message.reply(ALL_COMMANDS);
-    } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
+    } else if (
+      args.length === 1 &&
+      JSONHasValue(args[0].toLowerCase(), COMMANDS)
+    ) {
       if (args[0] === COMMANDS.getCommands) {
         message.reply(COMMAND_DESCRIPTIONS.getCommands);
       } else if (args[0] === COMMANDS.getAllRanks) {
