@@ -49,7 +49,7 @@ const COMMAND_DESCRIPTIONS = {
 };
 
 const SET_SMURF_SUCCESS =
-  "You have successfully added accound credentials to the database. Please note that this account and its credentials are now accessable to anyone who uses this bot.";
+  "has and its credentials has been added to the database.  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:";
 
