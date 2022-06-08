@@ -86,13 +86,13 @@ client.on("messageCreate", (message) => {
   } else if (command === COMMANDS.getAllRanks) {
     if (!args.length) {
       let reply = RANKS_INTRO;
-      getAccounts().then((data, err) => {
+      getAccounts().then((accountData, err) => {
         if (err) {
           console.error(err);
         } else {
-          getRankedDataByPUUIDs(data.map((user) => user.puuid))
+          getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
             .then((data) => {
-              reply = reply + mmrDataToString(data);
+              reply = reply + mmrDataToString(data, accountData);
               message.reply(reply);
               updateNameAndTag(data);
             })
@@ -152,9 +152,16 @@ client.on("messageCreate", (message) => {
 
       getAccountByNameAndTag(name, tag).then((data) => {
         if (Object.keys(data).length) {
-          message.reply(
-            `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
-          );
+          if (data.private) {
+            message.reply(
+              `User: ${name} #${tag} ` +
+                COMMAND_ERRORS.getSmurfCred_privateAccount
+            );
+          } else {
+            message.reply(
+              `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
+            );
+          }
         } else {
           message.reply(`User: ${name} #${tag} ` + COMMAND_ERRORS.getSmurfCred);
         }
@@ -170,19 +177,22 @@ client.on("messageCreate", (message) => {
     // setSmurf command
   } else if (command === COMMANDS.setSmurf) {
     const modifiedArgs = getModifiedArguments(argsAsString);
-    if (modifiedArgs.length === 4) {
+    if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
       getUserData(modifiedArgs[0], modifiedArgs[1])
         .then((data) => {
           if (data.status !== 200) {
             throw data;
           } else {
+            const private = !modifiedArgs[2] || !modifiedArgs[3];
+
             addToCollection(
               {
                 name: modifiedArgs[0],
                 tag: modifiedArgs[1],
                 puuid: data.data.puuid,
-                username: modifiedArgs[2],
-                password: modifiedArgs[3],
+                username: private ? null : modifiedArgs[2],
+                password: private ? null : modifiedArgs[3],
+                private: private,
               },
               (name, tag) => {
                 message.reply(`${name} #${tag} ${SET_SMURF_SUCCESS}`);
