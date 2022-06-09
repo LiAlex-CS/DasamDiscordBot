@@ -51,10 +51,10 @@ const COMMAND_DESCRIPTIONS = {
 };
 
 const SET_SMURF_PUBLIC_SUCCESS =
-  "has and its credentials has been added to the database.  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
+  "and its credentials has been added to the database.  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
 
 const SET_SMURF_PRIVATE_SUCCESS =
-  "has and its credentials has been added to the database.  :confetti_ball:";
+  "has been added to the database.  :confetti_ball:";
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
