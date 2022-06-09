@@ -5,7 +5,7 @@ const {
   SET_SMURF_PUBLIC_SUCCESS,
 } = require("../constants/commands");
 
-const { addToCollection } = require("../data/mongoDb");
+const { addToCollection, getAccountByPuuid } = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
 
@@ -15,29 +15,40 @@ const setSmurf_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
     getUserData(modifiedArgs[0], modifiedArgs[1])
-      .then((data) => {
-        if (data.status !== 200) {
-          throw data;
+      .then((fetchData) => {
+        if (fetchData.status !== 200) {
+          throw fetchData;
         } else {
           const private = !modifiedArgs[2] || !modifiedArgs[3];
 
-          addToCollection(
-            {
-              name: modifiedArgs[0],
-              tag: modifiedArgs[1],
-              puuid: data.data.puuid,
-              username: private ? null : modifiedArgs[2],
-              password: private ? null : modifiedArgs[3],
-              private: private,
-            },
-            (name, tag) => {
+          getAccountByPuuid(fetchData.data.puuid).then((data) => {
+            if (!data) {
+              addToCollection(
+                {
+                  name: modifiedArgs[0],
+                  tag: modifiedArgs[1],
+                  puuid: fetchData.data.puuid,
+                  username: private ? null : modifiedArgs[2],
+                  password: private ? null : modifiedArgs[3],
+                  private: private,
+                },
+                (name, tag) => {
+                  message.reply(
+                    `${name} #${tag} ${
+                      private
+                        ? SET_SMURF_PRIVATE_SUCCESS
+                        : SET_SMURF_PUBLIC_SUCCESS
+                    }`
+                  );
+                }
+              );
+            } else {
               message.reply(
-                `${name} #${tag} ${
-                  private ? SET_SMURF_PRIVATE_SUCCESS : SET_SMURF_PUBLIC_SUCCESS
-                }`
+                `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                  COMMAND_ERRORS.setSmurf_nonUnique_account
               );
             }
-          );
+          });
         }
       })
       .catch((err) => {

@@ -29,6 +29,8 @@ const COMMAND_ERRORS = {
     "is a private account, you cannot access the credentials of this account. Public accounts are labeled in yellow, while private accounts are labeled in white.",
   setSmurf:
     'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
+  setSmurf_nonUnique_account:
+    'is already stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
   setSmurf_privateAccount:
     'is a private account, you cannot retrieve this data. To set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
   getAllRanks_invalidArgs:

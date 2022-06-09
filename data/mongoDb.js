@@ -11,6 +11,11 @@ const getAccountByNameAndTag = async (name, tag) => {
   return account;
 };
 
+const getAccountByPuuid = async (puuid) => {
+  const account = await AccountDetails.findOne({ puuid: puuid });
+  return account;
+};
+
 const updateAccountNameByPuuid = async (puuid, newName) => {
   const doc = await AccountDetails.findOne({ puuid: puuid });
   doc.name = newName;
@@ -50,6 +55,7 @@ module.exports = {
   ServerApiVersion,
   getAccounts,
   getAccountByNameAndTag,
+  getAccountByPuuid,
   findOneByNameAndTagAndUpdate,
   updateAccountNameByPuuid,
   updateAccountTagByPuuid,
