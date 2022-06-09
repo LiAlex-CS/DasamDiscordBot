@@ -5,7 +5,9 @@ const COMMANDS = {
   getAllRanks: "ranks",
   getRankPlayer: "rank",
   getSmurfCred: "credentials",
-  setSmurf: "setsmurf",
+  setSmurf: "setSmurf",
+  makePublic: "makePublic",
+  makePrivate: "makePrivate",
 };
 
 const ALL_COMMANDS =

@@ -27,6 +27,7 @@ const {
   getAccounts,
   getAccountByNameAndTag,
   addToCollection,
+  findOneByNameAndTagAndUpdate,
   ServerApiVersion,
 } = require("./data/mongoDb");
 const Discord = require("discord.js");
@@ -52,7 +53,7 @@ client.on("messageCreate", (message) => {
 
   const commandBody = message.content.slice(PREFIX.length);
   const args = commandBody.split(" ");
-  const command = args.shift().toLowerCase();
+  const command = args.shift();
   const argsAsString = message.content.slice(
     PREFIX.length + command.length + 1
   );
@@ -60,10 +61,7 @@ client.on("messageCreate", (message) => {
   if (command === COMMANDS.getCommands) {
     if (!args.length) {
       message.reply(ALL_COMMANDS);
-    } else if (
-      args.length === 1 &&
-      JSONHasValue(args[0].toLowerCase(), COMMANDS)
-    ) {
+    } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
       if (args[0] === COMMANDS.getCommands) {
         message.reply(COMMAND_DESCRIPTIONS.getCommands);
       } else if (args[0] === COMMANDS.getAllRanks) {
@@ -225,19 +223,78 @@ client.on("messageCreate", (message) => {
         });
     } else {
       message.reply(
-        `"${command} ` +
+        `"${command}` +
           stringArrToString(args) +
           '" ' +
           COMMAND_ERRORS.getSmurfCred_invalidArgs
       );
       message.reply(HAS_SPACES_REMINDER);
     }
-    // unknown command
+    // makePublic command
+  } else if (command === COMMANDS.makePublic) {
+    const modifiedArgs = getModifiedArguments(argsAsString);
+    if (modifiedArgs.length === 4) {
+      findOneByNameAndTagAndUpdate(
+        modifiedArgs[0],
+        modifiedArgs[1],
+        (account, successCallback) => {
+          if (!account) {
+            message.reply("account no exist");
+          } else if (!account.private) {
+            message.reply("already public");
+          } else {
+            account.username = modifiedArgs[2];
+            account.password = modifiedArgs[3];
+            account.private = false;
+            successCallback();
+            message.reply("update success");
+          }
+        }
+      );
+    } else {
+      message.reply(
+        `"${command}` +
+          stringArrToString(args) +
+          '" ' +
+          COMMAND_ERRORS.getSmurfCred_invalidArgs
+      );
+      message.reply(HAS_SPACES_REMINDER);
+    }
+    // makePrivate command
+  } else if (command === COMMANDS.makePrivate) {
+    const modifiedArgs = getModifiedArguments(argsAsString);
+    if (modifiedArgs.length === 2) {
+      findOneByNameAndTagAndUpdate(
+        modifiedArgs[0],
+        modifiedArgs[1],
+        (account, successCallback) => {
+          if (!account) {
+            message.reply("account no exist");
+          } else if (account.private) {
+            message.reply("already private");
+          } else {
+            account.username = null;
+            account.password = null;
+            account.private = true;
+            successCallback();
+            message.reply("update success");
+          }
+        }
+      );
+    } else {
+      message.reply(
+        `"${command}` +
+          stringArrToString(args) +
+          '" ' +
+          COMMAND_ERRORS.getSmurfCred_invalidArgs
+      );
+      message.reply(HAS_SPACES_REMINDER);
+    }
   } else {
     message.reply(`"${command}" ` + UNKNOWN_COMMAND);
   }
 
-  if (command === "test") {
+  if (command === "Test") {
     message.reply(
       `commandBody: ${commandBody} args: ${args} command: ${command} argsAsString: ${argsAsString}`
     );
