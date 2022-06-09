@@ -213,7 +213,13 @@ client.on("messageCreate", (message) => {
               `${modifiedArgs[0]} and ${modifiedArgs[1]} ` +
                 COMMAND_ERRORS.setSmurf
             );
+          } else if (err.status === 500) {
+            message.reply(
+              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                COMMAND_ERRORS.setSmurf_privateAccount
+            );
           } else {
+            console.log(err);
             message.reply("error: " + err);
           }
         });
