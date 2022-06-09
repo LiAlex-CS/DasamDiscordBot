@@ -1,41 +1,11 @@
-const {
-  JSONHasValue,
-  stringArrToString,
-  mmrDataToString,
-  updateNameAndTag,
-  mmrDataSingleToString,
-  getModifiedArguments,
-} = require("./services");
-const {
-  getRankedData,
-  getUserData,
-  getRankedDataByPUUIDs,
-} = require("./fetching/fetching");
-const {
-  PREFIX,
-  COMMANDS,
-  ALL_COMMANDS,
-  UNKNOWN_COMMAND,
-  COMMAND_ERRORS,
-  COMMAND_DESCRIPTIONS,
-  RANKS_INTRO,
-  HAS_SPACES_REMINDER,
-  SET_SMURF_PRIVATE_SUCCESS,
-  SET_SMURF_PUBLIC_SUCCESS,
-  ACCOUNT_UPDATE_SUCCESS,
-} = require("./constants/commands");
-const {
-  getAccounts,
-  getAccountByNameAndTag,
-  addToCollection,
-  findOneByNameAndTagAndUpdate,
-  ServerApiVersion,
-} = require("./data/mongoDb");
-const Discord = require("discord.js");
+const { ServerApiVersion } = require("./data/mongoDb");
 const config = require("./token");
 
-const mongoose = require("mongoose");
+const { PREFIX, COMMANDS } = require("./constants/commands");
 const { uri } = require("./constants/mongodb_consts");
+
+const mongoose = require("mongoose");
+const Discord = require("discord.js");
 
 const {
   help_command,

@@ -1,15 +1,8 @@
 const {
-  PREFIX,
   COMMANDS,
   ALL_COMMANDS,
-  UNKNOWN_COMMAND,
   COMMAND_ERRORS,
   COMMAND_DESCRIPTIONS,
-  RANKS_INTRO,
-  HAS_SPACES_REMINDER,
-  SET_SMURF_PRIVATE_SUCCESS,
-  SET_SMURF_PUBLIC_SUCCESS,
-  ACCOUNT_UPDATE_SUCCESS,
 } = require("../constants/commands");
 
 const help_command = (message, command, args) => {

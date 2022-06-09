@@ -1,39 +1,8 @@
-const {
-  PREFIX,
-  COMMANDS,
-  ALL_COMMANDS,
-  UNKNOWN_COMMAND,
-  COMMAND_ERRORS,
-  COMMAND_DESCRIPTIONS,
-  rank_INTRO,
-  HAS_SPACES_REMINDER,
-  SET_SMURF_PRIVATE_SUCCESS,
-  SET_SMURF_PUBLIC_SUCCESS,
-  ACCOUNT_UPDATE_SUCCESS,
-} = require("../constants/commands");
+const { COMMAND_ERRORS } = require("../constants/commands");
 
-const {
-  getAccounts,
-  getAccountByNameAndTag,
-  addToCollection,
-  findOneByNameAndTagAndUpdate,
-  ServerApiVersion,
-} = require("../data/mongoDb");
+const { getAccountByNameAndTag } = require("../data/mongoDb");
 
-const {
-  getRankedData,
-  getUserData,
-  getRankedDataByPUUIDs,
-} = require("../fetching/fetching");
-
-const {
-  JSONHasValue,
-  stringArrToString,
-  mmrDataToString,
-  updateNameAndTag,
-  mmrDataSingleToString,
-  getModifiedArguments,
-} = require("../services");
+const { stringArrToString, getModifiedArguments } = require("../services");
 
 const credentials_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
