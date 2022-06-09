@@ -22,6 +22,7 @@ const {
   HAS_SPACES_REMINDER,
   SET_SMURF_PRIVATE_SUCCESS,
   SET_SMURF_PUBLIC_SUCCESS,
+  ACCOUNT_UPDATE_SUCCESS,
 } = require("./constants/commands");
 const {
   getAccounts,
@@ -239,15 +240,21 @@ client.on("messageCreate", (message) => {
         modifiedArgs[1],
         (account, successCallback) => {
           if (!account) {
-            message.reply("account no exist");
+            message.reply(
+              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                COMMAND_ERRORS.not_in_db
+            );
           } else if (!account.private) {
-            message.reply("already public");
+            message.reply(
+              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                COMMAND_ERRORS.makePublic_already_public
+            );
           } else {
             account.username = modifiedArgs[2];
             account.password = modifiedArgs[3];
             account.private = false;
             successCallback();
-            message.reply("update success");
+            message.reply(ACCOUNT_UPDATE_SUCCESS);
           }
         }
       );
@@ -269,15 +276,21 @@ client.on("messageCreate", (message) => {
         modifiedArgs[1],
         (account, successCallback) => {
           if (!account) {
-            message.reply("account no exist");
+            message.reply(
+              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                COMMAND_ERRORS.not_in_db
+            );
           } else if (account.private) {
-            message.reply("already private");
+            message.reply(
+              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                COMMAND_ERRORS.makePrivate_already_private
+            );
           } else {
             account.username = null;
             account.password = null;
             account.private = true;
             successCallback();
-            message.reply("update success");
+            message.reply(ACCOUNT_UPDATE_SUCCESS);
           }
         }
       );

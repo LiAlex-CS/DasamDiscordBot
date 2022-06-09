@@ -39,6 +39,12 @@ const COMMAND_ERRORS = {
     "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
   setSmurf_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
+  not_in_db:
+    'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
+  makePublic_already_public:
+    'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in yellow, while private accounts are labeled in white.',
+  makePrivate_already_private:
+    'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in yellow, while private accounts are labeled in white.',
 };
 
 const COMMAND_DESCRIPTIONS = {
@@ -55,10 +61,13 @@ const COMMAND_DESCRIPTIONS = {
 };
 
 const SET_SMURF_PUBLIC_SUCCESS =
-  "and its credentials has been added to the database.  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
+  "and its credentials has been added to the database!  :confetti_ball:  **Please note that this account and its credentials are now accessable to anyone who uses this bot.**";
 
 const SET_SMURF_PRIVATE_SUCCESS =
-  "has been added to the database.  :confetti_ball:";
+  "has been added to the database!  :confetti_ball:";
+
+const ACCOUNT_UPDATE_SUCCESS =
+  "The account has been updated successfully! :confetti_ball:";
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
@@ -88,4 +97,5 @@ module.exports = {
   SET_SMURF_PUBLIC_SUCCESS,
   SET_SMURF_PRIVATE_SUCCESS,
   RANK_EMOJIS,
+  ACCOUNT_UPDATE_SUCCESS,
 };
