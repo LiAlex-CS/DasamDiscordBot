@@ -14,7 +14,7 @@ const ALL_COMMANDS =
   'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:medal: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:pencil: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`';
 
 const UNKNOWN_COMMAND =
-  'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help <command>" for a description of the command';
+  'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command.';
 
 const COMMAND_ERRORS = {
   getCommands:
@@ -39,6 +39,10 @@ const COMMAND_ERRORS = {
     "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
   setSmurf_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
+  makePublic_invalidArgs:
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
+  makePrivate_invalidArgs:
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   not_in_db:
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
   makePublic_already_public:
