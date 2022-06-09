@@ -37,6 +37,17 @@ const config = require("./token");
 const mongoose = require("mongoose");
 const { uri } = require("./constants/mongodb_consts");
 
+const {
+  help_command,
+  ranks_command,
+  rank_command,
+  credentials_command,
+  setSmurf_command,
+  makePublic_command,
+  makePrivate_command,
+  unknown_command,
+} = require("./command_functions/index");
+
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
 mongoose.connect(uri, {
@@ -60,251 +71,28 @@ client.on("messageCreate", (message) => {
   );
   // help command
   if (command === COMMANDS.getCommands) {
-    if (!args.length) {
-      message.reply(ALL_COMMANDS);
-    } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
-      if (args[0] === COMMANDS.getCommands) {
-        message.reply(COMMAND_DESCRIPTIONS.getCommands);
-      } else if (args[0] === COMMANDS.getAllRanks) {
-        message.reply(COMMAND_DESCRIPTIONS.getAllRanks);
-      } else if (args[0] === COMMANDS.getRankPlayer) {
-        message.reply(COMMAND_DESCRIPTIONS.getRankPlayer);
-      } else if (args[0] === COMMANDS.getSmurfCred) {
-        message.reply(COMMAND_DESCRIPTIONS.getSmurfCred);
-      } else {
-        message.reply(COMMAND_DESCRIPTIONS.setSmurf);
-      }
-    } else {
-      message.reply(
-        `"${command} ` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getCommands
-      );
-    }
+    help_command(message, command, args);
     // ranks command
   } else if (command === COMMANDS.getAllRanks) {
-    if (!args.length) {
-      let reply = RANKS_INTRO;
-      getAccounts().then((accountData, err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
-            .then((data) => {
-              reply = reply + mmrDataToString(data, accountData);
-              message.reply(reply);
-              updateNameAndTag(data);
-            })
-            .catch((err) => {
-              message.reply("error: " + err);
-            });
-        }
-      });
-    } else {
-      message.reply(
-        `"${command} ` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getAllRanks_invalidArgs
-      );
-    }
+    ranks_command(message, command, args);
     // rank command
   } else if (command === COMMANDS.getRankPlayer) {
-    if (args.length >= 2) {
-      getRankedData(stringArrToString(args.slice(0, -1)), args[args.length - 1])
-        .then((data) => {
-          if (data.status !== 200) {
-            throw data;
-          } else {
-            message.reply(mmrDataSingleToString(data));
-          }
-        })
-        .catch((err) => {
-          if (err.status === 404) {
-            message.reply(
-              stringArrToString(args) + '" ' + COMMAND_ERRORS.getRankPlayer
-            );
-          } else if (parseInt(err.status, 10) === 500) {
-            message.reply(
-              stringArrToString(args) +
-                '" ' +
-                COMMAND_ERRORS.getRankPlayer_privateAccount
-            );
-          } else {
-            message.reply("error: " + err);
-          }
-        });
-    } else {
-      message.reply(
-        `"${command} ` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getRankPlayer_invalidArgs
-      );
-    }
+    rank_command(message, command, args);
     // credentials command
   } else if (command === COMMANDS.getSmurfCred) {
-    const modifiedArgs = getModifiedArguments(argsAsString);
-    if (modifiedArgs.length >= 2) {
-      const name = stringArrToString(modifiedArgs.slice(0, -1));
-      const tag = modifiedArgs[modifiedArgs.length - 1];
-
-      getAccountByNameAndTag(name, tag).then((data) => {
-        if (Object.keys(data).length) {
-          if (data.private) {
-            message.reply(
-              `User: ${name} #${tag} ` +
-                COMMAND_ERRORS.getSmurfCred_privateAccount
-            );
-          } else {
-            message.reply(
-              `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
-            );
-          }
-        } else {
-          message.reply(`User: ${name} #${tag} ` + COMMAND_ERRORS.getSmurfCred);
-        }
-      });
-    } else {
-      message.reply(
-        `"${command} ` +
-          stringArrToString(modifiedArgs) +
-          '" ' +
-          COMMAND_ERRORS.getSmurfCred_invalidArgs
-      );
-    }
+    credentials_command(message, command, argsAsString);
     // setSmurf command
   } else if (command === COMMANDS.setSmurf) {
-    const modifiedArgs = getModifiedArguments(argsAsString);
-    if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
-      getUserData(modifiedArgs[0], modifiedArgs[1])
-        .then((data) => {
-          if (data.status !== 200) {
-            throw data;
-          } else {
-            const private = !modifiedArgs[2] || !modifiedArgs[3];
-
-            addToCollection(
-              {
-                name: modifiedArgs[0],
-                tag: modifiedArgs[1],
-                puuid: data.data.puuid,
-                username: private ? null : modifiedArgs[2],
-                password: private ? null : modifiedArgs[3],
-                private: private,
-              },
-              (name, tag) => {
-                message.reply(
-                  `${name} #${tag} ${
-                    private
-                      ? SET_SMURF_PRIVATE_SUCCESS
-                      : SET_SMURF_PUBLIC_SUCCESS
-                  }`
-                );
-              }
-            );
-          }
-        })
-        .catch((err) => {
-          if (err.status === 404) {
-            message.reply(
-              `${modifiedArgs[0]} and ${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.setSmurf
-            );
-          } else if (err.status === 500) {
-            message.reply(
-              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.setSmurf_privateAccount
-            );
-          } else {
-            console.log(err);
-            message.reply("error: " + err);
-          }
-        });
-    } else {
-      message.reply(
-        `"${command}` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getSmurfCred_invalidArgs
-      );
-      message.reply(HAS_SPACES_REMINDER);
-    }
+    setSmurf_command(message, command, argsAsString);
     // makePublic command
   } else if (command === COMMANDS.makePublic) {
-    const modifiedArgs = getModifiedArguments(argsAsString);
-    if (modifiedArgs.length === 4) {
-      findOneByNameAndTagAndUpdate(
-        modifiedArgs[0],
-        modifiedArgs[1],
-        (account, successCallback) => {
-          if (!account) {
-            message.reply(
-              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.not_in_db
-            );
-          } else if (!account.private) {
-            message.reply(
-              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.makePublic_already_public
-            );
-          } else {
-            account.username = modifiedArgs[2];
-            account.password = modifiedArgs[3];
-            account.private = false;
-            successCallback();
-            message.reply(ACCOUNT_UPDATE_SUCCESS);
-          }
-        }
-      );
-    } else {
-      message.reply(
-        `"${command}` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getSmurfCred_invalidArgs
-      );
-      message.reply(HAS_SPACES_REMINDER);
-    }
+    makePublic_command(message, command, argsAsString);
     // makePrivate command
   } else if (command === COMMANDS.makePrivate) {
-    const modifiedArgs = getModifiedArguments(argsAsString);
-    if (modifiedArgs.length === 2) {
-      findOneByNameAndTagAndUpdate(
-        modifiedArgs[0],
-        modifiedArgs[1],
-        (account, successCallback) => {
-          if (!account) {
-            message.reply(
-              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.not_in_db
-            );
-          } else if (account.private) {
-            message.reply(
-              `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
-                COMMAND_ERRORS.makePrivate_already_private
-            );
-          } else {
-            account.username = null;
-            account.password = null;
-            account.private = true;
-            successCallback();
-            message.reply(ACCOUNT_UPDATE_SUCCESS);
-          }
-        }
-      );
-    } else {
-      message.reply(
-        `"${command}` +
-          stringArrToString(args) +
-          '" ' +
-          COMMAND_ERRORS.getSmurfCred_invalidArgs
-      );
-      message.reply(HAS_SPACES_REMINDER);
-    }
+    makePrivate_command(message, command, argsAsString);
+    // unknown command
   } else {
-    message.reply(`"${command}" ` + UNKNOWN_COMMAND);
+    unknown_command(message, command);
   }
 
   if (command === "Test") {
