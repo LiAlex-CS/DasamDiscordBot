@@ -5,6 +5,8 @@ const {
   COMMAND_DESCRIPTIONS,
 } = require("../constants/commands");
 
+const { stringArrToString, JSONHasValue } = require("../services");
+
 const help_command = (message, command, args) => {
   if (!args.length) {
     message.reply(ALL_COMMANDS);
