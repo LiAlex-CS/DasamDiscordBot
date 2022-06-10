@@ -44,8 +44,8 @@ const mmrDataToString = (dataArr, accountData) => {
     reply =
       reply +
       (accountData[index].private
-        ? `\n${tierEmoji} ${tier} ${startingPrivateText}${rankData}${endingPrivateText}`
-        : `\n${tierEmoji} ${tier} ${startingPublicText}${rankData}${endingPublicText}`);
+        ? `\n${tierEmoji}  ${newData.data.currenttierpatched} ${startingPrivateText}${rankData}${endingPrivateText}`
+        : `\n${tierEmoji}  ${newData.data.currenttierpatched} ${startingPublicText}${rankData}${endingPublicText}`);
   });
 
   return reply;
