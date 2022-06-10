@@ -82,7 +82,7 @@ const HAS_SPACES_REMINDER =
 
 const RANK_EMOJIS = {
   Radiant: ":sparkles:",
-  Immortal: ":congratulations:",
+  Immortal: ":white_flower:",
   Diamond: ":gem:",
   Platinum: ":shield:",
   Gold: ":first_place:",
