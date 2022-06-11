@@ -26,15 +26,23 @@ const ranks_command = (message, command, args) => {
         getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
           .then((data) => {
             if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
-              message.reply("invalid rank");
+              message.reply(
+                args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
+              );
             } else if (
               args.length == 2 &&
               (!JSONHasKey(args[0], RANK_EMOJIS) || !checkValidTierNum(args[1]))
             ) {
-              message.reply(" invalid rank or tier");
+              message.reply(
+                args[0] +
+                  " " +
+                  args[1] +
+                  " " +
+                  COMMAND_ERRORS.getAllRanks_invalidRankOrTier
+              );
             } else {
               if (args[0] === "Radiant" && args.length !== 1) {
-                message.reply("radiant has no tiers");
+                message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
               } else {
                 reply = reply + rankSpecificity(args, data, accountData);
 
