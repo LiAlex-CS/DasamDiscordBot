@@ -29,6 +29,25 @@ const stringArrToString = (strArr) => {
   return strArr.reduce((prev, newVal) => prev + " " + newVal);
 };
 
+const justify_content_apart = (strArr, totalLength) => {
+  const totalLengthWithoutSpaces = strArr.reduce((prev, newVal) => {
+    const prevLength = prev ? prev.length : 0;
+    return prevLength + newVal.length;
+  });
+
+  if (strArr.length !== 2 || totalLength < totalLengthWithoutSpaces) {
+    return;
+  } else {
+    const marginLength = totalLength - totalLengthWithoutSpaces;
+    let justifiedString = strArr[0];
+    for (let i = 0; i < marginLength; i++) {
+      justifiedString = justifiedString + " ";
+    }
+    justifiedString = justifiedString + strArr[1];
+    return justifiedString;
+  }
+};
+
 const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
   let reply = "";
 
@@ -58,8 +77,14 @@ const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
       reply =
         reply +
         (accountData[index].private
-          ? `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
-          : `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
+          ? `\n${rankEmoji}  ${justify_content_apart(
+              [`**${newData.data.currenttierpatched}**`, " "],
+              30
+            )}:lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
+          : `\n${rankEmoji}  ${justify_content_apart(
+              [`**${newData.data.currenttierpatched}**`, " "],
+              30
+            )}:unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
     };
 
     if (rankFilter && tierFilter) {
@@ -168,4 +193,5 @@ module.exports = {
   getModifiedArguments,
   checkValidTierNum,
   rankSpecificity,
+  justify_content_apart,
 };
