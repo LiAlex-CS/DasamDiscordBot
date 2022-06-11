@@ -58,8 +58,8 @@ const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
       reply =
         reply +
         (accountData[index].private
-          ? `\n${rankEmoji}  ${newData.data.currenttierpatched} ${startingPrivateText}${rankData}${endingPrivateText}`
-          : `\n${rankEmoji}  ${newData.data.currenttierpatched} ${startingPublicText}${rankData}${endingPublicText}`);
+          ? `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
+          : `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
     };
 
     if (rankFilter && tierFilter) {

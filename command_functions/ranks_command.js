@@ -10,7 +10,6 @@ const { getRankedDataByPUUIDs } = require("../fetching/fetching");
 
 const {
   stringArrToString,
-  mmrDataToString,
   updateNameAndTag,
   JSONHasKey,
   checkValidTierNum,
@@ -38,6 +37,11 @@ const ranks_command = (message, command, args) => {
                 message.reply("radiant has no tiers");
               } else {
                 reply = reply + rankSpecificity(args, data, accountData);
+
+                if (rankSpecificity(args, data, accountData).length === 0) {
+                  reply = COMMAND_ERRORS.getAllRanks_noAccounts;
+                }
+
                 message.reply(reply);
 
                 updateNameAndTag(data);
