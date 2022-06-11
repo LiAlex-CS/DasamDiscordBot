@@ -19,6 +19,11 @@ const UNKNOWN_COMMAND =
 const COMMAND_ERRORS = {
   getCommands:
     'is not a valid command, for all commands "type: $smurf help", for explanation on a command type: "$smurf help `<command>`".',
+  getAllRanks_invalidRankOrTier: "has either invalid rank or tier.",
+  getAllRanks_invalidRank: "is an invalid rank.",
+  getAllRanks_invalidTierRadiant: "The Radiant rank has no tiers.",
+  getAllRanks_noAccounts:
+    "There are no acounts with the desired criteria. :x: :mag:",
   getRankPlayer:
     'is not a valid account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getRankPlayer_privateAccount:
@@ -34,7 +39,7 @@ const COMMAND_ERRORS = {
   setSmurf_privateAccount:
     'is a private account, you cannot retrieve this data. To set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
   getAllRanks_invalidArgs:
-    "has invalid arguments, this command takes no arguments",
+    'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
   getRankPlayer_invalidArgs:
     "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
   getSmurfCred_invalidArgs:
@@ -57,7 +62,7 @@ const COMMAND_DESCRIPTIONS = {
   getCommands:
     ':question: **help**: This command gives some support on using this discord bot, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command. Ex. ```$smurf help ranks```',
   getAllRanks:
-    ":medal: **ranks**: This command gives the ranks of all accounts within the database.",
+    ':medal: **ranks**: This command gives the ranks of all accounts within the database.\nType: "$smurf ranks" to get all accounts.\nType: "$smurf ranks `<rank>`" to get all accounts in a specific rank.\nEx. ```$smurf ranks Silver```Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.\nEx. ```$smurf ranks Silver 1```',
   getRankPlayer:
     ':medal: **rank**: This command gives the rank of the player requested, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account. Ex. ```$smurf rank nugnug 6135```',
   getSmurfCred:

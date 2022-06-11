@@ -10,13 +10,26 @@ const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
 };
 
+const JSONHasKey = (value, json) => {
+  return json.hasOwnProperty(value);
+};
+
+const checkValidTierNum = (num) => {
+  if (parseInt(num)) {
+    if (parseInt(num) <= 3 && parseInt(num) > 0) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const stringArrToString = (strArr) => {
   if (!strArr || !strArr.length) return "";
 
   return strArr.reduce((prev, newVal) => prev + " " + newVal);
 };
 
-const mmrDataToString = (dataArr, accountData) => {
+const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
   let reply = "";
 
   const startingPrivateText = "```\n";
@@ -33,22 +46,46 @@ const mmrDataToString = (dataArr, accountData) => {
       ", Rank: " +
       newData.data.currenttierpatched;
 
-    const tier = newData.data.currenttierpatched
+    const rank = newData.data.currenttierpatched
       .split(/(\s+)/)
       .filter(function (e) {
         return e.trim().length > 0;
       })[0];
 
-    const tierEmoji = RANK_EMOJIS[tier];
+    const rankEmoji = RANK_EMOJIS[rank];
 
-    reply =
-      reply +
-      (accountData[index].private
-        ? `\n${tierEmoji}  ${newData.data.currenttierpatched} ${startingPrivateText}${rankData}${endingPrivateText}`
-        : `\n${tierEmoji}  ${newData.data.currenttierpatched} ${startingPublicText}${rankData}${endingPublicText}`);
+    const concatAccount = () => {
+      reply =
+        reply +
+        (accountData[index].private
+          ? `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
+          : `\n${rankEmoji}  **${newData.data.currenttierpatched}**      :unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
+    };
+
+    if (rankFilter && tierFilter) {
+      if (rankFilter + " " + tierFilter === newData.data.currenttierpatched) {
+        concatAccount();
+      }
+    } else if (rankFilter) {
+      if (newData.data.currenttierpatched.includes(rankFilter)) {
+        concatAccount();
+      }
+    } else {
+      concatAccount();
+    }
   });
 
   return reply;
+};
+
+const rankSpecificity = (args, data, accountData) => {
+  if (args.length === 2) {
+    return mmrDataToString(data, accountData, args[0], args[1]);
+  } else if (args.length === 1) {
+    return mmrDataToString(data, accountData, args[0]);
+  } else {
+    return mmrDataToString(data, accountData);
+  }
 };
 
 const mmrDataSingleToString = (data) => {
@@ -123,9 +160,12 @@ const getModifiedArguments = (commandBody) => {
 
 module.exports = {
   JSONHasValue,
+  JSONHasKey,
   stringArrToString,
   mmrDataToString,
   updateNameAndTag,
   mmrDataSingleToString,
   getModifiedArguments,
+  checkValidTierNum,
+  rankSpecificity,
 };
