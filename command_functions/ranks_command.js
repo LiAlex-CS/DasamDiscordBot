@@ -24,7 +24,7 @@ const ranks_command = (message, command, args) => {
         console.error(err);
       } else {
         getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
-          .then((data) => {
+          .then((rankedData) => {
             if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
               message.reply(
                 args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
@@ -44,15 +44,33 @@ const ranks_command = (message, command, args) => {
               if (args[0] === "Radiant" && args.length !== 1) {
                 message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
               } else {
-                reply = reply + rankSpecificity(args, data, accountData);
+                const combinedData = accountData.map((data, index) => ({
+                  rankedData: rankedData[index],
+                  accountData: data,
+                }));
+                const sortedCombinedData = combinedData.sort(
+                  (a, b) => b.rankedData.data.elo - a.rankedData.data.elo
+                );
+                const sortedAccountData = sortedCombinedData.map(
+                  (data) => data.accountData
+                );
+                const sortedRankedData = sortedCombinedData.map(
+                  (data) => data.rankedData
+                );
+                reply =
+                  reply +
+                  rankSpecificity(args, sortedRankedData, sortedAccountData);
 
-                if (rankSpecificity(args, data, accountData).length === 0) {
+                if (
+                  rankSpecificity(args, sortedRankedData, sortedAccountData)
+                    .length === 0
+                ) {
                   reply = COMMAND_ERRORS.getAllRanks_noAccounts;
                 }
 
                 message.reply(reply);
 
-                updateNameAndTag(data);
+                updateNameAndTag(rankedData);
               }
             }
           })
