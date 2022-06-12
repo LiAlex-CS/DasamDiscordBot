@@ -7,3 +7,5 @@ const STATUS_CODES = {
   internalServerError: 500,
   serviceUnavailable: 503,
 };
+
+module.exports = { STATUS_CODES };
