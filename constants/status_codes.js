@@ -1,0 +1,7 @@
+const OK = 200;
+const PERM_REDIRECT = 301;
+const TEMP_REDIRECT = 302;
+const NOT_FOUND = 404;
+const GONE = 410;
+const INT_SERVER_ERR = 500;
+const SERVICE_UNAVAILABLE = 503;
