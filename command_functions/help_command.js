@@ -11,16 +11,10 @@ const help_command = (message, command, args) => {
   if (!args.length) {
     message.reply(ALL_COMMANDS);
   } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
-    if (args[0] === COMMANDS.getCommands) {
-      message.reply(COMMAND_DESCRIPTIONS.getCommands);
-    } else if (args[0] === COMMANDS.getAllRanks) {
-      message.reply(COMMAND_DESCRIPTIONS.getAllRanks);
-    } else if (args[0] === COMMANDS.getRankPlayer) {
-      message.reply(COMMAND_DESCRIPTIONS.getRankPlayer);
-    } else if (args[0] === COMMANDS.getSmurfCred) {
-      message.reply(COMMAND_DESCRIPTIONS.getSmurfCred);
-    } else {
-      message.reply(COMMAND_DESCRIPTIONS.setSmurf);
+    for (let key in COMMANDS) {
+      if (COMMANDS[key] === args[0]) {
+        message.reply(COMMAND_DESCRIPTIONS[key]);
+      }
     }
   } else {
     message.reply(

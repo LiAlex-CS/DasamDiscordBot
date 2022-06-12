@@ -11,7 +11,7 @@ const COMMANDS = {
 };
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:medal: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:pencil: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:medal: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:pencil: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command.';
@@ -69,6 +69,10 @@ const COMMAND_DESCRIPTIONS = {
     ':pencil: **credentials**: This command gives the credentials to the requested account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ex. ```$smurf credentials nugnug 6135```',
   setSmurf:
     ':pencil2: **setSmurf**: This command sets a new smurf account into the database.\nType: \n"$smurf setSmurf `"<player name>"` `<tagline>`" to set a private account.\nEx. ```$smurf setSmurf "nugnug" 6135```Type: \n"$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"` to set a public account".\nEx. ```$smurf setSmurf "nugnug" 6135 AlexUsername "Alex Password123"``` **Please only add valid accounts.**',
+  makePublic:
+    ':unlock: **makePublic**: This account sets a private account in the database into a public account.\nType:\n"$smurf makePublic `"<player name>"` `<tagline>` `<username>` `"<password>"`" to make a private account public.\n Ex.```$smurf makePublic nugnug 6135 AlexUsername "Alex Password123"```',
+  makePrivate:
+    ':lock: **makePrivate**: This account sets a public account in the database into a private account.\nType:\n"$smurf makePrivate `"<player name>"` `<tagline>`" to make a public account private.\n Ex.```$smurf makePrivate nugnug 6135```',
 };
 
 const SET_SMURF_PUBLIC_SUCCESS =
