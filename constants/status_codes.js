@@ -1,7 +1,9 @@
-const OK = 200;
-const PERM_REDIRECT = 301;
-const TEMP_REDIRECT = 302;
-const NOT_FOUND = 404;
-const GONE = 410;
-const INT_SERVER_ERR = 500;
-const SERVICE_UNAVAILABLE = 503;
+const STATUS_CODES = {
+  ok: 200,
+  permRedirect: 301,
+  tempRedirect: 302,
+  notFound: 404,
+  gone: 410,
+  internalServerError: 500,
+  serviceUnavailable: 503,
+};

@@ -5,6 +5,8 @@ const {
   SET_SMURF_PUBLIC_SUCCESS,
 } = require("../constants/commands");
 
+const { STATUS_CODES } = require("../constants/status_codes");
+
 const { addToCollection, getAccountByPuuid } = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
@@ -16,7 +18,7 @@ const setSmurf_command = (message, command, argsAsString) => {
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
     getUserData(modifiedArgs[0], modifiedArgs[1])
       .then((fetchData) => {
-        if (fetchData.status !== 200) {
+        if (fetchData.status !== STATUS_CODES.ok) {
           throw fetchData;
         } else {
           const private = !modifiedArgs[2] || !modifiedArgs[3];
@@ -52,12 +54,12 @@ const setSmurf_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        if (err.status === 404) {
+        if (err.status === STATUS_CODES.notFound) {
           message.reply(
             `${modifiedArgs[0]} and ${modifiedArgs[1]} ` +
               COMMAND_ERRORS.setSmurf
           );
-        } else if (err.status === 500) {
+        } else if (err.status === STATUS_CODES.internalServerError) {
           message.reply(
             `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
               COMMAND_ERRORS.setSmurf_privateAccount
