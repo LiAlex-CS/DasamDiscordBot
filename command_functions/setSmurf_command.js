@@ -18,7 +18,7 @@ const setSmurf_command = (message, command, argsAsString) => {
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
     getUserData(modifiedArgs[0], modifiedArgs[1])
       .then((fetchData) => {
-        if (fetchData.status !== STATUS_CODES.ok) {
+        if (parseInt(fetchData.status, 10) !== STATUS_CODES.ok) {
           throw fetchData;
         } else {
           const private = !modifiedArgs[2] || !modifiedArgs[3];
@@ -54,12 +54,14 @@ const setSmurf_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        if (err.status === STATUS_CODES.notFound) {
+        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
           message.reply(
             `${modifiedArgs[0]} and ${modifiedArgs[1]} ` +
               COMMAND_ERRORS.setSmurf
           );
-        } else if (err.status === STATUS_CODES.internalServerError) {
+        } else if (
+          parseInt(err.status, 10) === STATUS_CODES.internalServerError
+        ) {
           message.reply(
             `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
               COMMAND_ERRORS.setSmurf_privateAccount

@@ -10,14 +10,14 @@ const rank_command = (message, command, args) => {
   if (args.length >= 2) {
     getRankedData(stringArrToString(args.slice(0, -1)), args[args.length - 1])
       .then((data) => {
-        if (data.status !== STATUS_CODES.ok) {
+        if (parseInt(data.status, 10) !== STATUS_CODES.ok) {
           throw data;
         } else {
           message.reply(mmrDataSingleToString(data));
         }
       })
       .catch((err) => {
-        if (err.status === STATUS_CODES.notFound) {
+        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
           message.reply(
             stringArrToString(args) + '" ' + COMMAND_ERRORS.getRankPlayer
           );
