@@ -8,4 +8,11 @@ const STATUS_CODES = {
   serviceUnavailable: 503,
 };
 
-module.exports = { STATUS_CODES };
+const STATUS_CODE_MESSAGES = {
+  apiDown: "The Valorant API is currently down, please try again later.",
+};
+
+module.exports = {
+  STATUS_CODES,
+  STATUS_CODE_MESSAGES,
+};
