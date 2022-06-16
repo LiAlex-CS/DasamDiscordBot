@@ -75,7 +75,7 @@ const ranks_command = (message, command, args) => {
             }
           })
           .catch((err) => {
-            message.reply("error: " + err);
+            message.reply("error: " + err.message);
           });
       }
     });
