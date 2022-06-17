@@ -65,10 +65,12 @@ client.on("messageCreate", (message) => {
     unknown_command(message, command);
   }
 
-  if (command === "Test") {
-    message.reply(
-      `commandBody: ${commandBody} args: ${args} command: ${command} argsAsString: ${argsAsString}`
-    );
+  if (process.env.BOT_ENV === "DEV") {
+    if (command === "Test") {
+      message.reply(
+        `commandBody: ${commandBody} args: ${args} command: ${command} argsAsString: ${argsAsString}`
+      );
+    }
   }
 });
 
