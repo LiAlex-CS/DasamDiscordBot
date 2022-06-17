@@ -35,7 +35,7 @@ const credentials_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        if (err.status === STATUS_CODES.notFound) {
+        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
           message.reply(STATUS_CODE_MESSAGES.MongoDBApiDown);
         }
       });
