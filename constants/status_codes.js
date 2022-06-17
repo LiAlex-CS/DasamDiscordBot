@@ -9,7 +9,9 @@ const STATUS_CODES = {
 };
 
 const STATUS_CODE_MESSAGES = {
-  apiDown: "The Valorant API is currently down, please try again later.",
+  ValorantApiDown:
+    "The Valorant API is currently down, please try again later.",
+  MongoDBApiDown: "The MongoDB API is currently down, please try again later.",
 };
 
 module.exports = {
