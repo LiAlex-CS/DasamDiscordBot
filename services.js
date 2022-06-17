@@ -50,6 +50,12 @@ const justify_content_apart = (strArr, totalLength) => {
   }
 };
 
+const getRankFromRankAndTier = (rankAndTier) => {
+  return rankAndTier.split(/(\s+)/).filter((e) => {
+    return e.trim().length > 0;
+  })[0];
+};
+
 const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
   let reply = "";
 
@@ -67,11 +73,7 @@ const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
       ", Rank: " +
       newData.data.currenttierpatched;
 
-    const rank = newData.data.currenttierpatched
-      .split(/(\s+)/)
-      .filter(function (e) {
-        return e.trim().length > 0;
-      })[0];
+    const rank = getRankFromRankAndTier(newData.data.currenttierpatched);
 
     const rankEmoji = RANK_EMOJIS[rank];
 
@@ -116,7 +118,7 @@ const rankSpecificity = (args, data, accountData) => {
 };
 
 const mmrDataSingleToString = (data) => {
-  return `Account Name: ${data.data.name}, Tagline: ${data.data.tag}, Rank: ${data.data.currenttierpatched}`;
+  return `Account Name: **${data.data.name}**, Tagline: **${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
 };
 
 const updateNameAndTag = (dataArr) => {
@@ -204,4 +206,5 @@ module.exports = {
   checkValidTierNum,
   rankSpecificity,
   justify_content_apart,
+  getRankFromRankAndTier,
 };
