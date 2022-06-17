@@ -121,9 +121,9 @@ const mmrDataSingleToString = (data) => {
 
 const updateNameAndTag = (dataArr) => {
   getAccounts()
-    .then((userData) => {
-      if (!userData) {
-        throw userData;
+    .then((userData, err) => {
+      if (err) {
+        throw err;
       } else {
         dataArr.forEach((data, index) => {
           if (userData[index].name !== data.data.name) {
