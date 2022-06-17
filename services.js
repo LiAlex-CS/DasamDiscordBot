@@ -116,7 +116,7 @@ const rankSpecificity = (args, data, accountData) => {
 };
 
 const mmrDataSingleToString = (data) => {
-  return `Account Name: **${data.data.name}**, Tagline: **${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
+  return `__Account Name:__ **${data.data.name}**, __Tagline:__ **${data.data.tag}**, __Rank:__ **${data.data.currenttierpatched}**`;
 };
 
 const updateNameAndTag = (dataArr) => {
