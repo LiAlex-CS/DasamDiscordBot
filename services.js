@@ -6,6 +6,8 @@ const {
 
 const { RANK_EMOJIS } = require("./constants/commands");
 
+const { STATUS_CODES } = require("./constants/status_codes");
+
 const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
 };
@@ -118,16 +120,24 @@ const mmrDataSingleToString = (data) => {
 };
 
 const updateNameAndTag = (dataArr) => {
-  getAccounts().then((userData) => {
-    dataArr.forEach((data, index) => {
-      if (userData[index].name !== data.data.name) {
-        updateAccountNameByPuuid(userData[index].puuid, data.data.name);
+  getAccounts()
+    .then((userData) => {
+      if (!userData) {
+        throw userData;
+      } else {
+        dataArr.forEach((data, index) => {
+          if (userData[index].name !== data.data.name) {
+            updateAccountNameByPuuid(userData[index].puuid, data.data.name);
+          }
+          if (userData[index].tag !== data.data.tag) {
+            updateAccountTagByPuuid(userData[index].puuid, data.data.tag);
+          }
+        });
       }
-      if (userData[index].tag !== data.data.tag) {
-        updateAccountTagByPuuid(userData[index].puuid, data.data.tag);
-      }
+    })
+    .catch((err) => {
+      console.error(err);
     });
-  });
 };
 
 const getModifiedArguments = (commandBody) => {
