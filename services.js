@@ -6,8 +6,6 @@ const {
 
 const { RANK_EMOJIS } = require("./constants/commands");
 
-const { STATUS_CODES } = require("./constants/status_codes");
-
 const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
 };
