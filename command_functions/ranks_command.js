@@ -82,7 +82,7 @@ const ranks_command = (message, command, args) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err.message);
       });
   } else {
     message.reply(
