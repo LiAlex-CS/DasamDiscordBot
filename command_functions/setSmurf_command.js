@@ -33,6 +33,7 @@ const setSmurf_command = (message, command, argsAsString) => {
                   username: private ? null : modifiedArgs[2],
                   password: private ? null : modifiedArgs[3],
                   private: private,
+                  creator_disc_id: message.author.id,
                 },
                 (name, tag) => {
                   message.reply(

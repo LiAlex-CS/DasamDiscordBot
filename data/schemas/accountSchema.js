@@ -11,6 +11,7 @@ const AccountSchema = new Schema(
     username: { type: String },
     password: { type: String },
     private: { type: Boolean, required: true, default: false },
+    creator_disc_id: { type: String, required: true },
   },
   { collection: ACCOUNTS_COLLECTION }
 );

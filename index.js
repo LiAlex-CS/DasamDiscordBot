@@ -70,6 +70,9 @@ client.on("messageCreate", (message) => {
       message.reply(
         `commandBody: ${commandBody} args: ${args} command: ${command} argsAsString: ${argsAsString}`
       );
+      message.reply(
+        "from: " + message.author.username + ", id: " + message.author.id
+      );
     }
   }
 });

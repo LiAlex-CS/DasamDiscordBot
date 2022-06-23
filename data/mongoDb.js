@@ -43,6 +43,7 @@ const addToCollection = async (data, cb) => {
     username: data.username,
     password: data.password,
     private: data.private,
+    creator_disc_id: data.creator_disc_id,
   });
 
   NewAccount.save((err, account) => {
