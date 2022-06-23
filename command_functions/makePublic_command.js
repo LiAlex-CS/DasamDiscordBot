@@ -14,7 +14,7 @@ const makePublic_command = (message, command, argsAsString) => {
     findOneByNameAndTagAndUpdate(
       modifiedArgs[0],
       modifiedArgs[1],
-      (account, successCallback) => {
+      (account, successSaveCallback) => {
         if (!account) {
           message.reply(
             `${modifiedArgs[0]} #${modifiedArgs[1]} ` + COMMAND_ERRORS.not_in_db
@@ -28,7 +28,7 @@ const makePublic_command = (message, command, argsAsString) => {
           account.username = modifiedArgs[2];
           account.password = modifiedArgs[3];
           account.private = false;
-          successCallback();
+          successSaveCallback();
           message.reply(ACCOUNT_UPDATE_SUCCESS);
         }
       }
