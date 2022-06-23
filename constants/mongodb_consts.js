@@ -6,5 +6,11 @@ const uri = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@accountdetails.hh
 
 const DATABASE = "DiscordBotAccountDetails";
 const ACCOUNTS_COLLECTION = "AccountDetails";
+const DISCORD_USER_COLLECTION = "DiscordUsers";
 
-module.exports = { uri, DATABASE, ACCOUNTS_COLLECTION };
+module.exports = {
+  uri,
+  DATABASE,
+  ACCOUNTS_COLLECTION,
+  DISCORD_USER_COLLECTION,
+};
