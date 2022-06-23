@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { DISCORD_USER_COLLECTION } = require("../../constants/mongodb_consts");
 
+const Schema = mongoose.Schema;
+
 const DiscordUserSchema = new Schema(
   {
     disc_id: { type: String, required: true },

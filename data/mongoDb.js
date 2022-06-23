@@ -1,5 +1,6 @@
 const { ServerApiVersion } = require("mongodb");
 const { AccountDetails } = require("./schemas/accountSchema");
+const { DiscordUsers } = require("./schemas/discordUserSchema");
 
 const getAccounts = async () => {
   const data = await AccountDetails.find({}).exec();
@@ -52,6 +53,20 @@ const addToCollection = async (data, cb) => {
   });
 };
 
+const addDiscordUser = async (name, id) => {
+  const found = await DiscordUsers.findOne({ disc_id: id });
+  if (!found) {
+    const newDiscordUser = new DiscordUsers({
+      name: name,
+      disc_id: id,
+      isAdmin: false,
+    });
+    newDiscordUser.save((err) => {
+      if (err) console.error(err);
+    });
+  }
+};
+
 module.exports = {
   ServerApiVersion,
   getAccounts,
@@ -61,4 +76,5 @@ module.exports = {
   updateAccountNameByPuuid,
   updateAccountTagByPuuid,
   addToCollection,
+  addDiscordUser,
 };

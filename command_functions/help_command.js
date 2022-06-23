@@ -6,10 +6,12 @@ const {
 } = require("../constants/commands");
 
 const { stringArrToString, JSONHasValue } = require("../services");
+const { addDiscordUser } = require("../data/mongoDb");
 
 const help_command = (message, command, args) => {
   if (!args.length) {
     message.reply(ALL_COMMANDS);
+    addDiscordUser(message.author.username, message.author.id);
   } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
     for (let key in COMMANDS) {
       if (COMMANDS[key] === args[0]) {
