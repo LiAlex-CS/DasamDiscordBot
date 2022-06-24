@@ -11,7 +11,7 @@ const COMMANDS = {
 };
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:medal: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:pencil: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command.';
@@ -62,11 +62,11 @@ const COMMAND_DESCRIPTIONS = {
   getCommands:
     ':question: **help**: This command gives some support on using this discord bot, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command. Ex. ```$smurf help ranks```',
   getAllRanks:
-    ':medal: **ranks**: This command gives the ranks of all accounts within the database.\nType: "$smurf ranks" to get all accounts.\nType: "$smurf ranks `<rank>`" to get all accounts in a specific rank.\nEx. ```$smurf ranks Silver```Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.\nEx. ```$smurf ranks Silver 1```',
+    ':trophy: **ranks**: This command gives the ranks of all accounts within the database.\nType: "$smurf ranks" to get all accounts.\nType: "$smurf ranks `<rank>`" to get all accounts in a specific rank.\nEx. ```$smurf ranks Silver```Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.\nEx. ```$smurf ranks Silver 1```',
   getRankPlayer:
     ':medal: **rank**: This command gives the rank of the player requested, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account. Ex. ```$smurf rank nugnug 6135```',
   getSmurfCred:
-    ':pencil: **credentials**: This command gives the credentials to the requested account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ex. ```$smurf credentials nugnug 6135```',
+    ':page_facing_up: **credentials**: This command gives the credentials to the requested account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ex. ```$smurf credentials nugnug 6135```',
   setSmurf:
     ':pencil2: **setSmurf**: This command sets a new smurf account into the database.\nType: \n"$smurf setSmurf `"<player name>"` `<tagline>`" to set a private account.\nEx. ```$smurf setSmurf "nugnug" 6135```Type: \n"$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"` to set a public account".\nEx. ```$smurf setSmurf "nugnug" 6135 AlexUsername "Alex Password123"``` **Please only add valid accounts.**',
   makePublic:
