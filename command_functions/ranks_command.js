@@ -16,6 +16,7 @@ const {
   JSONHasKey,
   checkValidTierNum,
   rankSpecificity,
+  checkArrayRespStatusMatch,
 } = require("../services");
 
 const ranks_command = (message, command, args) => {
@@ -28,8 +29,11 @@ const ranks_command = (message, command, args) => {
         } else {
           getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
             .then((rankedData, err) => {
-              if (parseInt(rankedData.status, 10) !== STATUS_CODES.ok || err) {
-                throw rankedData;
+              if (
+                !checkArrayRespStatusMatch(rankedData, STATUS_CODES.ok) ||
+                err
+              ) {
+                throw err;
               } else if (
                 args.length == 1 &&
                 !JSONHasKey(args[0], RANK_EMOJIS)

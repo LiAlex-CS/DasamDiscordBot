@@ -193,6 +193,15 @@ const getModifiedArguments = (commandBody) => {
   return args;
 };
 
+const checkArrayRespStatusMatch = (respArr, statusCode) => {
+  respArr.forEach((resp) => {
+    if (resp.status !== statusCode) {
+      return false;
+    }
+  });
+  return true;
+};
+
 module.exports = {
   JSONHasValue,
   JSONHasKey,
@@ -205,4 +214,5 @@ module.exports = {
   rankSpecificity,
   justify_content_apart,
   getRankFromRankAndTier,
+  checkArrayRespStatusMatch,
 };
