@@ -28,8 +28,8 @@ const ranks_command = (message, command, args) => {
         } else {
           getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
             .then((rankedData, err) => {
-              if (parseInt(data.status, 10) !== STATUS_CODES.ok || err) {
-                throw data;
+              if (parseInt(rankedData.status, 10) !== STATUS_CODES.ok || err) {
+                throw rankedData;
               } else if (
                 args.length == 1 &&
                 !JSONHasKey(args[0], RANK_EMOJIS)
