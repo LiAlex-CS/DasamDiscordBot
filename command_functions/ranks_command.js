@@ -8,6 +8,8 @@ const { getAccounts } = require("../data/mongoDb");
 
 const { getRankedDataByPUUIDs } = require("../fetching/fetching");
 
+const { STATUS_CODES } = require("../constants/status_codes");
+
 const {
   stringArrToString,
   updateNameAndTag,
@@ -25,8 +27,13 @@ const ranks_command = (message, command, args) => {
           throw err;
         } else {
           getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
-            .then((rankedData) => {
-              if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
+            .then((rankedData, err) => {
+              if (parseInt(data.status, 10) !== STATUS_CODES.ok || err) {
+                throw data;
+              } else if (
+                args.length == 1 &&
+                !JSONHasKey(args[0], RANK_EMOJIS)
+              ) {
                 message.reply(
                   args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
                 );

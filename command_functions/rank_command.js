@@ -13,8 +13,8 @@ const {
 const rank_command = (message, command, args) => {
   if (args.length >= 2) {
     getRankedData(stringArrToString(args.slice(0, -1)), args[args.length - 1])
-      .then((data) => {
-        if (parseInt(data.status, 10) !== STATUS_CODES.ok) {
+      .then((data, err) => {
+        if (parseInt(data.status, 10) !== STATUS_CODES.ok || err) {
           throw data;
         } else {
           const rank = getRankFromRankAndTier(data.data.currenttierpatched);
