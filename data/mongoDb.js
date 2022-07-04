@@ -47,8 +47,10 @@ const addToCollection = async (data, cb) => {
     creator_disc_id: data.creator_disc_id,
   });
 
-  NewAccount.save((err, account) => {
-    if (err) console.error(err);
+  NewAccount.save((err, account, cb) => {
+    if (err) {
+      cb(err);
+    }
     cb(account.name, account.tag);
   });
 };
