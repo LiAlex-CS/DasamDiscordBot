@@ -68,8 +68,7 @@ const setSmurf_command = (message, command, argsAsString) => {
               COMMAND_ERRORS.setSmurf_privateAccount
           );
         } else {
-          console.error(err.message);
-          message.reply("error: " + err.message);
+          message.reply("Error: " + err.message);
         }
       });
   } else {
