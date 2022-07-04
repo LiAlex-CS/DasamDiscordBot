@@ -47,7 +47,7 @@ const addToCollection = async (data, cb) => {
     creator_disc_id: data.creator_disc_id,
   });
 
-  NewAccount.save((err, account, cb) => {
+  NewAccount.save((err, account) => {
     if (err) {
       cb(err);
     }
