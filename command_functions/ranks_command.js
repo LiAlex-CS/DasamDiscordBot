@@ -27,17 +27,15 @@ const ranks_command = (message, command, args) => {
         if (err) {
           throw err;
         } else {
-          getRankedDataByPUUIDs(accountData.map((user) => user.puuid))
-            .then((rankedData, err) => {
+          getRankedDataByPUUIDs(accountData.map((user) => user.puuid)).then(
+            (rankedData, err) => {
               if (
                 !checkArrayRespStatusMatch(rankedData, STATUS_CODES.ok) ||
                 err
               ) {
-                throw err;
-              } else if (
-                args.length == 1 &&
-                !JSONHasKey(args[0], RANK_EMOJIS)
-              ) {
+                message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
+              }
+              if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
                 message.reply(
                   args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
                 );
@@ -57,6 +55,18 @@ const ranks_command = (message, command, args) => {
                 if (args[0] === "Radiant" && args.length !== 1) {
                   message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
                 } else {
+                  let hasError = false;
+                  rankedData.forEach((data, index) => {
+                    if (data.status !== STATUS_CODES.ok) {
+                      hasError = true;
+                      data.data = {
+                        currenttierpatched: "Error",
+                        name: accountData[index].name,
+                        tag: accountData[index].tag,
+                        elo: 0,
+                      };
+                    }
+                  });
                   const combinedData = accountData.map((data, index) => ({
                     rankedData: rankedData[index],
                     accountData: data,
@@ -82,14 +92,13 @@ const ranks_command = (message, command, args) => {
                   }
 
                   message.reply(reply);
-
-                  updateNameAndTag(rankedData);
+                  if (!hasError) {
+                    updateNameAndTag(rankedData);
+                  }
                 }
               }
-            })
-            .catch((err) => {
-              message.reply("error: " + err.message);
-            });
+            }
+          );
         }
       })
       .catch((err) => {

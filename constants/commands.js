@@ -24,6 +24,8 @@ const COMMAND_ERRORS = {
   getAllRanks_invalidTierRadiant: "The Radiant rank has no tiers.",
   getAllRanks_noAccounts:
     "There are no acounts with the desired criteria. :x: :mag:",
+  getAllRanks_errorFetching:
+    "```fix\nThere was an error fetching some accounts, all available accounts are shown below:\n```",
   getRankPlayer:
     'is not a valid account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getRankPlayer_privateAccount:
@@ -99,6 +101,7 @@ const RANK_EMOJIS = {
   Silver: ":second_place:",
   Bronze: ":third_place:",
   Iron: ":gear:",
+  Error: ":x:",
 };
 
 module.exports = {

@@ -1,8 +1,8 @@
 const fetch = require("node-fetch-commonjs");
-const { key } = require("./APIKey");
+const { API_key } = require("./APIKey");
 
 const rootURL = "https://api.henrikdev.xyz/valorant/v1";
-const headers = { Authorization: key };
+const headers = { Authorization: API_key };
 const APIConfigGET = { method: "GET", headers: headers };
 
 const getRankedData = async (name, id) => {

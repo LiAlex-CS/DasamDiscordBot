@@ -194,12 +194,20 @@ const getModifiedArguments = (commandBody) => {
 };
 
 const checkArrayRespStatusMatch = (respArr, statusCode) => {
+  let isMatching = true;
   respArr.forEach((resp) => {
-    if (resp.status !== statusCode) {
-      return false;
-    }
+    isMatching = resp.status !== statusCode ? false : isMatching;
   });
-  return true;
+  return isMatching;
+};
+
+const errorRespToErrorMessage = (resp) => {
+  const errors = resp.errors;
+  let errorString = "Errors: \n";
+  errors.forEach((error) => {
+    errorString += `${error.message},\n`;
+  });
+  return errorString;
 };
 
 module.exports = {
@@ -215,4 +223,5 @@ module.exports = {
   justify_content_apart,
   getRankFromRankAndTier,
   checkArrayRespStatusMatch,
+  errorRespToErrorMessage,
 };
