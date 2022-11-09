@@ -48,12 +48,14 @@ const addToCollection = async (data, cb) => {
   });
 
   NewAccount.save((err, account) => {
-    if (err) console.error(err);
+    if (err) {
+      cb(err);
+    }
     cb(account.name, account.tag);
   });
 };
 
-const addDiscordUser = async (name, id) => {
+const addDiscordUser = async (name, id, cb) => {
   const found = await DiscordUsers.findOne({ disc_id: id });
   if (!found) {
     const newDiscordUser = new DiscordUsers({
@@ -62,7 +64,7 @@ const addDiscordUser = async (name, id) => {
       isAdmin: false,
     });
     newDiscordUser.save((err) => {
-      if (err) console.error(err);
+      if (err) cb(err);
     });
   }
 };

@@ -92,8 +92,11 @@ const ranks_command = (message, command, args) => {
                   }
 
                   message.reply(reply);
+
                   if (!hasError) {
-                    updateNameAndTag(rankedData);
+                    updateNameAndTag(rankedData, (err) => {
+                      message.reply("Error: " + err.message);
+                    });
                   }
                 }
               }
@@ -102,7 +105,7 @@ const ranks_command = (message, command, args) => {
         }
       })
       .catch((err) => {
-        console.error(err.message);
+        message.reply("Error: " + err.message);
       });
   } else {
     message.reply(

@@ -120,7 +120,7 @@ const mmrDataSingleToString = (data) => {
   return `Account Name: **${data.data.name}**, Tagline: **${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
 };
 
-const updateNameAndTag = (dataArr) => {
+const updateNameAndTag = (dataArr, errorCB) => {
   getAccounts()
     .then((userData, err) => {
       if (err) {
@@ -137,7 +137,7 @@ const updateNameAndTag = (dataArr) => {
       }
     })
     .catch((err) => {
-      console.error(err);
+      errorCB(err);
     });
 };
 
