@@ -49,6 +49,7 @@ const justify_content_apart = (strArr, totalLength) => {
 };
 
 const getRankFromRankAndTier = (rankAndTier) => {
+  if (!rankAndTier) return "Error";
   return rankAndTier.split(/(\s+)/).filter((e) => {
     return e.trim().length > 0;
   })[0];
