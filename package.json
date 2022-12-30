@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
-    "deploy": "heroku ps:scale worker=1",
-    "shutdown": "heroku ps:scale worker=0"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
