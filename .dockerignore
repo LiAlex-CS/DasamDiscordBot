@@ -1,0 +1,4 @@
+node_modules
+.env
+env.list
+gcp-service-account-key.json
