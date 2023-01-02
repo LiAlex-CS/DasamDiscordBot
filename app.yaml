@@ -1,8 +1,12 @@
 runtime: nodejs18
 
+instance_class: B1
+manual_scaling:
+  instances: 1
+
 env_variables:
   BOT_TOKEN: "OTgyNDk1NDMyMzgwOTE1NzUy.G_X0W9.Rpyjv8m5e6GBoqkLIU5pr3UtKcGACK9-kQnbIQ"
   MONGO_USERNAME: "DiscordBotUser"
   MONGO_PASSWORD: "SBaTjjZtmJF2tC72"
-  BOT_ENV: "DEV"
+  BOT_ENV: "PROD"
   VAL_API_KEY: "HDEV-0d7a307a-ee7d-45bb-a94b-2542477677f1"
