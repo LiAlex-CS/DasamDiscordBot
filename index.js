@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { ServerApiVersion } = require("./data/mongoDb");
 const config = require("./token");
 
@@ -20,6 +21,7 @@ const {
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
+mongoose.set("strictQuery", false);
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
