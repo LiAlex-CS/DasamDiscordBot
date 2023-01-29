@@ -142,55 +142,36 @@ const updateNameAndTag = (dataArr, errorCB) => {
 };
 
 const getModifiedArguments = (commandBody) => {
-  let inQuotation = false;
-  let args = [];
-  let startIndex = 0;
-  let endIndex = 0;
-  let prevStartIndex = null;
-  let prevEndIndex = null;
-  let numQuotations = 0;
+  const args = [];
+  let inQuotations = false;
+  let currString = "";
 
-  for (let i = 0; i < commandBody.length; i++) {
-    if (commandBody[i] === '"') {
-      inQuotation = !inQuotation;
-      numQuotations += 1;
+  const addToArgs = () => {
+    if (currString.length > 0) {
+      args.push(currString);
+      currString = "";
     }
-    if (inQuotation) {
-      if (i > 0 && commandBody[i - 1] === '"') {
-        startIndex = i;
-      }
-      if (i < commandBody.length - 1 && commandBody[i + 1] === '"') {
-        endIndex = i;
-      }
+  };
+
+  for (let char of commandBody) {
+    if (char === '"') {
+      addToArgs();
+      inQuotations = !inQuotations;
     } else {
-      if (
-        (i > 0 && commandBody[i - 1] === " ") ||
-        (i === 0 && commandBody[i] !== " ")
-      ) {
-        startIndex = i;
-      }
-      if (
-        (i < commandBody.length - 1 && commandBody[i + 1] === " ") ||
-        (i === commandBody.length - 1 && commandBody[i] !== " ")
-      ) {
-        endIndex = i;
+      if (!inQuotations) {
+        if (char !== " ") {
+          currString += char;
+        } else {
+          addToArgs();
+        }
+      } else {
+        currString += char;
       }
     }
-    if (
-      (startIndex || endIndex) &&
-      commandBody[endIndex] !== '"' &&
-      endIndex >= startIndex &&
-      startIndex !== prevStartIndex &&
-      endIndex !== prevEndIndex
-    ) {
-      args.push(commandBody.slice(startIndex, endIndex + 1));
-      prevStartIndex = startIndex;
-      prevEndIndex = endIndex;
-    }
   }
-  if (numQuotations % 2 !== 0) {
-    return [];
-  }
+
+  addToArgs();
+
   return args;
 };
 
