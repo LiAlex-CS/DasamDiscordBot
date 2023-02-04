@@ -6,6 +6,7 @@ const { setSmurf_command } = require("./setSmurf_command");
 const { makePublic_command } = require("./makePublic_command");
 const { makePrivate_command } = require("./makePrivate_command");
 const { unknown_command } = require("./unknown_command");
+const { test_command } = require("./test_command");
 
 module.exports = {
   help_command,
@@ -16,4 +17,5 @@ module.exports = {
   makePublic_command,
   makePrivate_command,
   unknown_command,
+  test_command,
 };

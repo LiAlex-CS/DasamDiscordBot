@@ -17,6 +17,7 @@ const {
   makePublic_command,
   makePrivate_command,
   unknown_command,
+  test_command,
 } = require("./command_functions/index");
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
@@ -44,38 +45,38 @@ client.on("messageCreate", (message) => {
   // help command
   if (command === COMMANDS.getCommands) {
     help_command(message, command, args);
-    // ranks command
-  } else if (command === COMMANDS.getAllRanks) {
-    ranks_command(message, command, args);
-    // rank command
-  } else if (command === COMMANDS.getRankPlayer) {
-    rank_command(message, command, args);
-    // credentials command
-  } else if (command === COMMANDS.getSmurfCred) {
-    credentials_command(message, command, argsAsString);
-    // setSmurf command
-  } else if (command === COMMANDS.setSmurf) {
-    setSmurf_command(message, command, argsAsString);
-    // makePublic command
-  } else if (command === COMMANDS.makePublic) {
-    makePublic_command(message, command, argsAsString);
-    // makePrivate command
-  } else if (command === COMMANDS.makePrivate) {
-    makePrivate_command(message, command, argsAsString);
-    // unknown command
-  } else {
-    unknown_command(message, command);
   }
-
-  if (process.env.BOT_ENV === "DEV") {
-    if (command === "Test") {
-      message.reply(
-        `commandBody: ${commandBody} args: ${args} command: ${command} argsAsString: ${argsAsString}`
-      );
-      message.reply(
-        "from: " + message.author.username + ", id: " + message.author.id
-      );
-    }
+  // ranks command
+  else if (command === COMMANDS.getAllRanks) {
+    ranks_command(message, command, args);
+  }
+  // rank command
+  else if (command === COMMANDS.getRankPlayer) {
+    rank_command(message, command, args);
+  }
+  // credentials command
+  else if (command === COMMANDS.getSmurfCred) {
+    credentials_command(message, command, argsAsString);
+  }
+  // setSmurf command
+  else if (command === COMMANDS.setSmurf) {
+    setSmurf_command(message, command, argsAsString);
+  }
+  // makePublic command
+  else if (command === COMMANDS.makePublic) {
+    makePublic_command(message, command, argsAsString);
+  }
+  // makePrivate command
+  else if (command === COMMANDS.makePrivate) {
+    makePrivate_command(message, command, argsAsString);
+  }
+  // test command
+  else if (command === COMMANDS.test && process.env.BOT_ENV === "DEV") {
+    test_command(message, command, commandBody, args, argsAsString);
+  }
+  // unknown command
+  else {
+    unknown_command(message, command);
   }
 });
 
