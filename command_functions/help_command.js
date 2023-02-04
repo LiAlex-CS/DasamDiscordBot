@@ -11,11 +11,8 @@ const help_command = (message, command, args) => {
   if (!args.length) {
     message.reply(ALL_COMMANDS);
   } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
-    for (let key in COMMANDS) {
-      if (COMMANDS[key] === args[0]) {
-        message.reply(COMMAND_DESCRIPTIONS[key]);
-      }
-    }
+    const key = Object.keys(COMMANDS).find((key) => COMMANDS[key] === args[0]);
+    message.reply(COMMAND_DESCRIPTIONS[key]);
   } else {
     message.reply(
       `"${command} ` +
