@@ -8,6 +8,7 @@ const COMMANDS = {
   setSmurf: "setSmurf",
   makePublic: "makePublic",
   makePrivate: "makePrivate",
+  test: "test",
 };
 
 const ALL_COMMANDS =

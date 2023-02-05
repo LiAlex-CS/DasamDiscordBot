@@ -1,4 +1,4 @@
-const MOCK_VAL_API_RESP = {
+const MOCK_VAL_API_RESPS = {
   ranked_data_success: {
     status: 200,
     data: {
@@ -24,4 +24,15 @@ const MOCK_VAL_API_RESP = {
   },
 };
 
-module.exports = { MOCK_VAL_API_RESP };
+const MOCK_COMMANDS = {
+  command_array: ["rank", "nugnug", "6135"],
+  command_string: "rank nugnug 6135",
+  help_command: {
+    command: "help",
+    no_args: [],
+    valid_args: ["help"],
+    invalid_args: ["test", "help"],
+  },
+};
+
+module.exports = { MOCK_VAL_API_RESPS, MOCK_COMMANDS };
