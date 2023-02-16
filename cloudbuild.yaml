@@ -1,6 +1,14 @@
 steps:
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: ["app", "deploy"]
-options:
-  logging: CLOUD_LOGGING_ONLY
-timeout: "1600s"
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us.gcr.io/dasam-discord-bot/dasamdiscordbot:$SHORT_SHA",
+        ".",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "us.gcr.io/dasam-discord-bot/dasamdiscordbot:$SHORT_SHA"]
+# options:
+#   logging: CLOUD_LOGGING_ONLY
+# timeout: "1600s"

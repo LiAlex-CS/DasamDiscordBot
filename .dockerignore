@@ -1,4 +1,10 @@
-node_modules
+#files
 .env
 env.list
-gcp-service-account-key.json
+
+#directories
+tests
+node_modules
+.vscode
+.github
+.git
