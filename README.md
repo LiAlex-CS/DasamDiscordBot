@@ -27,7 +27,7 @@ _Ensure you have > node v16.x and npm installed on your machine._
 
 _if you are running an instance, please indicate it in the general text channel._
 
-1. cd into the root directory of the project.
+1. `cd` into the root directory of the project.
 
 2. Run `node index.js`.
 
