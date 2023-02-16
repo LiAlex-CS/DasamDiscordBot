@@ -1,4 +1,5 @@
 require("dotenv").config();
+const http = require("http");
 const { ServerApiVersion } = require("./data/mongoDb");
 const config = require("./token");
 
@@ -81,3 +82,9 @@ client.on("messageCreate", (message) => {
 });
 
 client.login(config.BOT_TOKEN);
+
+const server = http.createServer((req, res) => {
+  res.end("Dasam Discord Bot");
+});
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => console.log("listening"));
