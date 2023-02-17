@@ -7,6 +7,10 @@ const {
 const { getAccounts } = require("../data/mongoDb");
 
 const { getRankedDataByPUUIDs } = require("../fetching/fetching");
+const {
+  generateLoadingTime,
+  removeLoadingInstance,
+} = require("../fetching/loading");
 
 const { STATUS_CODES } = require("../constants/status_codes");
 
@@ -20,8 +24,10 @@ const {
 } = require("../services");
 
 const ranks_command = (message, command, args) => {
+  let dataLoading = null;
   if (args.length <= 2) {
     let reply = RANKS_INTRO;
+    dataLoading = generateLoadingTime(message);
     getAccounts()
       .then((accountData, err) => {
         if (err) {
@@ -29,6 +35,7 @@ const ranks_command = (message, command, args) => {
         } else {
           getRankedDataByPUUIDs(accountData.map((user) => user.puuid)).then(
             (rankedData, err) => {
+              removeLoadingInstance(dataLoading);
               if (
                 !checkArrayRespStatusMatch(rankedData, STATUS_CODES.ok) ||
                 err
@@ -95,6 +102,7 @@ const ranks_command = (message, command, args) => {
 
                   if (!hasError) {
                     updateNameAndTag(rankedData, (err) => {
+                      removeLoadingInstance(dataLoading);
                       message.reply("Error: " + err.message);
                     });
                   }
@@ -105,6 +113,7 @@ const ranks_command = (message, command, args) => {
         }
       })
       .catch((err) => {
+        removeLoadingInstance(dataLoading);
         message.reply("Error: " + err.message);
       });
   } else {
