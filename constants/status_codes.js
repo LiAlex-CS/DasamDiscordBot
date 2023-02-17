@@ -14,7 +14,11 @@ const STATUS_CODE_MESSAGES = {
   MongoDBApiDown: "The MongoDB API is currently down, please try again later.",
 };
 
+const LOADING_MESSAGE =
+  "Please wait a few moments as we get the data for you ...";
+
 module.exports = {
   STATUS_CODES,
   STATUS_CODE_MESSAGES,
+  LOADING_MESSAGE,
 };
