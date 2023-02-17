@@ -35,15 +35,14 @@ const ranks_command = (message, command, args) => {
         } else {
           getRankedDataByPUUIDs(accountData.map((user) => user.puuid)).then(
             (rankedData, err) => {
+              removeLoadingInstance(dataLoading);
               if (
                 !checkArrayRespStatusMatch(rankedData, STATUS_CODES.ok) ||
                 err
               ) {
-                removeLoadingInstance(dataLoading);
                 message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
               }
               if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
-                removeLoadingInstance(dataLoading);
                 message.reply(
                   args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
                 );
@@ -52,7 +51,6 @@ const ranks_command = (message, command, args) => {
                 (!JSONHasKey(args[0], RANK_EMOJIS) ||
                   !checkValidTierNum(args[1]))
               ) {
-                removeLoadingInstance(dataLoading);
                 message.reply(
                   args[0] +
                     " " +
@@ -62,7 +60,6 @@ const ranks_command = (message, command, args) => {
                 );
               } else {
                 if (args[0] === "Radiant" && args.length !== 1) {
-                  removeLoadingInstance(dataLoading);
                   message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
                 } else {
                   let hasError = false;
@@ -101,7 +98,6 @@ const ranks_command = (message, command, args) => {
                     reply = COMMAND_ERRORS.getAllRanks_noAccounts;
                   }
 
-                  removeLoadingInstance(dataLoading);
                   message.reply(reply);
 
                   if (!hasError) {
@@ -121,7 +117,6 @@ const ranks_command = (message, command, args) => {
         message.reply("Error: " + err.message);
       });
   } else {
-    removeLoadingInstance(dataLoading);
     message.reply(
       `"${command} ` +
         stringArrToString(args) +
