@@ -9,6 +9,3 @@ steps:
       ]
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "us.gcr.io/dasam-discord-bot/dasamdiscordbot:$SHORT_SHA"]
-# options:
-#   logging: CLOUD_LOGGING_ONLY
-# timeout: "1600s"
