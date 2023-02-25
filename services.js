@@ -29,7 +29,7 @@ const stringArrToString = (strArr) => {
   return strArr.reduce((prev, newVal) => prev + " " + newVal);
 };
 
-const justify_content_apart = (strArr, totalLength) => {
+const justifyContentApart = (strArr, totalLength) => {
   const totalLengthWithoutSpaces = strArr.reduce((prev, newVal) => {
     const prevLength = prev ? prev.length : 0;
     return prevLength + newVal.length;
@@ -80,11 +80,11 @@ const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
       reply =
         reply +
         (accountData[index].private
-          ? `\n${rankEmoji}  ${justify_content_apart(
+          ? `\n${rankEmoji}  ${justifyContentApart(
               [`**${newData.data.currenttierpatched}**`, " "],
               30
             )}:lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
-          : `\n${rankEmoji}  ${justify_content_apart(
+          : `\n${rankEmoji}  ${justifyContentApart(
               [`**${newData.data.currenttierpatched}**`, " "],
               30
             )}:unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
@@ -202,7 +202,7 @@ module.exports = {
   getModifiedArguments,
   checkValidTierNum,
   rankSpecificity,
-  justify_content_apart,
+  justifyContentApart,
   getRankFromRankAndTier,
   checkArrayRespStatusMatch,
   errorRespToErrorMessage,
