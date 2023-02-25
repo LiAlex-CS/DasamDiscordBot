@@ -43,4 +43,33 @@ describe("Tests for services.js", () => {
       expect(result).toBe(commandStr);
     });
   });
+
+  describe("justifyContentApart", () => {
+    test("Should space string out apart", () => {
+      const testArray = ["first", "second"];
+      const totalSpace = 30;
+      const spacedString = services.justifyContentApart(testArray, totalSpace);
+
+      expect(spacedString.length).toBe(totalSpace);
+      expect(spacedString.startsWith(testArray[0])).toBe(true);
+      expect(spacedString.endsWith(testArray[1])).toBe(true);
+    });
+
+    test("Should return undefined if strArr is not of lenght 2", () => {
+      const testArray1 = ["first", "second", "third"];
+      const testArray2 = ["first"];
+      const totalSpace = 30;
+      const spacedString1 = services.justifyContentApart(
+        testArray1,
+        totalSpace
+      );
+      const spacedString2 = services.justifyContentApart(
+        testArray2,
+        totalSpace
+      );
+
+      expect(spacedString1).toBe(undefined);
+      expect(spacedString2).toBe(undefined);
+    });
+  });
 });
