@@ -5,7 +5,7 @@ const {
 } = require("../constants/commands");
 
 const { getAccounts } = require("../data/mongoDb");
-
+const { ranksReaction_command } = require("./ranks_reaction_command");
 const { getRankedDataByPUUIDs } = require("../fetching/fetching");
 const {
   generateLoadingTime,
@@ -13,14 +13,16 @@ const {
 } = require("../fetching/loading");
 
 const { STATUS_CODES } = require("../constants/status_codes");
+const { REGION_INDICATOR_SYMBOLS } = require("../constants/commands");
 
 const {
   stringArrToString,
   updateNameAndTag,
   JSONHasKey,
   checkValidTierNum,
-  rankSpecificity,
+  mmrDataToString,
   checkArrayRespStatusMatch,
+  filterByRankAndTier,
 } = require("../services");
 
 const ranks_command = (message, command, args) => {
@@ -81,24 +83,39 @@ const ranks_command = (message, command, args) => {
                   const sortedCombinedData = combinedData.sort(
                     (a, b) => b.rankedData.data.elo - a.rankedData.data.elo
                   );
-                  const sortedAccountData = sortedCombinedData.map(
+
+                  const filteredData = filterByRankAndTier(
+                    sortedCombinedData,
+                    args[0],
+                    args[1]
+                  );
+
+                  const sortedFilteredAccountData = filteredData.map(
                     (data) => data.accountData
                   );
-                  const sortedRankedData = sortedCombinedData.map(
+                  const sortedFilteredRankedData = filteredData.map(
                     (data) => data.rankedData
                   );
+
                   reply =
                     reply +
-                    rankSpecificity(args, sortedRankedData, sortedAccountData);
+                    mmrDataToString(
+                      sortedFilteredRankedData,
+                      sortedFilteredAccountData,
+                      Object.keys(REGION_INDICATOR_SYMBOLS)
+                    );
 
-                  if (
-                    rankSpecificity(args, sortedRankedData, sortedAccountData)
-                      .length === 0
-                  ) {
+                  if (filteredData.length === 0) {
                     reply = COMMAND_ERRORS.getAllRanks_noAccounts;
                   }
 
-                  message.reply(reply);
+                  message.reply(reply).then((reaction) => {
+                    ranksReaction_command(
+                      reaction,
+                      message,
+                      sortedFilteredAccountData
+                    );
+                  });
 
                   if (!hasError) {
                     updateNameAndTag(rankedData, (err) => {

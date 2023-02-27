@@ -105,6 +105,29 @@ const RANK_EMOJIS = {
   Error: ":x:",
 };
 
+const REGION_INDICATOR_SYMBOLS = {
+  "🇦": 0,
+  "🇧": 1,
+  "🇨": 2,
+  "🇩": 3,
+  "🇪": 4,
+  "🇫": 5,
+  "🇬": 6,
+  "🇭": 7,
+  "🇮": 8,
+  "🇯": 9,
+  "🇰": 10,
+  "🇱": 11,
+  "🇲": 12,
+  "🇳": 13,
+  "🇴": 14,
+  "🇵": 15,
+  "🇶": 16,
+  "🇷": 17,
+  "🇸": 18,
+  "🇹": 19,
+};
+
 module.exports = {
   PREFIX,
   COMMANDS,
@@ -118,4 +141,5 @@ module.exports = {
   SET_SMURF_PRIVATE_SUCCESS,
   RANK_EMOJIS,
   ACCOUNT_UPDATE_SUCCESS,
+  REGION_INDICATOR_SYMBOLS,
 };
