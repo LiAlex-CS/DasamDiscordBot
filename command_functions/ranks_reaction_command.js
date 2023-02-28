@@ -5,6 +5,8 @@ const {
 
 const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
   const MAX_REACTION_LIMIT = 20;
+  const REACTION_COLLECTION_TIME = 300000;
+
   const numReactions =
     ranksAccountData.length > MAX_REACTION_LIMIT
       ? MAX_REACTION_LIMIT
@@ -25,7 +27,7 @@ const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
   };
 
   const collector = ranksMessage.createReactionCollector({
-    time: 300000,
+    time: REACTION_COLLECTION_TIME,
   });
 
   collector.on("collect", (reaction, user) => {
