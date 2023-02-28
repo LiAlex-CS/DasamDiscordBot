@@ -1,4 +1,7 @@
-const { REGION_INDICATOR_SYMBOLS } = require("../constants/commands");
+const {
+  REGION_INDICATOR_SYMBOLS,
+  COMMAND_ERRORS,
+} = require("../constants/commands");
 
 const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
   const MAX_REACTION_LIMIT = 20;
@@ -30,9 +33,15 @@ const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
       const userInfo =
         ranksAccountData[REGION_INDICATOR_SYMBOLS[reaction.emoji.name]];
 
-      message.reply(
-        `For account: ${userInfo.name} #${userInfo.tag}, Username: ${userInfo.username} Password: ${userInfo.password}`
-      );
+      if (userInfo.private) {
+        message.reply(
+          `User: ${userInfo.name} #${userInfo.tag} ${COMMAND_ERRORS.getSmurfCred_privateAccount}`
+        );
+      } else {
+        message.reply(
+          `For account: ${userInfo.name} #${userInfo.tag}, Username: ${userInfo.username} Password: ${userInfo.password}`
+        );
+      }
     }
   });
 };
