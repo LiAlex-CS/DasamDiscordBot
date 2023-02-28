@@ -17,11 +17,12 @@ const makePublic_command = (message, command, argsAsString) => {
       (account, successSaveCallback) => {
         if (!account) {
           message.reply(
-            `${modifiedArgs[0]} #${modifiedArgs[1]} ` + COMMAND_ERRORS.not_in_db
+            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
+              COMMAND_ERRORS.not_in_db
           );
         } else if (!account.private) {
           message.reply(
-            `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
               COMMAND_ERRORS.makePublic_already_public
           );
         } else {

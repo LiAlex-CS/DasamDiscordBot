@@ -34,7 +34,7 @@ const COMMAND_ERRORS = {
   getSmurfCred:
     'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
   getSmurfCred_privateAccount:
-    "is a private account, you cannot access the credentials of this account. Public accounts are labeled in yellow, while private accounts are labeled in white.",
+    "is a private account, you cannot access the credentials of this account. Public accounts are labeled in blue, while private accounts are labeled in white.",
   setSmurf:
     'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
   setSmurf_nonUnique_account:
@@ -56,9 +56,9 @@ const COMMAND_ERRORS = {
   not_in_db:
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
   makePublic_already_public:
-    'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in yellow, while private accounts are labeled in white.',
+    'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
   makePrivate_already_private:
-    'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in yellow, while private accounts are labeled in white.',
+    'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
 };
 
 const COMMAND_DESCRIPTIONS = {

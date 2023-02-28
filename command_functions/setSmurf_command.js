@@ -37,7 +37,7 @@ const setSmurf_command = (message, command, argsAsString) => {
                 },
                 (name, tag) => {
                   message.reply(
-                    `${name} #${tag} ${
+                    `**${name} #${tag}** ${
                       private
                         ? SET_SMURF_PRIVATE_SUCCESS
                         : SET_SMURF_PUBLIC_SUCCESS
@@ -47,7 +47,7 @@ const setSmurf_command = (message, command, argsAsString) => {
               );
             } else {
               message.reply(
-                `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+                `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
                   COMMAND_ERRORS.setSmurf_nonUnique_account
               );
             }
@@ -64,7 +64,7 @@ const setSmurf_command = (message, command, argsAsString) => {
           parseInt(err.status, 10) === STATUS_CODES.internalServerError
         ) {
           message.reply(
-            `${modifiedArgs[0]} #${modifiedArgs[1]} ` +
+            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
               COMMAND_ERRORS.setSmurf_privateAccount
           );
         } else {

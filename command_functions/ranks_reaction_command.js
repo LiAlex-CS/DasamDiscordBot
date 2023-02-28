@@ -35,7 +35,7 @@ const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
 
       if (userInfo.private) {
         message.reply(
-          `User: ${userInfo.name} #${userInfo.tag} ${COMMAND_ERRORS.getSmurfCred_privateAccount}`
+          `User: **${userInfo.name} #${userInfo.tag}** ${COMMAND_ERRORS.getSmurfCred_privateAccount}`
         );
       } else {
         message.reply(
