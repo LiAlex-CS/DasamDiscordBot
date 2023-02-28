@@ -21,7 +21,9 @@ const {
   test_command,
 } = require("./command_functions/index");
 
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
+const client = new Discord.Client({
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
+});
 
 mongoose.set("strictQuery", false);
 mongoose.connect(uri, {

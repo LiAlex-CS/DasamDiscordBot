@@ -43,9 +43,9 @@ const rank_command = (message, command, args) => {
           parseInt(err.status, 10) === STATUS_CODES.internalServerError
         ) {
           message.reply(
-            `"${stringArrToString(args.slice(0, -1))} #${
+            `"**${stringArrToString(args.slice(0, -1))} #${
               args[args.length - 1]
-            }" ` + COMMAND_ERRORS.getRankPlayer_privateAccount
+            }**" ` + COMMAND_ERRORS.getRankPlayer_privateAccount
           );
         } else {
           message.reply("error: " + err.message);

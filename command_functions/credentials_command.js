@@ -22,7 +22,7 @@ const credentials_command = (message, command, argsAsString) => {
         if (Object.keys(data).length) {
           if (data.private) {
             message.reply(
-              `User: ${name} #${tag} ` +
+              `User: **${name} #${tag}** ` +
                 COMMAND_ERRORS.getSmurfCred_privateAccount
             );
           } else {
@@ -31,7 +31,9 @@ const credentials_command = (message, command, argsAsString) => {
             );
           }
         } else {
-          message.reply(`User: ${name} #${tag} ` + COMMAND_ERRORS.getSmurfCred);
+          message.reply(
+            `User: **${name} #${tag}** ` + COMMAND_ERRORS.getSmurfCred
+          );
         }
       })
       .catch((err) => {

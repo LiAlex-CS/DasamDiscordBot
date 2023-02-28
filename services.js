@@ -55,7 +55,7 @@ const getRankFromRankAndTier = (rankAndTier) => {
   })[0];
 };
 
-const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
+const mmrDataToString = (dataArr, accountData, regionalIndicatorEmojis) => {
   let reply = "";
 
   const startingPrivateText = "```\n";
@@ -76,44 +76,24 @@ const mmrDataToString = (dataArr, accountData, rankFilter, tierFilter) => {
 
     const rankEmoji = RANK_EMOJIS[rank];
 
-    const concatAccount = () => {
-      reply =
-        reply +
-        (accountData[index].private
-          ? `\n${rankEmoji}  ${justifyContentApart(
-              [`**${newData.data.currenttierpatched}**`, " "],
-              30
-            )}:lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
-          : `\n${rankEmoji}  ${justifyContentApart(
-              [`**${newData.data.currenttierpatched}**`, " "],
-              30
-            )}:unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
-    };
-
-    if (rankFilter && tierFilter) {
-      if (rankFilter + " " + tierFilter === newData.data.currenttierpatched) {
-        concatAccount();
-      }
-    } else if (rankFilter) {
-      if (newData.data.currenttierpatched.includes(rankFilter)) {
-        concatAccount();
-      }
-    } else {
-      concatAccount();
-    }
+    reply =
+      reply +
+      (accountData[index].private
+        ? `\n${
+            regionalIndicatorEmojis[index]
+          }   ${rankEmoji}  ${justifyContentApart(
+            [`**${newData.data.currenttierpatched}**`, " "],
+            30
+          )}:lock: Private ${startingPrivateText}${rankData}${endingPrivateText}`
+        : `\n${
+            regionalIndicatorEmojis[index]
+          }   ${rankEmoji}  ${justifyContentApart(
+            [`**${newData.data.currenttierpatched}**`, " "],
+            30
+          )}:unlock: Public ${startingPublicText}${rankData}${endingPublicText}`);
   });
 
   return reply;
-};
-
-const rankSpecificity = (args, data, accountData) => {
-  if (args.length === 2) {
-    return mmrDataToString(data, accountData, args[0], args[1]);
-  } else if (args.length === 1) {
-    return mmrDataToString(data, accountData, args[0]);
-  } else {
-    return mmrDataToString(data, accountData);
-  }
 };
 
 const mmrDataSingleToString = (data) => {
@@ -139,6 +119,29 @@ const updateNameAndTag = (dataArr, errorCB) => {
     .catch((err) => {
       errorCB(err);
     });
+};
+
+const filterByRankAndTier = (accountRankDataArr, rankFilter, tierFilter) => {
+  if (!rankFilter && !tierFilter) {
+    return accountRankDataArr;
+  }
+
+  let filteredArr = accountRankDataArr.filter((account) => {
+    const rankAndTier = account.rankedData.data.currenttierpatched;
+    const rank = rankAndTier.split(" ")[0];
+
+    return rank === rankFilter;
+  });
+  if (tierFilter) {
+    filteredArr = filteredArr.filter((account) => {
+      const rankAndTier = account.rankedData.data.currenttierpatched;
+      const tier = rankAndTier.split(" ")[1];
+
+      return tier == tierFilter;
+    });
+  }
+
+  return filteredArr;
 };
 
 const getModifiedArguments = (commandBody) => {
@@ -201,9 +204,9 @@ module.exports = {
   mmrDataSingleToString,
   getModifiedArguments,
   checkValidTierNum,
-  rankSpecificity,
   justifyContentApart,
   getRankFromRankAndTier,
   checkArrayRespStatusMatch,
   errorRespToErrorMessage,
+  filterByRankAndTier,
 };
