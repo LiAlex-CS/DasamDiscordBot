@@ -11,34 +11,42 @@ const { addToCollection, getAccountByPuuid } = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
 
-const { stringArrToString, getModifiedArguments } = require("../services");
+const {
+  stringArrToString,
+  getModifiedArguments,
+  removeHashtagFromTag,
+} = require("../services");
 
 const setSmurf_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
-    getUserData(modifiedArgs[0], modifiedArgs[1])
+    const name = modifiedArgs[0];
+    const tag = removeHashtagFromTag(modifiedArgs[1]);
+    const username = modifiedArgs.length === 4 ? modifiedArgs[2] : null;
+    const password = modifiedArgs.length === 4 ? modifiedArgs[3] : null;
+    getUserData(name, tag)
       .then((fetchData) => {
         if (parseInt(fetchData.status, 10) !== STATUS_CODES.ok) {
           throw fetchData;
         } else {
-          const private = !modifiedArgs[2] || !modifiedArgs[3];
+          const isPrivate = !username || !password;
 
           getAccountByPuuid(fetchData.data.puuid).then((data) => {
             if (!data) {
               addToCollection(
                 {
-                  name: modifiedArgs[0],
-                  tag: modifiedArgs[1],
+                  name: name,
+                  tag: tag,
                   puuid: fetchData.data.puuid,
-                  username: private ? null : modifiedArgs[2],
-                  password: private ? null : modifiedArgs[3],
-                  private: private,
+                  username: username,
+                  password: password,
+                  private: isPrivate,
                   creator_disc_id: message.author.id,
                 },
                 (name, tag) => {
                   message.reply(
                     `**${name} #${tag}** ${
-                      private
+                      isPrivate
                         ? SET_SMURF_PRIVATE_SUCCESS
                         : SET_SMURF_PUBLIC_SUCCESS
                     }`
@@ -47,7 +55,7 @@ const setSmurf_command = (message, command, argsAsString) => {
               );
             } else {
               message.reply(
-                `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
+                `**${name} #${tag}** ` +
                   COMMAND_ERRORS.setSmurf_nonUnique_account
               );
             }
@@ -55,17 +63,15 @@ const setSmurf_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
-          message.reply(
-            `${modifiedArgs[0]} and ${modifiedArgs[1]} ` +
-              COMMAND_ERRORS.setSmurf
-          );
-        } else if (
-          parseInt(err.status, 10) === STATUS_CODES.internalServerError
+        const errorStatus = parseInt(err.status, 10);
+        if (
+          errorStatus === STATUS_CODES.notFound ||
+          errorStatus == STATUS_CODES.clientError
         ) {
+          message.reply(`${name} and ${tag} ` + COMMAND_ERRORS.setSmurf);
+        } else if (errorStatus === STATUS_CODES.internalServerError) {
           message.reply(
-            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
-              COMMAND_ERRORS.setSmurf_privateAccount
+            `**${name} #${tag}** ` + COMMAND_ERRORS.setSmurf_privateAccount
           );
         } else {
           message.reply("Error: " + err.message);

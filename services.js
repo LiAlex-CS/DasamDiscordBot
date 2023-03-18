@@ -195,6 +195,13 @@ const errorRespToErrorMessage = (resp) => {
   return errorString;
 };
 
+const removeHashtagFromTag = (tag) => {
+  if (tag[0] == "#") {
+    return tag.substring(1);
+  }
+  return tag;
+};
+
 module.exports = {
   JSONHasValue,
   JSONHasKey,
@@ -209,4 +216,5 @@ module.exports = {
   checkArrayRespStatusMatch,
   errorRespToErrorMessage,
   filterByRankAndTier,
+  removeHashtagFromTag,
 };

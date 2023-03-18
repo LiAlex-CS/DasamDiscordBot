@@ -6,34 +6,35 @@ const {
 
 const { findOneByNameAndTagAndUpdate } = require("../data/mongoDb");
 
-const { stringArrToString, getModifiedArguments } = require("../services");
+const {
+  stringArrToString,
+  getModifiedArguments,
+  removeHashtagFromTag,
+} = require("../services");
 
 const makePublic_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 4) {
-    findOneByNameAndTagAndUpdate(
-      modifiedArgs[0],
-      modifiedArgs[1],
-      (account, successSaveCallback) => {
-        if (!account) {
-          message.reply(
-            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
-              COMMAND_ERRORS.not_in_db
-          );
-        } else if (!account.private) {
-          message.reply(
-            `**${modifiedArgs[0]} #${modifiedArgs[1]}** ` +
-              COMMAND_ERRORS.makePublic_already_public
-          );
-        } else {
-          account.username = modifiedArgs[2];
-          account.password = modifiedArgs[3];
-          account.private = false;
-          successSaveCallback();
-          message.reply(ACCOUNT_UPDATE_SUCCESS);
-        }
+    const name = modifiedArgs[0];
+    const tag = removeHashtagFromTag(modifiedArgs[1]);
+    const username = modifiedArgs[2];
+    const password = modifiedArgs[3];
+
+    findOneByNameAndTagAndUpdate(name, tag, (account, successSaveCallback) => {
+      if (!account) {
+        message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.not_in_db);
+      } else if (!account.private) {
+        message.reply(
+          `**${name} #${tag}** ` + COMMAND_ERRORS.makePublic_already_public
+        );
+      } else {
+        account.username = username;
+        account.password = password;
+        account.private = false;
+        successSaveCallback();
+        message.reply(ACCOUNT_UPDATE_SUCCESS);
       }
-    );
+    });
   } else {
     message.reply(
       `"${command}` +
