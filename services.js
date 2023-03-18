@@ -202,6 +202,22 @@ const removeHashtagFromTag = (tag) => {
   return tag;
 };
 
+const fixRank = (rank) => {
+  let lowerCaseRank = rank.toLowerCase();
+  const shortForms = {
+    plat: "platinum",
+    asc: "ascendant",
+    imm: "immortal",
+    rad: "radiant",
+  };
+  if (JSONHasKey(lowerCaseRank, shortForms)) {
+    lowerCaseRank = shortForms[lowerCaseRank];
+  }
+  return (
+    lowerCaseRankstring.charAt(0).toUpperCase() + lowerCaseRankstring.slice(1)
+  );
+};
+
 module.exports = {
   JSONHasValue,
   JSONHasKey,
@@ -217,4 +233,5 @@ module.exports = {
   errorRespToErrorMessage,
   filterByRankAndTier,
   removeHashtagFromTag,
+  fixRank,
 };

@@ -23,12 +23,15 @@ const {
   mmrDataToString,
   checkArrayRespStatusMatch,
   filterByRankAndTier,
+  fixRank,
 } = require("../services");
 
 const ranks_command = (message, command, args) => {
   let dataLoading = null;
   if (args.length <= 2) {
     let reply = RANKS_INTRO;
+    const rank = fixRank(args[0]);
+    const tier = args.length === 2 ? args[1] : null;
     dataLoading = generateLoadingTime(message);
     getAccounts()
       .then((accountData, err) => {
@@ -44,24 +47,23 @@ const ranks_command = (message, command, args) => {
               ) {
                 message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
               }
-              if (args.length == 1 && !JSONHasKey(args[0], RANK_EMOJIS)) {
+              if (args.length == 1 && !JSONHasKey(rank, RANK_EMOJIS)) {
                 message.reply(
-                  args[0] + " " + COMMAND_ERRORS.getAllRanks_invalidRank
+                  rank + " " + COMMAND_ERRORS.getAllRanks_invalidRank
                 );
               } else if (
                 args.length == 2 &&
-                (!JSONHasKey(args[0], RANK_EMOJIS) ||
-                  !checkValidTierNum(args[1]))
+                (!JSONHasKey(rank, RANK_EMOJIS) || !checkValidTierNum(tier))
               ) {
                 message.reply(
-                  args[0] +
+                  rank +
                     " " +
-                    args[1] +
+                    tier +
                     " " +
                     COMMAND_ERRORS.getAllRanks_invalidRankOrTier
                 );
               } else {
-                if (args[0] === "Radiant" && args.length !== 1) {
+                if (rank === "Radiant" && args.length !== 1) {
                   message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
                 } else {
                   let hasError = false;
@@ -86,8 +88,8 @@ const ranks_command = (message, command, args) => {
 
                   const filteredData = filterByRankAndTier(
                     sortedCombinedData,
-                    args[0],
-                    args[1]
+                    rank,
+                    tier
                   );
 
                   const sortedFilteredAccountData = filteredData.map(
