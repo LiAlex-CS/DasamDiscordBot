@@ -213,9 +213,7 @@ const fixRank = (rank) => {
   if (JSONHasKey(lowerCaseRank, shortForms)) {
     lowerCaseRank = shortForms[lowerCaseRank];
   }
-  return (
-    lowerCaseRankstring.charAt(0).toUpperCase() + lowerCaseRankstring.slice(1)
-  );
+  return lowerCaseRank.charAt(0).toUpperCase() + lowerCaseRank.slice(1);
 };
 
 module.exports = {
