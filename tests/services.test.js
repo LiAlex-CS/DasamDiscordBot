@@ -88,4 +88,36 @@ describe("Tests for services.js", () => {
       expect(tagWithoutHashtag).toBe(tag);
     });
   });
+
+  describe("fixRank", () => {
+    test("Should fix rank to proper format", () => {
+      const rank = "silver";
+      const fixedRank = services.fixRank(rank);
+      const expectedRank = "Silver";
+
+      expect(fixedRank).toBe(expectedRank);
+    });
+    test("Should convert shortform rank to properlly formatted rank", () => {
+      const rank1 = "plat";
+      const rank2 = "pLat";
+      const rank3 = "Rad";
+
+      const fixedRank1 = services.fixRank(rank1);
+      const fixedRank2 = services.fixRank(rank2);
+      const fixedRank3 = services.fixRank(rank3);
+
+      const expectedRankPlat = "Platinum";
+      const expectedRankRadiant = "Radiant";
+
+      expect(fixedRank1).toBe(expectedRankPlat);
+      expect(fixedRank2).toBe(expectedRankPlat);
+      expect(fixedRank3).toBe(expectedRankRadiant);
+    });
+    test("Should remain the same for already formatted rank", () => {
+      const rank = "Gold";
+      const fixedRank = services.fixRank(rank);
+
+      expect(rank).toBe(fixedRank);
+    });
+  });
 });
