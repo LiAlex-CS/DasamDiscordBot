@@ -72,4 +72,20 @@ describe("Tests for services.js", () => {
       expect(spacedString2).toBe(undefined);
     });
   });
+
+  describe("removeHashtagFromTag", () => {
+    test("Should remove # from tag", () => {
+      const tag = "#NA1";
+      const tagWithoutHashtag = services.removeHashtagFromTag(tag);
+      const expectedTag = "NA1";
+
+      expect(tagWithoutHashtag).toBe(expectedTag);
+    });
+    test("Should not change tag", () => {
+      const tag = "NA1";
+      const tagWithoutHashtag = services.removeHashtagFromTag(tag);
+
+      expect(tagWithoutHashtag).toBe(tag);
+    });
+  });
 });
