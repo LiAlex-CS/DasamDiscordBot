@@ -13,12 +13,15 @@ const {
   stringArrToString,
   mmrDataSingleToString,
   getRankFromRankAndTier,
+  removeHashtagFromTag,
 } = require("../services");
 
 const rank_command = (message, command, args) => {
   if (args.length >= 2) {
     const dataLoading = generateLoadingTime(message);
-    getRankedData(stringArrToString(args.slice(0, -1)), args[args.length - 1])
+    const name = stringArrToString(args.slice(0, -1));
+    const tag = removeHashtagFromTag(args[args.length - 1]);
+    getRankedData(name, tag)
       .then((data, err) => {
         if (parseInt(data.status, 10) !== STATUS_CODES.ok || err) {
           throw data;
@@ -33,22 +36,21 @@ const rank_command = (message, command, args) => {
       })
       .catch((err) => {
         removeLoadingInstance(dataLoading);
-        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
-          message.reply(
-            `"${stringArrToString(args.slice(0, -1))} #${
-              args[args.length - 1]
-            }" ` + COMMAND_ERRORS.getRankPlayer
-          );
-        } else if (
-          parseInt(err.status, 10) === STATUS_CODES.internalServerError
+        const errorStatus = parseInt(err.status, 10);
+        if (
+          errorStatus === STATUS_CODES.notFound ||
+          errorStatus == STATUS_CODES.clientError
         ) {
           message.reply(
-            `"**${stringArrToString(args.slice(0, -1))} #${
-              args[args.length - 1]
-            }**" ` + COMMAND_ERRORS.getRankPlayer_privateAccount
+            `"**${name} #${tag}**" ` + COMMAND_ERRORS.getRankPlayer
+          );
+        } else if (errorStatus === STATUS_CODES.internalServerError) {
+          message.reply(
+            `"**${name} #${tag}**" ` +
+              COMMAND_ERRORS.getRankPlayer_privateAccount
           );
         } else {
-          message.reply("error: " + err.message);
+          message.reply("error: " + err.errors[0].message);
         }
       });
   } else {

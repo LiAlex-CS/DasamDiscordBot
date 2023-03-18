@@ -6,18 +6,24 @@ const {
 
 const { getAccountByNameAndTag } = require("../data/mongoDb");
 
-const { stringArrToString, getModifiedArguments } = require("../services");
+const {
+  stringArrToString,
+  getModifiedArguments,
+  removeHashtagFromTag,
+} = require("../services");
 
 const credentials_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length >= 2) {
     const name = stringArrToString(modifiedArgs.slice(0, -1));
-    const tag = modifiedArgs[modifiedArgs.length - 1];
+    const tag = removeHashtagFromTag(modifiedArgs[modifiedArgs.length - 1]);
 
     getAccountByNameAndTag(name, tag)
       .then((data) => {
         if (!data) {
-          throw data;
+          throw {
+            status: STATUS_CODES.notFound,
+          };
         }
         if (Object.keys(data).length) {
           if (data.private) {
@@ -27,7 +33,7 @@ const credentials_command = (message, command, argsAsString) => {
             );
           } else {
             message.reply(
-              `For account: ${name} #${tag}, Username: ${data.username} Password: ${data.password}`
+              `For account: **${name} #${tag}**, Username: ${data.username} Password: ${data.password}`
             );
           }
         } else {
@@ -37,7 +43,15 @@ const credentials_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        if (parseInt(err.status, 10) === STATUS_CODES.notFound) {
+        const errorStatus = parseInt(err.status, 10);
+        if (
+          errorStatus === STATUS_CODES.notFound ||
+          errorStatus === STATUS_CODES.clientError
+        ) {
+          message.reply(
+            `Account: "**${name} #${tag}**" ` + COMMAND_ERRORS.getSmurfCred
+          );
+        } else if (errorStatus === STATUS_CODES.internalServerError) {
           message.reply(STATUS_CODE_MESSAGES.MongoDBApiDown);
         }
       });
