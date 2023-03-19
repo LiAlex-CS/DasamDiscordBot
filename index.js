@@ -19,7 +19,10 @@ const {
   makePrivate_command,
   unknown_command,
   test_command,
+  no_command,
 } = require("./command_functions/index");
+
+const { formatMessage } = require("./services");
 
 const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
@@ -37,14 +40,13 @@ database.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
-  if (!message.content.startsWith(PREFIX)) return;
+  const commandAsArray = formatMessage(message.content);
+  if (!commandAsArray.length || commandAsArray[0] !== PREFIX) return;
 
-  const commandBody = message.content.slice(PREFIX.length);
-  const args = commandBody.split(" ");
+  const args = commandAsArray.slice(1);
+  const commandBody = args.join(" ");
   const command = args.shift();
-  const argsAsString = message.content.slice(
-    PREFIX.length + command.length + 1
-  );
+  const argsAsString = args.join(" ");
   // help command
   if (command === COMMANDS.getCommands) {
     help_command(message, command, args);
@@ -76,6 +78,10 @@ client.on("messageCreate", (message) => {
   // test command
   else if (command === COMMANDS.test && process.env.BOT_ENV === "DEV") {
     test_command(message, command, commandBody, args, argsAsString);
+  }
+  // no command
+  else if (command === undefined) {
+    no_command(message);
   }
   // unknown command
   else {
