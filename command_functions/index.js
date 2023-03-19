@@ -7,6 +7,7 @@ const { makePublic_command } = require("./makePublic_command");
 const { makePrivate_command } = require("./makePrivate_command");
 const { unknown_command } = require("./unknown_command");
 const { test_command } = require("./test_command");
+const { no_command } = require("./no_command");
 
 module.exports = {
   help_command,
@@ -18,4 +19,5 @@ module.exports = {
   makePrivate_command,
   unknown_command,
   test_command,
+  no_command,
 };

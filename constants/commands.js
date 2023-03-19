@@ -1,4 +1,4 @@
-const PREFIX = "$smurf ";
+const PREFIX = "$smurf";
 
 const COMMANDS = {
   getCommands: "help",

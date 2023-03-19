@@ -217,6 +217,10 @@ const fixRank = (rank) => {
   return lowerCaseRank.charAt(0).toUpperCase() + lowerCaseRank.slice(1);
 };
 
+const formatMessage = (command) => {
+  return command.split(" ").filter((str) => str !== "");
+};
+
 module.exports = {
   JSONHasValue,
   JSONHasKey,
@@ -233,4 +237,5 @@ module.exports = {
   filterByRankAndTier,
   removeHashtagFromTag,
   fixRank,
+  formatMessage,
 };
