@@ -119,5 +119,11 @@ describe("Tests for services.js", () => {
 
       expect(rank).toBe(fixedRank);
     });
+    test("Should return undefined if not rank given", () => {
+      const undefinedRank = undefined;
+      const fixedRank = services.fixRank(undefinedRank);
+
+      expect(fixedRank).toBe(undefined);
+    });
   });
 });
