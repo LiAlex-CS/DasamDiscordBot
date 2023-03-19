@@ -203,6 +203,7 @@ const removeHashtagFromTag = (tag) => {
 };
 
 const fixRank = (rank) => {
+  if (!rank) return;
   let lowerCaseRank = rank.toLowerCase();
   const shortForms = {
     plat: "platinum",
