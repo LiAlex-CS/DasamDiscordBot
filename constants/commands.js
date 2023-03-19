@@ -18,7 +18,7 @@ const ALL_COMMANDS =
   'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
-  'is a unknown command, type: "$smurf help" for a list of all commands or type: "$smurf help `<command>`" for a description of the command.';
+  'is a unknown command.\nType: "*$smurf help*" for a list of all commands or type: "*$smurf help `<command>`*" for a description of the command.';
 
 const COMMAND_ERRORS = {
   getCommands:
@@ -93,7 +93,7 @@ const ACCOUNT_UPDATE_SUCCESS =
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
 const HAS_SPACES_REMINDER =
-  'If any arguments have spaces, remember to add quotation marks around them. Ex. `<player name>: "nug nug"`.';
+  'If any arguments have spaces, remember to add quotation marks around them.\n\n__Example:__   `<player name>: "nug nug"`.';
 
 const RANK_EMOJIS = {
   Radiant: ":sparkles:",

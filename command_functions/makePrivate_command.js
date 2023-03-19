@@ -35,8 +35,8 @@ const makePrivate_command = (message, command, argsAsString) => {
     });
   } else {
     message.reply(
-      `"${command}` +
-        stringArrToString(args) +
+      `"${command} ` +
+        argsAsString +
         '" ' +
         COMMAND_ERRORS.makePrivate_invalidArgs
     );
