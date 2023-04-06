@@ -1,4 +1,5 @@
 const PREFIX = "$smurf";
+const PREFIX_DEV = "$smurf-d";
 
 const COMMANDS = {
   getCommands: "help",
@@ -133,6 +134,7 @@ const REGION_INDICATOR_SYMBOLS = {
 
 module.exports = {
   PREFIX,
+  PREFIX_DEV,
   COMMANDS,
   ALL_COMMANDS,
   UNKNOWN_COMMAND,

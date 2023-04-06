@@ -3,7 +3,7 @@ const http = require("http");
 const { ServerApiVersion } = require("./data/mongoDb");
 const config = require("./token");
 
-const { PREFIX, COMMANDS } = require("./constants/commands");
+const { PREFIX, COMMANDS, PREFIX_DEV } = require("./constants/commands");
 const { uri } = require("./constants/mongodb_consts");
 
 const mongoose = require("mongoose");
@@ -41,7 +41,15 @@ database.on("error", console.error.bind(console, "MongoDB connection error:"));
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
   const commandAsArray = formatMessage(message.content);
-  if (!commandAsArray.length || commandAsArray[0] !== PREFIX) return;
+
+  if (process.env.BOT_ENV === "DEV") {
+    if (
+      !commandAsArray.length ||
+      commandAsArray[0] !== PREFIX_DEV ||
+      message.author.id !== process.env.DISCORD_ID
+    )
+      return;
+  } else if (!commandAsArray.length || commandAsArray[0] !== PREFIX) return;
 
   const args = commandAsArray.slice(1);
   const commandBody = args.join(" ");
