@@ -13,7 +13,10 @@ The bot listens to `$smurf`. To get a list of all commands use `$smurf help`.
 ### SETTING UP THE BOT:
 
 _Ensure you have > node v16.x and npm installed on your machine._
+
 _All environment variables required for setup are listed in the `#environment-variables` discord channel._
+
+[This link](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) will help in setting up the `DISCORD_ID` environment variable.
 
 1. Clone bot to your machine using:
 
@@ -26,7 +29,8 @@ _All environment variables required for setup are listed in the `#environment-va
 
 ### STARTING THE BOT:
 
-_if you are running an instance, please indicate it in the general text channel._
+_If you are running an instance, please indicate it in the general text channel._
+
 _Please note, the bot is listening to `$smurf-d` for developer instances and not `$smurf`, like in production._
 
 1. `cd` into the root directory of the project.
