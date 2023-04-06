@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "if command -v nodemon; then nodemon; else echo \"Install nodemon for change watching and hot reload\" && node index.js; fi"
   },
   "author": "",
   "license": "ISC",
