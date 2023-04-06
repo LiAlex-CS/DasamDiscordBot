@@ -69,7 +69,7 @@ const COMMAND_DESCRIPTIONS = {
   getCommands:
     ':question: **help**: This command gives some support on using this discord bot.\nType: "*$smurf help*" for a list of all commands.\nType: "*$smurf help `<command>`*" for a description of the command.\n\n__Example:__```$smurf help ranks```',
   getAllRanks:
-    ':trophy: **ranks**: This command gives the ranks of all accounts within the database.\nType: "*$smurf ranks*" to get all accounts.\nType: "*$smurf ranks `<rank>`*" to get all accounts in a specific rank.\n\n__Example:__```$smurf ranks Silver```\nType: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.\n\n__Example:__```$smurf ranks Silver 1```',
+    ':trophy: **ranks**: This command gives the ranks of all accounts within the database.\nType: "*$smurf ranks*" to get all accounts.\nType: "*$smurf ranks `<rank>`*" to get all accounts in a specific rank.\n\n__Example:__```$smurf ranks Silver```\nType: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.\n\n__Example:__```$smurf ranks Silver 1```\nReact to the correlating emote ( :regional_indicator_a:,:regional_indicator_b:,:regional_indicator_c:, ... ) to get the credentials for a specific account.',
   getRankPlayer:
     ':medal: **rank**: This command gives the rank of the player requested.\nType: "*$smurf rank `<player name>` `<tagline>`*" to get the rank of your account.\n\n__Example:__```$smurf rank nugnug 6135```',
   getSmurfCred:

@@ -55,45 +55,48 @@ client.on("messageCreate", (message) => {
   const commandBody = args.join(" ");
   const command = args.shift();
   const argsAsString = args.join(" ");
-  // help command
-  if (command === COMMANDS.getCommands) {
-    help_command(message, command, args);
-  }
-  // ranks command
-  else if (command === COMMANDS.getAllRanks) {
-    ranks_command(message, command, args);
-  }
-  // rank command
-  else if (command === COMMANDS.getRankPlayer) {
-    rank_command(message, command, args);
-  }
-  // credentials command
-  else if (command === COMMANDS.getSmurfCred) {
-    credentials_command(message, command, argsAsString);
-  }
-  // setSmurf command
-  else if (command === COMMANDS.setSmurf) {
-    setSmurf_command(message, command, argsAsString);
-  }
-  // makePublic command
-  else if (command === COMMANDS.makePublic) {
-    makePublic_command(message, command, argsAsString);
-  }
-  // makePrivate command
-  else if (command === COMMANDS.makePrivate) {
-    makePrivate_command(message, command, argsAsString);
-  }
-  // test command
-  else if (command === COMMANDS.test && process.env.BOT_ENV === "DEV") {
-    test_command(message, command, commandBody, args, argsAsString);
-  }
-  // no command
-  else if (command === undefined) {
-    no_command(message);
-  }
-  // unknown command
-  else {
-    unknown_command(message, command);
+
+  switch (command) {
+    // Help Command - $smurf help
+    case COMMANDS.getCommands:
+      help_command(message, command, args);
+      break;
+    // Ranks Command - $smurf ranks
+    case COMMANDS.getAllRanks:
+      ranks_command(message, command, args);
+      break;
+    // Rank Command - $smurf rank
+    case COMMANDS.getRankPlayer:
+      rank_command(message, command, args);
+      break;
+    // Credentials Command - $smurf credentials
+    case COMMANDS.getSmurfCred:
+      credentials_command(message, command, argsAsString);
+      break;
+    // Set Smurf Command - $smurf setSmurf
+    case COMMANDS.setSmurf:
+      setSmurf_command(message, command, argsAsString);
+      break;
+    // Make Public Command - $smurf makePublic
+    case COMMANDS.makePublic:
+      makePublic_command(message, command, argsAsString);
+      break;
+    // Make Private Command - $smurf makePrivate
+    case COMMANDS.makePrivate:
+      makePrivate_command(message, command, argsAsString);
+      break;
+    // Test Command - $smurf test
+    case COMMANDS.test:
+      if (process.env.BOT_ENV === "DEV")
+        test_command(message, command, commandBody, args, argsAsString);
+      break;
+    // No Command - $smurf
+    case undefined:
+      no_command(message);
+      break;
+    // Unkown Command
+    default:
+      unknown_command(message, command);
   }
 });
 
@@ -103,4 +106,4 @@ const server = http.createServer((req, res) => {
   res.end("Dasam Discord Bot");
 });
 const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => console.log("listening"));
+server.listen(PORT, () => console.log("Listening..."));
