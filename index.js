@@ -89,6 +89,7 @@ client.on("messageCreate", (message) => {
     case COMMANDS.test:
       if (process.env.BOT_ENV === "DEV")
         test_command(message, command, commandBody, args, argsAsString);
+      else no_command(message);
       break;
     // No Command - $smurf
     case undefined:
