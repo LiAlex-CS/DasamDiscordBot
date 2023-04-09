@@ -29,13 +29,6 @@ const updateAccountTagByPuuid = async (puuid, newTag) => {
   doc.save();
 };
 
-const findOneByNameAndTagAndUpdate = async (name, tag, cb) => {
-  const account = await AccountDetails.findOne({ name: name, tag: tag });
-  cb(account, () => {
-    account.save();
-  });
-};
-
 const addToCollection = async (data, cb) => {
   const NewAccount = new AccountDetails({
     name: data.name,
@@ -82,7 +75,6 @@ module.exports = {
   getAccounts,
   getAccountByNameAndTag,
   getAccountByPuuid,
-  findOneByNameAndTagAndUpdate,
   updateAccountNameByPuuid,
   updateAccountTagByPuuid,
   addToCollection,
