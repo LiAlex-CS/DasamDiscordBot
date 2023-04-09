@@ -6,11 +6,7 @@ const {
 
 const { findOneByNameAndTagAndUpdate } = require("../data/mongoDb");
 
-const {
-  stringArrToString,
-  getModifiedArguments,
-  removeHashtagFromTag,
-} = require("../services");
+const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
 const makePublic_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
