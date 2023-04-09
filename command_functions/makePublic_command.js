@@ -24,7 +24,7 @@ const makePublic_command = async (message, command, argsAsString) => {
     if (!valAccount) {
       message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.not_in_db);
     } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
-      message.reply("not your smurf. not premeted");
+      message.reply(COMMAND_ERRORS.unauthorized_modification);
     } else if (!valAccount.private) {
       message.reply(
         `**${name} #${tag}** ` + COMMAND_ERRORS.makePublic_already_public
@@ -35,7 +35,7 @@ const makePublic_command = async (message, command, argsAsString) => {
       valAccount.private = false;
       valAccount.save((err) => {
         if (err) {
-          message.reply("error saving account status");
+          message.reply(COMMAND_ERRORS.error_saving);
         } else {
           message.reply(ACCOUNT_UPDATE_SUCCESS);
         }
