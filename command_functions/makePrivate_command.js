@@ -4,31 +4,41 @@ const {
   ACCOUNT_UPDATE_SUCCESS,
 } = require("../constants/commands");
 
-const { findOneByNameAndTagAndUpdate } = require("../data/mongoDb");
+const {
+  getAccountByNameAndTag,
+  isDiscordUserAdmin,
+} = require("../data/mongoDb");
 
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
-const makePrivate_command = (message, command, argsAsString) => {
+const makePrivate_command = async (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 2) {
     const name = modifiedArgs[0];
     const tag = removeHashtagFromTag(modifiedArgs[1]);
+    const valAccount = await getAccountByNameAndTag(name, tag);
+    const isAdmin = await isDiscordUserAdmin(message.author.id);
 
-    findOneByNameAndTagAndUpdate(name, tag, (account, successSaveCallback) => {
-      if (!account) {
-        message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.not_in_db);
-      } else if (account.private) {
-        message.reply(
-          `**${name} #${tag}** ` + COMMAND_ERRORS.makePrivate_already_private
-        );
-      } else {
-        account.username = null;
-        account.password = null;
-        account.private = true;
-        successSaveCallback();
-        message.reply(ACCOUNT_UPDATE_SUCCESS);
-      }
-    });
+    if (!valAccount) {
+      message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.not_in_db);
+    } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
+      message.reply("not your smurf. not premeted");
+    } else if (valAccount.private) {
+      message.reply(
+        `**${name} #${tag}** ` + COMMAND_ERRORS.makePrivate_already_private
+      );
+    } else {
+      valAccount.username = null;
+      valAccount.password = null;
+      valAccount.private = true;
+      valAccount.save((err) => {
+        if (err) {
+          message.reply("error saving account status");
+        } else {
+          message.reply(ACCOUNT_UPDATE_SUCCESS);
+        }
+      });
+    }
   } else {
     message.reply(
       `"${command} ` +
