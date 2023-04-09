@@ -69,6 +69,14 @@ const addDiscordUser = async (name, id, cb) => {
   }
 };
 
+const isDiscordUserAdmin = async (id) => {
+  const user = await DiscordUsers.findOne({ disc_id: id });
+  if (user) {
+    return user.isAdmin;
+  }
+  return false;
+};
+
 module.exports = {
   ServerApiVersion,
   getAccounts,
@@ -79,4 +87,5 @@ module.exports = {
   updateAccountTagByPuuid,
   addToCollection,
   addDiscordUser,
+  isDiscordUserAdmin,
 };
