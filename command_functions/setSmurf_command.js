@@ -7,15 +7,15 @@ const {
 
 const { STATUS_CODES } = require("../constants/status_codes");
 
-const { addToCollection, getAccountByPuuid } = require("../data/mongoDb");
+const {
+  addToCollection,
+  getAccountByPuuid,
+  addDiscordUser,
+} = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
 
-const {
-  stringArrToString,
-  getModifiedArguments,
-  removeHashtagFromTag,
-} = require("../services");
+const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
 const setSmurf_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
@@ -43,14 +43,25 @@ const setSmurf_command = (message, command, argsAsString) => {
                   private: isPrivate,
                   creator_disc_id: message.author.id,
                 },
-                (name, tag) => {
-                  message.reply(
-                    `**${name} #${tag}** ${
-                      isPrivate
-                        ? SET_SMURF_PRIVATE_SUCCESS
-                        : SET_SMURF_PUBLIC_SUCCESS
-                    }`
-                  );
+                (err, name, tag) => {
+                  if (err) {
+                    message.reply(COMMAND_ERRORS.error_saving_val_account);
+                  } else {
+                    message.reply(
+                      `**${name} #${tag}** ${
+                        isPrivate
+                          ? SET_SMURF_PRIVATE_SUCCESS
+                          : SET_SMURF_PUBLIC_SUCCESS
+                      }`
+                    );
+                    addDiscordUser(message.author.id, (err) => {
+                      if (err) {
+                        message.reply(
+                          COMMAND_ERRORS.error_saving_discord_account
+                        );
+                      }
+                    });
+                  }
                 }
               );
             } else {

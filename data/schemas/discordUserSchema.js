@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const DiscordUserSchema = new Schema(
   {
     disc_id: { type: String, required: true },
-    name: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: false },
   },
   { collection: DISCORD_USER_COLLECTION }

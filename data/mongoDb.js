@@ -29,7 +29,7 @@ const updateAccountTagByPuuid = async (puuid, newTag) => {
   doc.save();
 };
 
-const addToCollection = async (data, cb) => {
+const addToCollection = async (data, savingCallback) => {
   const NewAccount = new AccountDetails({
     name: data.name,
     tag: data.tag,
@@ -41,23 +41,19 @@ const addToCollection = async (data, cb) => {
   });
 
   NewAccount.save((err, account) => {
-    if (err) {
-      cb(err);
-    }
-    cb(account.name, account.tag);
+    savingCallback(err, account.name, account.tag);
   });
 };
 
-const addDiscordUser = async (name, id, cb) => {
+const addDiscordUser = async (id, savingCallback) => {
   const found = await DiscordUsers.findOne({ disc_id: id });
   if (!found) {
     const newDiscordUser = new DiscordUsers({
-      name: name,
       disc_id: id,
       isAdmin: false,
     });
     newDiscordUser.save((err) => {
-      if (err) cb(err);
+      savingCallback(err);
     });
   }
 };

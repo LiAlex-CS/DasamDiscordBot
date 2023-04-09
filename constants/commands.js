@@ -65,7 +65,10 @@ const COMMAND_ERRORS = {
     'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
   unauthorized_modification:
     "This is not your smurf account, you cannot change the status of this account.",
-  error_saving: ":x: There was an error saving these updates.",
+  error_saving_val_account:
+    ":x: There was an error saving these account updates.",
+  error_saving_discord_account:
+    ":x: There was an error saving discord information to the database.",
 };
 
 const COMMAND_DESCRIPTIONS = {

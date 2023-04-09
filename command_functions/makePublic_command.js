@@ -35,7 +35,7 @@ const makePublic_command = async (message, command, argsAsString) => {
       valAccount.private = false;
       valAccount.save((err) => {
         if (err) {
-          message.reply(COMMAND_ERRORS.error_saving);
+          message.reply(COMMAND_ERRORS.error_saving_val_account);
         } else {
           message.reply(ACCOUNT_UPDATE_SUCCESS);
         }
