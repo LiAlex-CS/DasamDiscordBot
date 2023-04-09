@@ -46,7 +46,8 @@ client.on("messageCreate", (message) => {
     if (
       !commandAsArray.length ||
       commandAsArray[0] !== PREFIX_DEV ||
-      message.author.id !== process.env.DISCORD_ID
+      (message.author.id !== process.env.DISCORD_ID &&
+        process.env.ALLOW_PUBLIC_ACCESS === "FALSE")
     )
       return;
   } else if (!commandAsArray.length || commandAsArray[0] !== PREFIX) return;
