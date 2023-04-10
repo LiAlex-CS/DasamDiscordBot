@@ -6,7 +6,7 @@ const COMMANDS = {
   getAllRanks: "ranks",
   getRankPlayer: "rank",
   getSmurfCred: "credentials",
-  setSmurf: "setSmurf",
+  addSmurf: "addSmurf",
   makePublic: "makePublic",
   makePrivate: "makePrivate",
   test: "test",
@@ -16,7 +16,7 @@ const BOT_DESCRIPTION =
   ":wave:   Hi, Do you need a Valorant smurf? The **DasamRankBot** gives you access to all the Dasam smurf accounts and tracks their ranks. To get started, type:\n ```$smurf ranks```\n to get all the ranks of the Dasam accounts, and find an account for you to use. Type:\n ```$smurf help```\n to checkout all the other functions of the bot such as setting your own personal smurfs, and finding the rank of any Valorant account.";
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>`\n:pencil2: **setSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command.\nType: "*$smurf help*" for a list of all commands or type: "*$smurf help `<command>`*" for a description of the command.';
@@ -39,19 +39,19 @@ const COMMAND_ERRORS = {
     'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
   getSmurfCred_privateAccount:
     "is a private account, you cannot access the credentials of this account. Public accounts are labeled in blue, while private accounts are labeled in white.",
-  setSmurf:
-    'are not valid player name and tagline, to set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
-  setSmurf_nonUnique_account:
+  addSmurf:
+    'are not valid player name and tagline, to set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
+  addSmurf_nonUnique_account:
     'is already stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-  setSmurf_privateAccount:
-    'is a private account, you cannot retrieve this data. To set a smurf in the database type: "$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf setSmurf `"<player name>"` `<tagline>`".',
+  addSmurf_privateAccount:
+    'is a private account, you cannot retrieve this data. To set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
   getAllRanks_invalidArgs:
     'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
   getRankPlayer_invalidArgs:
     "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
   getSmurfCred_invalidArgs:
     "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
-  setSmurf_invalidArgs:
+  addSmurf_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
   makePublic_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
@@ -80,8 +80,8 @@ const COMMAND_DESCRIPTIONS = {
     ':medal: **rank**: This command gives the rank of the player requested.\nType: "*$smurf rank `<player name>` `<tagline>`*" to get the rank of your account.\n\n__Example:__```$smurf rank nugnug 6135```',
   getSmurfCred:
     ':page_facing_up: **credentials**: This command gives the credentials to the requested account.\nType: "*$smurf credentials `<player name>` `<tagline>`*" to get the credentials to your account.\n\n__Example:__ ```$smurf credentials nugnug 6135```',
-  setSmurf:
-    ':pencil2: **setSmurf**: This command sets a new smurf account into the database.\nType: "*$smurf setSmurf `"<player name>"` `<tagline>`*" to set a private account.\n\n__Example:__ ```$smurf setSmurf "nugnug" 6135```\nType: "*$smurf setSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to set a public account.\n\n__Example:__```$smurf setSmurf nugnug 6135 AlexUsername "Alex Password123"```\n:bangbang:  **Please only add valid accounts with valid account credentials.**  :bangbang:',
+  addSmurf:
+    ':pencil2: **addSmurf**: This command sets a new smurf account into the database.\nType: "*$smurf addSmurf `"<player name>"` `<tagline>`*" to set a private account.\n\n__Example:__ ```$smurf addSmurf "nugnug" 6135```\nType: "*$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to set a public account.\n\n__Example:__```$smurf addSmurf nugnug 6135 AlexUsername "Alex Password123"```\n:bangbang:  **Please only add valid accounts with valid account credentials.**  :bangbang:',
   makePublic:
     ':unlock: **makePublic**: This account sets a private account in the database into a public account.\nType: "*$smurf makePublic `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to make a private account public.\n\n__Example:__```$smurf makePublic nugnug 6135 AlexUsername "Alex Password123"```',
   makePrivate:

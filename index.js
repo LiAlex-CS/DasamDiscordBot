@@ -14,7 +14,7 @@ const {
   ranks_command,
   rank_command,
   credentials_command,
-  setSmurf_command,
+  addSmurf_command,
   makePublic_command,
   makePrivate_command,
   unknown_command,
@@ -74,9 +74,9 @@ client.on("messageCreate", (message) => {
     case COMMANDS.getSmurfCred:
       credentials_command(message, command, argsAsString);
       break;
-    // Set Smurf Command - $smurf setSmurf
-    case COMMANDS.setSmurf:
-      setSmurf_command(message, command, argsAsString);
+    // Set Smurf Command - $smurf addSmurf
+    case COMMANDS.addSmurf:
+      addSmurf_command(message, command, argsAsString);
       break;
     // Make Public Command - $smurf makePublic
     case COMMANDS.makePublic:

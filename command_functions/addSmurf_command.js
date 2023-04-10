@@ -17,7 +17,7 @@ const { getUserData } = require("../fetching/fetching");
 
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
-const setSmurf_command = (message, command, argsAsString) => {
+const addSmurf_command = (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
     const name = modifiedArgs[0];
@@ -67,7 +67,7 @@ const setSmurf_command = (message, command, argsAsString) => {
             } else {
               message.reply(
                 `**${name} #${tag}** ` +
-                  COMMAND_ERRORS.setSmurf_nonUnique_account
+                  COMMAND_ERRORS.addSmurf_nonUnique_account
               );
             }
           });
@@ -79,10 +79,10 @@ const setSmurf_command = (message, command, argsAsString) => {
           errorStatus === STATUS_CODES.notFound ||
           errorStatus == STATUS_CODES.clientError
         ) {
-          message.reply(`${name} and ${tag} ` + COMMAND_ERRORS.setSmurf);
+          message.reply(`${name} and ${tag} ` + COMMAND_ERRORS.addSmurf);
         } else if (errorStatus === STATUS_CODES.internalServerError) {
           message.reply(
-            `**${name} #${tag}** ` + COMMAND_ERRORS.setSmurf_privateAccount
+            `**${name} #${tag}** ` + COMMAND_ERRORS.addSmurf_privateAccount
           );
         } else {
           message.reply("Error: " + err.message);
@@ -99,4 +99,4 @@ const setSmurf_command = (message, command, argsAsString) => {
   }
 };
 
-module.exports = { setSmurf_command };
+module.exports = { addSmurf_command };
