@@ -99,6 +99,9 @@ const ACCOUNT_UPDATE_SUCCESS =
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
+const REACTIONS_DESCRIPTION =
+  "\n**React to the letters below corresponding to a smurf account to get the credentials of that account.**";
+
 const HAS_SPACES_REMINDER =
   'If any arguments have spaces, remember to add quotation marks around them.\n\n__Example:__   `<player name>: "nug nug"`.';
 
@@ -147,6 +150,7 @@ module.exports = {
   COMMAND_ERRORS,
   COMMAND_DESCRIPTIONS,
   RANKS_INTRO,
+  REACTIONS_DESCRIPTION,
   HAS_SPACES_REMINDER,
   SET_SMURF_PUBLIC_SUCCESS,
   SET_SMURF_PRIVATE_SUCCESS,

@@ -1,6 +1,7 @@
 const {
   COMMAND_ERRORS,
   RANKS_INTRO,
+  REACTIONS_DESCRIPTION,
   RANK_EMOJIS,
 } = require("../constants/commands");
 
@@ -106,6 +107,8 @@ const ranks_command = (message, command, args) => {
                       sortedFilteredAccountData,
                       Object.keys(REGION_INDICATOR_SYMBOLS)
                     );
+
+                  reply += REACTIONS_DESCRIPTION;
 
                   if (filteredData.length === 0) {
                     reply = COMMAND_ERRORS.getAllRanks_noAccounts;
