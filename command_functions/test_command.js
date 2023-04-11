@@ -3,7 +3,10 @@ const test_command = (message, command, commandBody, args, argsAsString) => {
     `commandBody: ${commandBody}\nargs: ${args}\ncommand: ${command}\nargsAsString: ${argsAsString}`
   );
   message.reply(
-    "from: " + message.author.username + ", id: " + message.author.id
+    `from: "${message.author.username}", id: "${message.author.id}`
+  );
+  message.reply(
+    `Guild Id: ${message.guildId}, Channel Id: ${message.channelId}`
   );
 };
 
