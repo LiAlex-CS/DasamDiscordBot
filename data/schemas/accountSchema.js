@@ -7,11 +7,12 @@ const AccountSchema = new Schema(
   {
     name: { type: String, required: true },
     tag: { type: String, required: true },
-    puuid: { type: String, required: true },
+    puuid: { type: String, required: true, index: true },
     username: { type: String },
     password: { type: String },
     private: { type: Boolean, required: true, default: false },
     creator_disc_id: { type: String, required: true },
+    guilds: { type: [String], required: true },
   },
   { collection: ACCOUNTS_COLLECTION }
 );
