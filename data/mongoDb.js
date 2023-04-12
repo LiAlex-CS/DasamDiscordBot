@@ -2,8 +2,8 @@ const { ServerApiVersion } = require("mongodb");
 const { AccountDetails } = require("./schemas/accountSchema");
 const { DiscordUsers } = require("./schemas/discordUserSchema");
 
-const getAccounts = async () => {
-  const data = await AccountDetails.find({}).exec();
+const getAccountsByGuild = async (guildId) => {
+  const data = await AccountDetails.find({ guilds: guildId }).exec();
   return data;
 };
 
@@ -68,7 +68,7 @@ const isDiscordUserAdmin = async (id) => {
 
 module.exports = {
   ServerApiVersion,
-  getAccounts,
+  getAccountsByGuild,
   getAccountByNameAndTag,
   getAccountByPuuid,
   updateAccountNameByPuuid,

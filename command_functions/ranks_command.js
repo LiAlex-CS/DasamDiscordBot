@@ -5,7 +5,7 @@ const {
   RANK_EMOJIS,
 } = require("../constants/commands");
 
-const { getAccounts } = require("../data/mongoDb");
+const { getAccountsByGuild } = require("../data/mongoDb");
 const { ranksReaction_command } = require("./ranks_reaction_command");
 const { getRankedDataByPUUIDs } = require("../fetching/fetching");
 const {
@@ -34,7 +34,7 @@ const ranks_command = (message, command, args) => {
     const rank = fixRank(args[0]);
     const tier = args.length === 2 ? args[1] : null;
     dataLoading = generateLoadingTime(message);
-    getAccounts()
+    getAccountsByGuild(message.guildId)
       .then((accountData, err) => {
         if (err) {
           throw err;
@@ -123,7 +123,7 @@ const ranks_command = (message, command, args) => {
                   });
 
                   if (!hasError) {
-                    updateNameAndTag(rankedData, (err) => {
+                    updateNameAndTag(message.guildId, rankedData, (err) => {
                       removeLoadingInstance(dataLoading);
                       message.reply("Error: " + err.message);
                     });
