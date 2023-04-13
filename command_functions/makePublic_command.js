@@ -18,7 +18,7 @@ const makePublic_command = async (message, command, argsAsString) => {
     const tag = removeHashtagFromTag(modifiedArgs[1]);
     const username = modifiedArgs[2];
     const password = modifiedArgs[3];
-    const valAccount = await getAccountByNameAndTag(name, tag);
+    const valAccount = await getAccountByNameAndTag(name, tag, message.guildId);
     const isAdmin = await isDiscordUserAdmin(message.author.id);
 
     if (!valAccount) {

@@ -16,7 +16,7 @@ const makePrivate_command = async (message, command, argsAsString) => {
   if (modifiedArgs.length === 2) {
     const name = modifiedArgs[0];
     const tag = removeHashtagFromTag(modifiedArgs[1]);
-    const valAccount = await getAccountByNameAndTag(name, tag);
+    const valAccount = await getAccountByNameAndTag(name, tag, message.guildId);
     const isAdmin = await isDiscordUserAdmin(message.author.id);
 
     if (!valAccount) {

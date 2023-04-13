@@ -31,46 +31,49 @@ const addSmurf_command = (message, command, argsAsString) => {
         } else {
           const isPrivate = !username || !password;
 
-          getAccountByPuuid(fetchData.data.puuid).then((data) => {
-            if (!data) {
-              addToCollection(
-                {
-                  name: name,
-                  tag: tag,
-                  puuid: fetchData.data.puuid,
-                  username: username,
-                  password: password,
-                  private: isPrivate,
-                  creator_disc_id: message.author.id,
-                },
-                (err, name, tag) => {
-                  if (err) {
-                    message.reply(COMMAND_ERRORS.error_saving_val_account);
-                  } else {
-                    message.reply(
-                      `**${name} #${tag}** ${
-                        isPrivate
-                          ? SET_SMURF_PRIVATE_SUCCESS
-                          : SET_SMURF_PUBLIC_SUCCESS
-                      }`
-                    );
-                    addDiscordUser(message.author.id, (err) => {
-                      if (err) {
-                        message.reply(
-                          COMMAND_ERRORS.error_saving_discord_account
-                        );
-                      }
-                    });
+          getAccountByPuuid(fetchData.data.puuid, message.guildId).then(
+            (data) => {
+              if (!data) {
+                addToCollection(
+                  {
+                    name: name,
+                    tag: tag,
+                    puuid: fetchData.data.puuid,
+                    username: username,
+                    password: password,
+                    private: isPrivate,
+                    creator_disc_id: message.author.id,
+                    guild: message.guildId,
+                  },
+                  (err, name, tag) => {
+                    if (err) {
+                      message.reply(COMMAND_ERRORS.error_saving_val_account);
+                    } else {
+                      message.reply(
+                        `**${name} #${tag}** ${
+                          isPrivate
+                            ? SET_SMURF_PRIVATE_SUCCESS
+                            : SET_SMURF_PUBLIC_SUCCESS
+                        }`
+                      );
+                      addDiscordUser(message.author.id, (err) => {
+                        if (err) {
+                          message.reply(
+                            COMMAND_ERRORS.error_saving_discord_account
+                          );
+                        }
+                      });
+                    }
                   }
-                }
-              );
-            } else {
-              message.reply(
-                `**${name} #${tag}** ` +
-                  COMMAND_ERRORS.addSmurf_nonUnique_account
-              );
+                );
+              } else {
+                message.reply(
+                  `**${name} #${tag}** ` +
+                    COMMAND_ERRORS.addSmurf_nonUnique_account
+                );
+              }
             }
-          });
+          );
         }
       })
       .catch((err) => {
@@ -79,7 +82,9 @@ const addSmurf_command = (message, command, argsAsString) => {
           errorStatus === STATUS_CODES.notFound ||
           errorStatus == STATUS_CODES.clientError
         ) {
-          message.reply(`${name} and ${tag} ` + COMMAND_ERRORS.addSmurf);
+          message.reply(
+            `**${name}** and **#${tag}** ` + COMMAND_ERRORS.addSmurf
+          );
         } else if (errorStatus === STATUS_CODES.internalServerError) {
           message.reply(
             `**${name} #${tag}** ` + COMMAND_ERRORS.addSmurf_privateAccount

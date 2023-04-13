@@ -12,15 +12,15 @@ const AccountSchema = new Schema(
     password: { type: String },
     private: { type: Boolean, required: true, default: false },
     creator_disc_id: { type: String, required: true },
-    guilds: { type: [String], required: true },
+    guild: { type: String, required: true, index: true },
   },
   { collection: ACCOUNTS_COLLECTION }
 );
 
-const AccountDetails = mongoose.model(
+const SmurfAccounts = mongoose.model(
   ACCOUNTS_COLLECTION,
   AccountSchema,
   ACCOUNTS_COLLECTION
 );
 
-module.exports = { AccountDetails };
+module.exports = { SmurfAccounts };

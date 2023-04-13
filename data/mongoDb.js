@@ -1,36 +1,43 @@
 const { ServerApiVersion } = require("mongodb");
-const { AccountDetails } = require("./schemas/accountSchema");
+const { SmurfAccounts } = require("./schemas/accountSchema");
 const { DiscordUsers } = require("./schemas/discordUserSchema");
+const { getUserData } = require("../fetching/fetching");
+const { STATUS_CODES } = require("../constants/status_codes");
 
 const getAccountsByGuild = async (guildId) => {
-  const data = await AccountDetails.find({ guilds: guildId }).exec();
+  const data = await SmurfAccounts.find({ guild: guildId }).exec();
   return data;
 };
 
-const getAccountByNameAndTag = async (name, tag) => {
-  const account = await AccountDetails.findOne({ name: name, tag: tag });
+// needs guild
+const getAccountByPuuid = async (puuid, guild) => {
+  const account = await SmurfAccounts.findOne({ puuid: puuid, guild: guild });
   return account;
 };
 
-const getAccountByPuuid = async (puuid) => {
-  const account = await AccountDetails.findOne({ puuid: puuid });
-  return account;
+// needs guild
+const getAccountByNameAndTag = async (name, tag, guild) => {
+  const userData = await getUserData(name, tag);
+  if (userData.status !== STATUS_CODES.ok) {
+    throw userData;
+  } else {
+    const account = await getAccountByPuuid(userData.data.puuid, guild);
+    return account;
+  }
 };
 
+// needs to be update all accounts with puuid (updateMany)
 const updateAccountNameByPuuid = async (puuid, newName) => {
-  const doc = await AccountDetails.findOne({ puuid: puuid });
-  doc.name = newName;
-  doc.save();
+  await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { name: newName } });
 };
 
+// needs to be update all accounts with puuid(updateMany)
 const updateAccountTagByPuuid = async (puuid, newTag) => {
-  const doc = await AccountDetails.findOne({ puuid: puuid });
-  doc.tag = newTag;
-  doc.save();
+  await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { tag: newTag } });
 };
 
 const addToCollection = async (data, savingCallback) => {
-  const NewAccount = new AccountDetails({
+  const NewAccount = new SmurfAccounts({
     name: data.name,
     tag: data.tag,
     puuid: data.puuid,
@@ -38,6 +45,7 @@ const addToCollection = async (data, savingCallback) => {
     password: data.password,
     private: data.private,
     creator_disc_id: data.creator_disc_id,
+    guild: data.guild,
   });
 
   NewAccount.save((err, account) => {
