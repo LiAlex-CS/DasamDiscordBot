@@ -1,5 +1,5 @@
 const {
-  getAccounts,
+  getAccountsByGuild,
   updateAccountNameByPuuid,
   updateAccountTagByPuuid,
 } = require("./data/mongoDb");
@@ -100,8 +100,8 @@ const mmrDataSingleToString = (data) => {
   return `Account Name: **${data.data.name}**, Tagline: **${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
 };
 
-const updateNameAndTag = (dataArr, errorCB) => {
-  getAccounts()
+const updateNameAndTag = (guildId, dataArr, errorCB) => {
+  getAccountsByGuild(guildId)
     .then((userData, err) => {
       if (err) {
         throw err;
