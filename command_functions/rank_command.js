@@ -9,6 +9,8 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
+const { errorHandlingAPI } = require("../fetching/errorHandling");
+
 const {
   stringArrToString,
   mmrDataSingleToString,
@@ -36,22 +38,10 @@ const rank_command = (message, command, args) => {
       })
       .catch((err) => {
         removeLoadingInstance(dataLoading);
-        const errorStatus = parseInt(err.status, 10);
-        if (
-          errorStatus === STATUS_CODES.notFound ||
-          errorStatus == STATUS_CODES.clientError
-        ) {
-          message.reply(
-            `"**${name} #${tag}**" ` + COMMAND_ERRORS.getRankPlayer
-          );
-        } else if (errorStatus === STATUS_CODES.internalServerError) {
-          message.reply(
-            `"**${name} #${tag}**" ` +
-              COMMAND_ERRORS.getRankPlayer_privateAccount
-          );
-        } else {
-          message.reply("error: " + err.errors[0].message);
-        }
+        const errorResponses = {
+          notFound: `"**${name} #${tag}**" ` + COMMAND_ERRORS.getRankPlayer,
+        };
+        errorHandlingAPI(message, err, errorResponses);
       });
   } else {
     message.reply(

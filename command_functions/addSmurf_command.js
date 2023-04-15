@@ -15,6 +15,8 @@ const {
 
 const { getUserData } = require("../fetching/fetching");
 
+const { errorHandlingAPI } = require("../fetching/errorHandling");
+
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
 const addSmurf_command = (message, command, argsAsString) => {
@@ -77,21 +79,11 @@ const addSmurf_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        const errorStatus = parseInt(err.status, 10);
-        if (
-          errorStatus === STATUS_CODES.notFound ||
-          errorStatus == STATUS_CODES.clientError
-        ) {
-          message.reply(
-            `**${name}** and **#${tag}** ` + COMMAND_ERRORS.addSmurf
-          );
-        } else if (errorStatus === STATUS_CODES.internalServerError) {
-          message.reply(
-            `**${name} #${tag}** ` + COMMAND_ERRORS.addSmurf_privateAccount
-          );
-        } else {
-          message.reply("Error: " + err.message);
-        }
+        const errorResponses = {
+          notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
+          forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
+        };
+        errorHandlingAPI(message, err, errorResponses);
       });
   } else {
     message.reply(

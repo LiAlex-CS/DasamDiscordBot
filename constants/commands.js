@@ -33,8 +33,6 @@ const COMMAND_ERRORS = {
     "```fix\nThere was an error fetching some accounts, all available accounts are shown below:\n```",
   getRankPlayer:
     'is not a valid account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
-  getRankPlayer_privateAccount:
-    'is a private account, you cannot retrieve this data, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getSmurfCred:
     'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
   getSmurfCred_privateAccount:
@@ -43,8 +41,8 @@ const COMMAND_ERRORS = {
     'are not valid player name and tagline, to set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
   addSmurf_nonUnique_account:
     'is already stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-  addSmurf_privateAccount:
-    'is a private account, you cannot retrieve this data. To set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
+  addSmurf_forbidden:
+    "account data is forbidden and could not be added to the database. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
   getAllRanks_invalidArgs:
     'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
   getRankPlayer_invalidArgs:
