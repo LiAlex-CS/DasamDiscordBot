@@ -6,6 +6,8 @@ const {
 
 const { getAccountByNameAndTag } = require("../data/mongoDb");
 
+const { handleAPIError } = require("../fetching/errorHandling");
+
 const {
   stringArrToString,
   getModifiedArguments,
@@ -21,14 +23,13 @@ const credentials_command = (message, command, argsAsString) => {
     getAccountByNameAndTag(name, tag)
       .then((data) => {
         if (!data) {
-          throw {
-            status: STATUS_CODES.notFound,
-          };
-        }
-        if (Object.keys(data).length) {
+          message.reply(
+            `Account: "**${name} #${tag}**" ` + COMMAND_ERRORS.getSmurfCred
+          );
+        } else if (Object.keys(data).length) {
           if (data.private) {
             message.reply(
-              `User: **${name} #${tag}** ` +
+              `Account: **${name} #${tag}** ` +
                 COMMAND_ERRORS.getSmurfCred_privateAccount
             );
           } else {
@@ -38,22 +39,16 @@ const credentials_command = (message, command, argsAsString) => {
           }
         } else {
           message.reply(
-            `User: **${name} #${tag}** ` + COMMAND_ERRORS.getSmurfCred
+            `Account: **${name} #${tag}** ` + COMMAND_ERRORS.getSmurfCred
           );
         }
       })
       .catch((err) => {
-        const errorStatus = parseInt(err.status, 10);
-        if (
-          errorStatus === STATUS_CODES.notFound ||
-          errorStatus === STATUS_CODES.clientError
-        ) {
-          message.reply(
-            `Account: "**${name} #${tag}**" ` + COMMAND_ERRORS.getSmurfCred
-          );
-        } else if (errorStatus === STATUS_CODES.internalServerError) {
-          message.reply(STATUS_CODE_MESSAGES.MongoDBApiDown);
-        }
+        const errorResponses = {
+          notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCred_invalidAccount}`,
+          forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCred_forbidden}`,
+        };
+        handleAPIError(message, err, errorResponses);
       });
   } else {
     message.reply(

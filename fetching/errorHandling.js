@@ -3,7 +3,7 @@ const {
   DEFAULT_STATUS_CODE_MESSAGES,
 } = require("../constants/status_codes");
 
-const errorHandlingAPI = (message, errorResp, errorMessages = {}) => {
+const handleAPIError = (message, errorResp, errorMessages = {}) => {
   const errorStatus = parseInt(errorResp.status, 10);
   switch (errorStatus) {
     case STATUS_CODES_API.clientError:
@@ -48,4 +48,4 @@ const errorHandlingAPI = (message, errorResp, errorMessages = {}) => {
   }
 };
 
-module.exports = { errorHandlingAPI };
+module.exports = { handleAPIError };

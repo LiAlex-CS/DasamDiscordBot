@@ -9,7 +9,7 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
-const { errorHandlingAPI } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/errorHandling");
 
 const {
   stringArrToString,
@@ -39,9 +39,9 @@ const rank_command = (message, command, args) => {
       .catch((err) => {
         removeLoadingInstance(dataLoading);
         const errorResponses = {
-          notFound: `"**${name} #${tag}**" ` + COMMAND_ERRORS.getRankPlayer,
+          notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.getRankPlayer}`,
         };
-        errorHandlingAPI(message, err, errorResponses);
+        handleAPIError(message, err, errorResponses);
       });
   } else {
     message.reply(

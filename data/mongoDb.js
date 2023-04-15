@@ -9,13 +9,11 @@ const getAccountsByGuild = async (guildId) => {
   return data;
 };
 
-// needs guild
 const getAccountByPuuid = async (puuid, guild) => {
   const account = await SmurfAccounts.findOne({ puuid: puuid, guild: guild });
   return account;
 };
 
-// needs guild
 const getAccountByNameAndTag = async (name, tag, guild) => {
   const userData = await getUserData(name, tag);
   if (userData.status !== STATUS_CODES.ok) {
@@ -26,12 +24,10 @@ const getAccountByNameAndTag = async (name, tag, guild) => {
   }
 };
 
-// needs to be update all accounts with puuid (updateMany)
 const updateAccountNameByPuuid = async (puuid, newName) => {
   await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { name: newName } });
 };
 
-// needs to be update all accounts with puuid(updateMany)
 const updateAccountTagByPuuid = async (puuid, newTag) => {
   await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { tag: newTag } });
 };

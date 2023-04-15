@@ -15,7 +15,7 @@ const {
 
 const { getUserData } = require("../fetching/fetching");
 
-const { errorHandlingAPI } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/errorHandling");
 
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
@@ -83,7 +83,7 @@ const addSmurf_command = (message, command, argsAsString) => {
           notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
           forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
         };
-        errorHandlingAPI(message, err, errorResponses);
+        handleAPIError(message, err, errorResponses);
       });
   } else {
     message.reply(

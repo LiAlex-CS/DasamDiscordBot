@@ -32,9 +32,13 @@ const COMMAND_ERRORS = {
   getAllRanks_errorFetching:
     "```fix\nThere was an error fetching some accounts, all available accounts are shown below:\n```",
   getRankPlayer:
-    'is not a valid account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
+    'is not a valid Valorant account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getSmurfCred:
-    'is not a valid account in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
+    'is not in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ensure that you have already added this acount with "$smurf addSmurf" in this server.',
+  getSmurfCred_invalidAccount:
+    'is not a valid Valorant account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
+  getSmurfCred_forbidden:
+    "credentials could not be fetched because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
   getSmurfCred_privateAccount:
     "is a private account, you cannot access the credentials of this account. Public accounts are labeled in blue, while private accounts are labeled in white.",
   addSmurf:
