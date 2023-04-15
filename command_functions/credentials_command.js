@@ -1,8 +1,4 @@
 const { COMMAND_ERRORS } = require("../constants/commands");
-const {
-  STATUS_CODES,
-  STATUS_CODE_MESSAGES,
-} = require("../constants/status_codes");
 
 const { getAccountByNameAndTag } = require("../data/mongoDb");
 

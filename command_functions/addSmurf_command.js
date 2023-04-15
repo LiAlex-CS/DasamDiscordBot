@@ -5,7 +5,7 @@ const {
   SET_SMURF_PUBLIC_SUCCESS,
 } = require("../constants/commands");
 
-const { STATUS_CODES } = require("../constants/status_codes");
+const { STATUS_CODES_API } = require("../constants/status_codes");
 
 const {
   addToCollection,
@@ -28,7 +28,7 @@ const addSmurf_command = (message, command, argsAsString) => {
     const password = modifiedArgs.length === 4 ? modifiedArgs[3] : null;
     getUserData(name, tag)
       .then((fetchData) => {
-        if (parseInt(fetchData.status, 10) !== STATUS_CODES.ok) {
+        if (parseInt(fetchData.status, 10) !== STATUS_CODES_API.ok) {
           throw fetchData;
         } else {
           const isPrivate = !username || !password;

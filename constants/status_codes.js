@@ -1,14 +1,3 @@
-const STATUS_CODES = {
-  ok: 200,
-  permRedirect: 301,
-  tempRedirect: 302,
-  clientError: 400,
-  notFound: 404,
-  gone: 410,
-  internalServerError: 500,
-  serviceUnavailable: 503,
-};
-
 const STATUS_CODES_API = {
   ok: 200,
   clientError: 400,
@@ -42,7 +31,6 @@ const LOADING_MESSAGE =
   "Please wait a few moments as we get the data for you ...";
 
 module.exports = {
-  STATUS_CODES,
   STATUS_CODES_API,
   STATUS_CODE_MESSAGES,
   DEFAULT_STATUS_CODE_MESSAGES,
