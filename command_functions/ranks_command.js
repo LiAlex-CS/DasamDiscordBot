@@ -13,7 +13,7 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
-const { STATUS_CODES } = require("../constants/status_codes");
+const { STATUS_CODES_API } = require("../constants/status_codes");
 const { REGION_INDICATOR_SYMBOLS } = require("../constants/commands");
 
 const {
@@ -43,7 +43,7 @@ const ranks_command = (message, command, args) => {
             (rankedData, err) => {
               removeLoadingInstance(dataLoading);
               if (
-                !checkArrayRespStatusMatch(rankedData, STATUS_CODES.ok) ||
+                !checkArrayRespStatusMatch(rankedData, STATUS_CODES_API.ok) ||
                 err
               ) {
                 message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
@@ -69,7 +69,7 @@ const ranks_command = (message, command, args) => {
                 } else {
                   let hasError = false;
                   rankedData.forEach((data, index) => {
-                    if (data.status !== STATUS_CODES.ok) {
+                    if (data.status !== STATUS_CODES_API.ok) {
                       hasError = true;
                       data.data = {
                         currenttierpatched: "Error",

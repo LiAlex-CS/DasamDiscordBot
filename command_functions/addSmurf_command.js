@@ -5,7 +5,7 @@ const {
   SET_SMURF_PUBLIC_SUCCESS,
 } = require("../constants/commands");
 
-const { STATUS_CODES } = require("../constants/status_codes");
+const { STATUS_CODES_API } = require("../constants/status_codes");
 
 const {
   addToCollection,
@@ -14,6 +14,8 @@ const {
 } = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
+
+const { handleAPIError } = require("../fetching/errorHandling");
 
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
@@ -26,7 +28,7 @@ const addSmurf_command = (message, command, argsAsString) => {
     const password = modifiedArgs.length === 4 ? modifiedArgs[3] : null;
     getUserData(name, tag)
       .then((fetchData) => {
-        if (parseInt(fetchData.status, 10) !== STATUS_CODES.ok) {
+        if (parseInt(fetchData.status, 10) !== STATUS_CODES_API.ok) {
           throw fetchData;
         } else {
           const isPrivate = !username || !password;
@@ -77,21 +79,11 @@ const addSmurf_command = (message, command, argsAsString) => {
         }
       })
       .catch((err) => {
-        const errorStatus = parseInt(err.status, 10);
-        if (
-          errorStatus === STATUS_CODES.notFound ||
-          errorStatus == STATUS_CODES.clientError
-        ) {
-          message.reply(
-            `**${name}** and **#${tag}** ` + COMMAND_ERRORS.addSmurf
-          );
-        } else if (errorStatus === STATUS_CODES.internalServerError) {
-          message.reply(
-            `**${name} #${tag}** ` + COMMAND_ERRORS.addSmurf_privateAccount
-          );
-        } else {
-          message.reply("Error: " + err.message);
-        }
+        const errorResponses = {
+          notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
+          forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
+        };
+        handleAPIError(message, err, errorResponses);
       });
   } else {
     message.reply(

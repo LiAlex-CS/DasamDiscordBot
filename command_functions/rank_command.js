@@ -1,6 +1,6 @@
 const { COMMAND_ERRORS, RANK_EMOJIS } = require("../constants/commands");
 
-const { STATUS_CODES } = require("../constants/status_codes");
+const { STATUS_CODES_API } = require("../constants/status_codes");
 
 const { getRankedData } = require("../fetching/fetching");
 
@@ -8,6 +8,8 @@ const {
   generateLoadingTime,
   removeLoadingInstance,
 } = require("../fetching/loading");
+
+const { handleAPIError } = require("../fetching/errorHandling");
 
 const {
   stringArrToString,
@@ -23,7 +25,7 @@ const rank_command = (message, command, args) => {
     const tag = removeHashtagFromTag(args[args.length - 1]);
     getRankedData(name, tag)
       .then((data, err) => {
-        if (parseInt(data.status, 10) !== STATUS_CODES.ok || err) {
+        if (parseInt(data.status, 10) !== STATUS_CODES_API.ok || err) {
           throw data;
         } else {
           const rank = getRankFromRankAndTier(data.data.currenttierpatched);
@@ -36,22 +38,10 @@ const rank_command = (message, command, args) => {
       })
       .catch((err) => {
         removeLoadingInstance(dataLoading);
-        const errorStatus = parseInt(err.status, 10);
-        if (
-          errorStatus === STATUS_CODES.notFound ||
-          errorStatus == STATUS_CODES.clientError
-        ) {
-          message.reply(
-            `"**${name} #${tag}**" ` + COMMAND_ERRORS.getRankPlayer
-          );
-        } else if (errorStatus === STATUS_CODES.internalServerError) {
-          message.reply(
-            `"**${name} #${tag}**" ` +
-              COMMAND_ERRORS.getRankPlayer_privateAccount
-          );
-        } else {
-          message.reply("error: " + err.errors[0].message);
-        }
+        const errorResponses = {
+          notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.getRankPlayer}`,
+        };
+        handleAPIError(message, err, errorResponses);
       });
   } else {
     message.reply(

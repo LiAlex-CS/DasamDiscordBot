@@ -2,23 +2,21 @@ const { ServerApiVersion } = require("mongodb");
 const { SmurfAccounts } = require("./schemas/accountSchema");
 const { DiscordUsers } = require("./schemas/discordUserSchema");
 const { getUserData } = require("../fetching/fetching");
-const { STATUS_CODES } = require("../constants/status_codes");
+const { STATUS_CODES_API } = require("../constants/status_codes");
 
 const getAccountsByGuild = async (guildId) => {
   const data = await SmurfAccounts.find({ guild: guildId }).exec();
   return data;
 };
 
-// needs guild
 const getAccountByPuuid = async (puuid, guild) => {
   const account = await SmurfAccounts.findOne({ puuid: puuid, guild: guild });
   return account;
 };
 
-// needs guild
 const getAccountByNameAndTag = async (name, tag, guild) => {
   const userData = await getUserData(name, tag);
-  if (userData.status !== STATUS_CODES.ok) {
+  if (userData.status !== STATUS_CODES_API.ok) {
     throw userData;
   } else {
     const account = await getAccountByPuuid(userData.data.puuid, guild);
@@ -26,12 +24,10 @@ const getAccountByNameAndTag = async (name, tag, guild) => {
   }
 };
 
-// needs to be update all accounts with puuid (updateMany)
 const updateAccountNameByPuuid = async (puuid, newName) => {
   await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { name: newName } });
 };
 
-// needs to be update all accounts with puuid(updateMany)
 const updateAccountTagByPuuid = async (puuid, newTag) => {
   await SmurfAccounts.updateMany({ puuid: puuid }, { $set: { tag: newTag } });
 };

@@ -97,7 +97,7 @@ const mmrDataToString = (dataArr, accountData, regionalIndicatorEmojis) => {
 };
 
 const mmrDataSingleToString = (data) => {
-  return `Account Name: **${data.data.name}**, Tagline: **${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
+  return `Account Name: **${data.data.name}**, Tagline: **#${data.data.tag}**, Rank: **${data.data.currenttierpatched}**`;
 };
 
 const updateNameAndTag = (guildId, dataArr, errorCB) => {
