@@ -30,12 +30,12 @@ const makePublic_command = async (message, command, argsAsString) => {
       const isAdmin = await isDiscordUserAdmin(message.author.id);
 
       if (!valAccount) {
-        message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.not_in_db);
+        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
         message.reply(COMMAND_ERRORS.unauthorized_modification);
       } else if (!valAccount.private) {
         message.reply(
-          `**${name} #${tag}** ` + COMMAND_ERRORS.makePublic_already_public
+          `**${name} #${tag}** ${COMMAND_ERRORS.makePublic_already_public}`
         );
       } else {
         valAccount.username = username;
@@ -58,10 +58,7 @@ const makePublic_command = async (message, command, argsAsString) => {
     }
   } else {
     message.reply(
-      `"${command} ` +
-        argsAsString +
-        '" ' +
-        COMMAND_ERRORS.makePublic_invalidArgs
+      `"${command} ${argsAsString}" ${COMMAND_ERRORS.makePublic_invalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }
