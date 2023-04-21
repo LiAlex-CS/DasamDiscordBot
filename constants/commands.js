@@ -64,12 +64,21 @@ const COMMAND_ERRORS = {
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
   makePublic_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
-  makePrivate_invalidArgs:
-    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  not_in_db:
-    'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
   makePublic_already_public:
     'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
+  makePublic_invalidAccount:
+    'is not a valid Valorant account, type: "$smurf makePublic `<player name>` `<tagline>` `<username>` `<password>`", to publicize your account.',
+  makePublic_forbidden:
+    "could not be made public because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
+  makePrivate_invalidArgs:
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
+  makePrivate_invalidAccount:
+    'is not a valid Valorant account, type: "$smurf makePrivate `<player name>` `<tagline>`", to privatize your account.',
+  makePrivate_forbidden:
+    "could not be made private because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
+  not_in_db:
+    'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
+
   already_private:
     'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
   unauthorized_modification:
