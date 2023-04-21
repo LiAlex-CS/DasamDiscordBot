@@ -24,9 +24,7 @@ const makePrivate_command = async (message, command, argsAsString) => {
     } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
       message.reply(COMMAND_ERRORS.unauthorized_modification);
     } else if (valAccount.private) {
-      message.reply(
-        `**${name} #${tag}** ` + COMMAND_ERRORS.makePrivate_already_private
-      );
+      message.reply(`**${name} #${tag}** ` + COMMAND_ERRORS.already_private);
     } else {
       valAccount.username = null;
       valAccount.password = null;

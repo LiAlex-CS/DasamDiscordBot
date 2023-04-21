@@ -9,6 +9,7 @@ const COMMANDS = {
   addSmurf: "addSmurf",
   makePublic: "makePublic",
   makePrivate: "makePrivate",
+  update: "update",
   test: "test",
 };
 
@@ -37,6 +38,12 @@ const COMMAND_ERRORS = {
     'is not in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ensure that you have already added this acount with "$smurf addSmurf" in this server.',
   getSmurfCred_invalidAccount:
     'is not a valid Valorant account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
+  updateSmurf_invalidAccount:
+    'is not a valid Valorant account, type: "$smurf update `<player name>` `<tagline>`", or "$smurf update `<player name>` `<tagline>` `<username>` `<password>`" to update your account.',
+  updateSmurf_forbidden:
+    "could not be updated because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
+  updateSmurf_invalidArgs:
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
   getSmurfCred_forbidden:
     "credentials could not be fetched because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
   getSmurfCred_privateAccount:
@@ -63,7 +70,7 @@ const COMMAND_ERRORS = {
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
   makePublic_already_public:
     'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
-  makePrivate_already_private:
+  already_private:
     'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
   unauthorized_modification:
     "This is not your smurf account, you cannot change the status of this account.",
