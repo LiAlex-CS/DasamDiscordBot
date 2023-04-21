@@ -17,7 +17,7 @@ const BOT_DESCRIPTION =
   ":wave:   Hi, Do you need a Valorant smurf? The **DasamRankBot** gives you access to all the Dasam smurf accounts and tracks their ranks. To get started, type:\n ```$smurf ranks```\n to get all the ranks of the Dasam accounts, and find an account for you to use. Type:\n ```$smurf help```\n to checkout all the other functions of the bot such as setting your own personal smurfs, and finding the rank of any Valorant account.";
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>` `<username>` `"<password>"`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command.\nType: "*$smurf help*" for a list of all commands or type: "*$smurf help `<command>`*" for a description of the command.';
@@ -92,9 +92,11 @@ const COMMAND_DESCRIPTIONS = {
   addSmurf:
     ':pencil2: **addSmurf**: This command sets a new smurf account into the database.\nType: "*$smurf addSmurf `"<player name>"` `<tagline>`*" to set a private account.\n\n__Example:__ ```$smurf addSmurf "nugnug" 6135```\nType: "*$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to set a public account.\n\n__Example:__```$smurf addSmurf nugnug 6135 AlexUsername "Alex Password123"```\n:bangbang:  **Please only add valid accounts with valid account credentials.**  :bangbang:',
   makePublic:
-    ':unlock: **makePublic**: This account sets a private account in the database into a public account.\nType: "*$smurf makePublic `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to make a private account public.\n\n__Example:__```$smurf makePublic nugnug 6135 AlexUsername "Alex Password123"```',
+    ':unlock: **makePublic**: This command sets a private account in the database into a public account.\nType: "*$smurf makePublic `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to make a private account public.\n\n__Example:__```$smurf makePublic nugnug 6135 AlexUsername "Alex Password123"```',
   makePrivate:
-    ':lock: **makePrivate**: This account sets a public account in the database into a private account.\nType: "*$smurf makePrivate `"<player name>"` `<tagline>`*" to make a public account private.\n\n__Example:__```$smurf makePrivate nugnug 6135```',
+    ':lock: **makePrivate**: This command sets a public account in the database into a private account.\nType: "*$smurf makePrivate `"<player name>"` `<tagline>`*" to make a public account private.\n\n__Example:__```$smurf makePrivate nugnug 6135```',
+  update:
+    ':wrench: **update**: This command updates an accounts credentials or status.\n Type: "*$smurf update `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to update the credentials of that account or to make the status of that account public.\n\n__Example:__```$smurf update nugnug 6135 AlexUsername "Alex Password123"```\nType: "*$smurf update `"<player name>"` `<tagline>` *" to make the status of an public account private.\n\n__Example:__```$smurf update nugnug 6135```',
 };
 
 const SET_SMURF_PUBLIC_SUCCESS =
