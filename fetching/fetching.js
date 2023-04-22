@@ -25,7 +25,7 @@ const getRankedDataByPUUID = async (puuid) => {
 
 const getRankedDataByPUUIDs = async (puuids) => {
   const data = await Promise.all(
-    puuids.map((data) => getRankedDataByPUUID(data))
+    puuids.map((puuid) => getRankedDataByPUUID(puuid))
   );
   return data;
 };
