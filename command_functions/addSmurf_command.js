@@ -9,8 +9,8 @@ const { STATUS_CODES_API } = require("../constants/status_codes");
 
 const {
   addToCollection,
-  getAccountByPuuid,
   addDiscordUser,
+  getAccountByPuuid,
 } = require("../data/mongoDb");
 
 const { getUserData } = require("../fetching/fetching");
@@ -19,72 +19,69 @@ const { handleAPIError } = require("../fetching/errorHandling");
 
 const { getModifiedArguments, removeHashtagFromTag } = require("../services");
 
-const addSmurf_command = (message, command, argsAsString) => {
+const addSmurf_command = async (message, command, argsAsString) => {
   const modifiedArgs = getModifiedArguments(argsAsString);
   if (modifiedArgs.length === 4 || modifiedArgs.length === 2) {
     const name = modifiedArgs[0];
     const tag = removeHashtagFromTag(modifiedArgs[1]);
     const username = modifiedArgs.length === 4 ? modifiedArgs[2] : null;
     const password = modifiedArgs.length === 4 ? modifiedArgs[3] : null;
-    getUserData(name, tag)
-      .then((fetchData) => {
-        if (parseInt(fetchData.status, 10) !== STATUS_CODES_API.ok) {
-          throw fetchData;
-        } else {
-          const isPrivate = !username || !password;
+    const isPrivate = !username || !password;
 
-          getAccountByPuuid(fetchData.data.puuid, message.guildId).then(
-            (data) => {
-              if (!data) {
-                addToCollection(
-                  {
-                    name: name,
-                    tag: tag,
-                    puuid: fetchData.data.puuid,
-                    username: username,
-                    password: password,
-                    private: isPrivate,
-                    creator_disc_id: message.author.id,
-                    guild: message.guildId,
-                  },
-                  (err, name, tag) => {
-                    if (err) {
-                      message.reply(COMMAND_ERRORS.error_saving_val_account);
-                    } else {
-                      message.reply(
-                        `**${name} #${tag}** ${
-                          isPrivate
-                            ? SET_SMURF_PRIVATE_SUCCESS
-                            : SET_SMURF_PUBLIC_SUCCESS
-                        }`
-                      );
-                      addDiscordUser(message.author.id, (err) => {
-                        if (err) {
-                          message.reply(
-                            COMMAND_ERRORS.error_saving_discord_account
-                          );
-                        }
-                      });
-                    }
-                  }
-                );
+    try {
+      const valAccount = await getUserData(name, tag);
+
+      if (valAccount.status !== STATUS_CODES_API.ok) {
+        throw valAccount;
+      } else {
+        const accountInDatabase = await getAccountByPuuid(
+          valAccount.data.puuid,
+          message.guildId
+        );
+        if (!accountInDatabase) {
+          addToCollection(
+            {
+              name: name,
+              tag: tag,
+              puuid: valAccount.data.puuid,
+              username: username,
+              password: password,
+              private: isPrivate,
+              creator_disc_id: message.author.id,
+              guild: message.guildId,
+            },
+            (err) => {
+              if (err) {
+                message.reply(COMMAND_ERRORS.error_saving_val_account);
               } else {
                 message.reply(
-                  `**${name} #${tag}** ` +
-                    COMMAND_ERRORS.addSmurf_nonUnique_account
+                  `**${name} #${tag}** ${
+                    isPrivate
+                      ? SET_SMURF_PRIVATE_SUCCESS
+                      : SET_SMURF_PUBLIC_SUCCESS
+                  }`
                 );
+                addDiscordUser(message.author.id, (err) => {
+                  if (err) {
+                    message.reply(COMMAND_ERRORS.error_saving_discord_account);
+                  }
+                });
               }
             }
           );
+        } else {
+          message.reply(
+            `**${name} #${tag}** ` + COMMAND_ERRORS.addSmurf_nonUnique_account
+          );
         }
-      })
-      .catch((err) => {
-        const errorResponses = {
-          notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
-          forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
-        };
-        handleAPIError(message, err, errorResponses);
-      });
+      }
+    } catch (error) {
+      const errorResponses = {
+        notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
+        forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
+      };
+      handleAPIError(message, error, errorResponses);
+    }
   } else {
     message.reply(
       `"${command} ` +
