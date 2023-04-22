@@ -5,6 +5,7 @@ const { credentials_command } = require("./credentials_command");
 const { addSmurf_command } = require("./addSmurf_command");
 const { makePublic_command } = require("./makePublic_command");
 const { makePrivate_command } = require("./makePrivate_command");
+const { update_command } = require("./update_command");
 const { unknown_command } = require("./unknown_command");
 const { test_command } = require("./test_command");
 const { no_command } = require("./no_command");
@@ -17,6 +18,7 @@ module.exports = {
   addSmurf_command,
   makePublic_command,
   makePrivate_command,
+  update_command,
   unknown_command,
   test_command,
   no_command,

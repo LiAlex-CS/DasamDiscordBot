@@ -17,6 +17,7 @@ const {
   addSmurf_command,
   makePublic_command,
   makePrivate_command,
+  update_command,
   unknown_command,
   test_command,
   no_command,
@@ -85,6 +86,10 @@ client.on("messageCreate", (message) => {
     // Make Private Command - $smurf makePrivate
     case COMMANDS.makePrivate:
       makePrivate_command(message, command, argsAsString);
+      break;
+    // Update Command - $smurf update
+    case COMMANDS.update:
+      update_command(message, command, argsAsString);
       break;
     // Test Command - $smurf test
     case COMMANDS.test:
