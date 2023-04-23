@@ -128,10 +128,9 @@ const ranks_command = async (message, command, args) => {
     }
   } else {
     message.reply(
-      `"${command} ` +
-        stringArrToString(args) +
-        '" ' +
+      `*${command} ${stringArrToString(args)}* ${
         COMMAND_ERRORS.getAllRanks_invalidArgs
+      }`
     );
   }
 };

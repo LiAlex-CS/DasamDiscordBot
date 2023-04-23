@@ -16,17 +16,19 @@ const {
   mmrDataSingleToString,
   getRankFromRankAndTier,
   removeHashtagFromTag,
+  parseArgsFromArgsAsString,
 } = require("../services");
 
-const rank_command = async (message, command, args) => {
-  if (args.length >= 2) {
+const rank_command = async (message, command, argsAsString) => {
+  const parsedArgs = parseArgsFromArgsAsString(argsAsString);
+  if (parsedArgs.length == 2) {
     const dataLoading = generateLoadingTime(message);
-    const name = stringArrToString(args.slice(0, -1));
-    const tag = removeHashtagFromTag(args[args.length - 1]);
+    const name = parsedArgs[0];
+    const tag = removeHashtagFromTag(parsedArgs[1]);
 
     try {
       const rankData = await getRankedData(name, tag);
-      if (parseInt(rankData.status, 10) !== STATUS_CODES_API.ok || err) {
+      if (parseInt(rankData.status, 10) !== STATUS_CODES_API.ok) {
         throw rankData;
       } else {
         const rank = getRankFromRankAndTier(rankData.data.currenttierpatched);
@@ -34,7 +36,7 @@ const rank_command = async (message, command, args) => {
         const rankEmoji = RANK_EMOJIS[rank];
 
         removeLoadingInstance(dataLoading);
-        message.reply(rankEmoji + " " + mmrDataSingleToString(rankData));
+        message.reply(`${rankEmoji} ${mmrDataSingleToString(rankData)}`);
       }
     } catch (error) {
       removeLoadingInstance(dataLoading);
@@ -45,10 +47,7 @@ const rank_command = async (message, command, args) => {
     }
   } else {
     message.reply(
-      `"${command} ` +
-        stringArrToString(args) +
-        '" ' +
-        COMMAND_ERRORS.getRankPlayer_invalidArgs
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getRankPlayer_invalidArgs}`
     );
   }
 };
