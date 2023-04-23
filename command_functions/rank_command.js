@@ -12,7 +12,6 @@ const {
 const { handleAPIError } = require("../fetching/errorHandling");
 
 const {
-  stringArrToString,
   mmrDataSingleToString,
   getRankFromRankAndTier,
   removeHashtagFromTag,
@@ -21,7 +20,7 @@ const {
 
 const rank_command = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
-  if (parsedArgs.length == 2) {
+  if (parsedArgs.length === 2) {
     const dataLoading = generateLoadingTime(message);
     const name = parsedArgs[0];
     const tag = removeHashtagFromTag(parsedArgs[1]);

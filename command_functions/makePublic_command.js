@@ -14,7 +14,6 @@ const { handleAPIError } = require("../fetching/errorHandling");
 const {
   parseArgsFromArgsAsString,
   removeHashtagFromTag,
-  stringArrToString,
 } = require("../services");
 
 const makePublic_command = async (message, command, argsAsString) => {

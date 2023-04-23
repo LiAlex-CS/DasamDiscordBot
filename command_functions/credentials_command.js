@@ -11,7 +11,7 @@ const {
 
 const credentials_command = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
-  if (parsedArgs.length == 2) {
+  if (parsedArgs.length === 2) {
     const name = parsedArgs[0];
     const tag = removeHashtagFromTag(parsedArgs[1]);
 

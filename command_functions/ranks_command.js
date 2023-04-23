@@ -48,11 +48,11 @@ const ranks_command = async (message, command, args) => {
         message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
       }
 
-      if (args.length == 1 && !JSONHasKey(rank, RANK_EMOJIS)) {
+      if (args.length === 1 && !JSONHasKey(rank, RANK_EMOJIS)) {
         removeLoadingInstance(dataLoading);
         message.reply(`${rank} ${COMMAND_ERRORS.getAllRanks_invalidRank}`);
       } else if (
-        args.length == 2 &&
+        args.length === 2 &&
         (!JSONHasKey(rank, RANK_EMOJIS) || !checkValidTierNum(tier))
       ) {
         removeLoadingInstance(dataLoading);
