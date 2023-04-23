@@ -15,10 +15,7 @@ const help_command = (message, command, args) => {
     message.reply(COMMAND_DESCRIPTIONS[key]);
   } else {
     message.reply(
-      `"${command} ` +
-        stringArrToString(args) +
-        '" ' +
-        COMMAND_ERRORS.getCommands
+      `*${command} ${stringArrToString(args)}* ${COMMAND_ERRORS.getCommands}`
     );
   }
 };

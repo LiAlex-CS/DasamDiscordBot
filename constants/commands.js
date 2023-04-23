@@ -57,9 +57,9 @@ const COMMAND_ERRORS = {
   getAllRanks_invalidArgs:
     'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
   getRankPlayer_invalidArgs:
-    "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   getSmurfCred_invalidArgs:
-    "has invalid arguments, this command takes the arguments `<player name>` `<tagline>`.",
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   addSmurf_invalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
   makePublic_invalidArgs:

@@ -21,6 +21,9 @@ const DEFAULT_STATUS_CODE_MESSAGES = {
     "There is currently an error with the servers. Please try again later.",
 };
 
+const CODE_ERROR_MESSAGE =
+  "\nThere has been a problem with the bot. An administrator has been contacted. <@692450156569952398>";
+
 const STATUS_CODE_MESSAGES = {
   ValorantApiDown:
     "The Valorant API is currently down, please try again later.",
@@ -34,5 +37,6 @@ module.exports = {
   STATUS_CODES_API,
   STATUS_CODE_MESSAGES,
   DEFAULT_STATUS_CODE_MESSAGES,
+  CODE_ERROR_MESSAGE,
   LOADING_MESSAGE,
 };

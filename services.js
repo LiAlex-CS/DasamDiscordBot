@@ -144,7 +144,7 @@ const filterByRankAndTier = (accountRankDataArr, rankFilter, tierFilter) => {
   return filteredArr;
 };
 
-const getModifiedArguments = (commandBody) => {
+const parseArgsFromArgsAsString = (argsAsString) => {
   const args = [];
   let inQuotations = false;
   let currString = "";
@@ -156,7 +156,7 @@ const getModifiedArguments = (commandBody) => {
     }
   };
 
-  for (let char of commandBody) {
+  for (let char of argsAsString) {
     if (char === '"') {
       addToArgs();
       inQuotations = !inQuotations;
@@ -228,7 +228,7 @@ module.exports = {
   mmrDataToString,
   updateNameAndTag,
   mmrDataSingleToString,
-  getModifiedArguments,
+  parseArgsFromArgsAsString,
   checkValidTierNum,
   justifyContentApart,
   getRankFromRankAndTier,

@@ -69,7 +69,7 @@ client.on("messageCreate", (message) => {
       break;
     // Rank Command - $smurf rank
     case COMMANDS.getRankPlayer:
-      rank_command(message, command, args);
+      rank_command(message, command, argsAsString);
       break;
     // Credentials Command - $smurf credentials
     case COMMANDS.getSmurfCred:

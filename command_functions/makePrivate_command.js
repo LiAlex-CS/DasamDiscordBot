@@ -11,13 +11,16 @@ const {
 
 const { handleAPIError } = require("../fetching/errorHandling");
 
-const { getModifiedArguments, removeHashtagFromTag } = require("../services");
+const {
+  parseArgsFromArgsAsString,
+  removeHashtagFromTag,
+} = require("../services");
 
 const makePrivate_command = async (message, command, argsAsString) => {
-  const modifiedArgs = getModifiedArguments(argsAsString);
-  if (modifiedArgs.length === 2) {
-    const name = modifiedArgs[0];
-    const tag = removeHashtagFromTag(modifiedArgs[1]);
+  const parsedArgs = parseArgsFromArgsAsString(argsAsString);
+  if (parsedArgs.length === 2) {
+    const name = parsedArgs[0];
+    const tag = removeHashtagFromTag(parsedArgs[1]);
 
     try {
       const valAccount = await getAccountByNameAndTag(
@@ -54,7 +57,7 @@ const makePrivate_command = async (message, command, argsAsString) => {
     }
   } else {
     message.reply(
-      `"${command} ${argsAsString}" ${COMMAND_ERRORS.makePrivate_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.makePrivate_invalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }

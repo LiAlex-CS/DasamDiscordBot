@@ -41,10 +41,9 @@ describe("Test help command", () => {
 
     expect(mockMessage.reply.mock.calls).toHaveLength(1);
     expect(mockMessage.reply.mock.calls[0][0]).toBe(
-      `"${HELP_COMMAND.command} ` +
-        stringArrToString(HELP_COMMAND.invalid_args) +
-        '" ' +
-        COMMAND_ERRORS.getCommands
+      `*${HELP_COMMAND.command} ${stringArrToString(
+        HELP_COMMAND.invalid_args
+      )}* ${COMMAND_ERRORS.getCommands}`
     );
   });
 });

@@ -1,6 +1,7 @@
 const {
   STATUS_CODES_API,
   DEFAULT_STATUS_CODE_MESSAGES,
+  CODE_ERROR_MESSAGE,
 } = require("../constants/status_codes");
 
 const handleAPIError = (message, errorResp, errorMessages = {}) => {
@@ -42,8 +43,12 @@ const handleAPIError = (message, errorResp, errorMessages = {}) => {
         errorResp.errors.forEach((error) => {
           message.reply(`${errorResp.status}: ${error.message}`);
         });
+      } else if (errorResp.message && errorResp.name) {
+        message.reply(
+          `${errorResp.name}: ${errorResp.message}. ${CODE_ERROR_MESSAGE}`
+        );
       } else {
-        message.reply(`${errorResp.status}: No error details.`);
+        message.reply(`Error: No error details. ${CODE_ERROR_MESSAGE}`);
       }
   }
 };
