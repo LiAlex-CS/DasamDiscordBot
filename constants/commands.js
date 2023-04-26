@@ -18,7 +18,7 @@ const BOT_DESCRIPTION =
   ":wave:   Hi, Do you need a Valorant smurf? The **DasamRankBot** gives you access to all the Dasam smurf accounts and tracks their ranks. To get started, type:\n ```$smurf ranks```\n to get all the ranks of the Dasam accounts, and find an account for you to use. Type:\n ```$smurf help```\n to checkout all the other functions of the bot such as setting your own personal smurfs, and finding the rank of any Valorant account.";
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>` `<username>` `"<password>"`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:soap: **delete** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command.\nType: "*$smurf help*" for a list of all commands or type: "*$smurf help `<command>`*" for a description of the command.';
@@ -85,7 +85,6 @@ const COMMAND_ERRORS = {
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   not_in_db:
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-
   already_private:
     'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
   unauthorized_modification:
@@ -113,6 +112,8 @@ const COMMAND_DESCRIPTIONS = {
     ':lock: **makePrivate**: This command sets a public account in the database into a private account.\nType: "*$smurf makePrivate `"<player name>"` `<tagline>`*" to make a public account private.\n\n__Example:__```$smurf makePrivate nugnug 6135```',
   update:
     ':wrench: **update**: This command updates an accounts credentials or status.\n Type: "*$smurf update `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to update the credentials of that account or to make the status of that account public.\n\n__Example:__```$smurf update nugnug 6135 AlexUsername "Alex Password123"```\nType: "*$smurf update `"<player name>"` `<tagline>` *" to make the status of an public account private.\n\n__Example:__```$smurf update nugnug 6135```',
+  delete:
+    ':soap: **delete**: This command deletes a smurf account.\n Type: "*$smurf delete `"<player name>"` `<tagline>`*" to delete that account.\n\n__Example:__```$smurf delete nugnug 6135```',
 };
 
 const SET_SMURF_PUBLIC_SUCCESS =
