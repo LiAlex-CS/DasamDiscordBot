@@ -10,8 +10,8 @@ const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
 };
 
-const JSONHasKey = (value, json) => {
-  return json.hasOwnProperty(value);
+const JSONHasKey = (value, jsonObj) => {
+  return Object.hasOwn(jsonObj, value);
 };
 
 const checkValidTierNum = (num) => {
