@@ -17,7 +17,9 @@ jobs:
         with:
           node-version: 18.x
           cache: "npm"
+      - name: Install NPM Packages
       - run: npm ci
+      - name: Run Eslint
       - run: npm run lint
   test:
     runs-on: ubuntu-latest
@@ -29,5 +31,7 @@ jobs:
         with:
           node-version: 18.x
           cache: "npm"
+      - name: Install NPM Packages
       - run: npm ci
+      - name: Run Jest
       - run: npm test
