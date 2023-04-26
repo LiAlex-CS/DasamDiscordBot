@@ -10,6 +10,7 @@ const COMMANDS = {
   makePublic: "makePublic",
   makePrivate: "makePrivate",
   update: "update",
+  delete: "delete",
   test: "test",
 };
 
