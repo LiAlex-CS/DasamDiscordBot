@@ -77,6 +77,12 @@ const COMMAND_ERRORS = {
     'is not a valid Valorant account, type: "$smurf makePrivate `<player name>` `<tagline>`", to privatize your account.',
   makePrivate_forbidden:
     "could not be made private because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
+  delete_forbidden:
+    "could not be deleted because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
+  delete_invalidAccount:
+    'is not a valid Valorant account, type: "$smurf makePrivate `<player name>` `<tagline>`", to delete your account.',
+  delete_invalidArgs:
+    'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   not_in_db:
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
 
@@ -117,6 +123,9 @@ const SET_SMURF_PRIVATE_SUCCESS =
 
 const ACCOUNT_UPDATE_SUCCESS =
   "The account has been updated successfully! :confetti_ball:";
+
+const ACCOUNT_DELETE_SUCCESS =
+  "The account has been successfully deleted. :wave:";
 
 const RANKS_INTRO = "Here is a list of all accounts and their ranks:\n\n";
 
@@ -175,8 +184,9 @@ module.exports = {
   HAS_SPACES_REMINDER,
   SET_SMURF_PUBLIC_SUCCESS,
   SET_SMURF_PRIVATE_SUCCESS,
-  RANK_EMOJIS,
   ACCOUNT_UPDATE_SUCCESS,
+  ACCOUNT_DELETE_SUCCESS,
+  RANK_EMOJIS,
   REGION_INDICATOR_SYMBOLS,
   BOT_DESCRIPTION,
 };

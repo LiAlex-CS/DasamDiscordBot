@@ -1,7 +1,7 @@
 const {
   COMMAND_ERRORS,
   HAS_SPACES_REMINDER,
-  ACCOUNT_UPDATE_SUCCESS,
+  ACCOUNT_DELETE_SUCCESS,
 } = require("../constants/commands");
 
 const {
@@ -37,7 +37,7 @@ const delete_command = async (message, command, argsAsString) => {
         message.reply(COMMAND_ERRORS.unauthorized_modification);
       } else {
         await deleteFromCollection(valAccount.puuid, message.guildId);
-        message.reply(ACCOUNT_UPDATE_SUCCESS);
+        message.reply(ACCOUNT_DELETE_SUCCESS);
       }
     } catch (error) {
       const errorResponses = {
