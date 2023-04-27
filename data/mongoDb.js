@@ -49,6 +49,10 @@ const addToCollection = async (data, savingCallback) => {
   });
 };
 
+const deleteFromCollection = async (puuid, guild) => {
+  await SmurfAccounts.findOneAndDelete({ puuid: puuid, guild: guild });
+};
+
 const addDiscordUser = async (id, savingCallback) => {
   const found = await DiscordUsers.findOne({ disc_id: id });
   if (!found) {
@@ -78,6 +82,7 @@ module.exports = {
   updateAccountNameByPuuid,
   updateAccountTagByPuuid,
   addToCollection,
+  deleteFromCollection,
   addDiscordUser,
   isDiscordUserAdmin,
 };

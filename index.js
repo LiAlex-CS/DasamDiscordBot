@@ -18,6 +18,7 @@ const {
   makePublic_command,
   makePrivate_command,
   update_command,
+  delete_command,
   unknown_command,
   test_command,
   no_command,
@@ -90,6 +91,10 @@ client.on("messageCreate", (message) => {
     // Update Command - $smurf update
     case COMMANDS.update:
       update_command(message, command, argsAsString);
+      break;
+    // Delete Command - $smurf delete
+    case COMMANDS.delete:
+      delete_command(message, command, argsAsString);
       break;
     // Test Command - $smurf test
     case COMMANDS.test:
