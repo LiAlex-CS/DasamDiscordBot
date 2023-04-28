@@ -13,6 +13,13 @@ const {
 const { handleAPIError } = require("../fetching/errorHandling");
 
 const {
+  generateLoadingTime,
+  removeLoadingInstance,
+} = require("../fetching/loading");
+
+const { SAVING_MESSAGE } = require("../constants/fetching_consts");
+
+const {
   parseArgsFromArgsAsString,
   removeHashtagFromTag,
 } = require("../services");
@@ -23,6 +30,10 @@ const delete_command = async (message, command, argsAsString) => {
     const name = parsedArgs[0];
     const tag = removeHashtagFromTag(parsedArgs[1]);
 
+    const savingInstance = generateLoadingTime(message, {
+      loadingMessage: SAVING_MESSAGE,
+    });
+
     try {
       const valAccount = await getAccountByNameAndTag(
         name,
@@ -32,11 +43,14 @@ const delete_command = async (message, command, argsAsString) => {
       const isAdmin = await isDiscordUserAdmin(message.author.id);
 
       if (!valAccount) {
+        removeLoadingInstance(savingInstance);
         message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
+        removeLoadingInstance(savingInstance);
         message.reply(COMMAND_ERRORS.unauthorized_modification);
       } else {
         await deleteFromCollection(valAccount.puuid, message.guildId);
+        removeLoadingInstance(savingInstance);
         message.reply(ACCOUNT_DELETE_SUCCESS);
       }
     } catch (error) {
@@ -44,6 +58,7 @@ const delete_command = async (message, command, argsAsString) => {
         notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.delete_invalidAccount}`,
         forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.delete_forbidden}`,
       };
+      removeLoadingInstance(savingInstance);
       handleAPIError(message, error, errorResponses);
     }
   } else {

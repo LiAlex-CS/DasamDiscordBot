@@ -12,6 +12,13 @@ const {
 const { handleAPIError } = require("../fetching/errorHandling");
 
 const {
+  generateLoadingTime,
+  removeLoadingInstance,
+} = require("../fetching/loading");
+
+const { SAVING_MESSAGE } = require("../constants/fetching_consts");
+
+const {
   parseArgsFromArgsAsString,
   removeHashtagFromTag,
 } = require("../services");
@@ -25,6 +32,10 @@ const update_command = async (message, command, argsAsString) => {
     const password = parsedArgs.length === 4 ? parsedArgs[3] : null;
     const setPrivate = !username || !password;
 
+    const savingInstance = generateLoadingTime(message, {
+      loadingMessage: SAVING_MESSAGE,
+    });
+
     try {
       const valAccount = await getAccountByNameAndTag(
         name,
@@ -34,12 +45,15 @@ const update_command = async (message, command, argsAsString) => {
       const isAdmin = await isDiscordUserAdmin(message.author.id);
 
       if (!valAccount) {
+        removeLoadingInstance(savingInstance);
         message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
+        removeLoadingInstance(savingInstance);
         message.reply(COMMAND_ERRORS.unauthorized_modification);
       } else {
         if (setPrivate) {
           if (valAccount.private) {
+            removeLoadingInstance(savingInstance);
             message.reply(
               `**${name} #${tag}** ${COMMAND_ERRORS.already_private}`
             );
@@ -48,6 +62,7 @@ const update_command = async (message, command, argsAsString) => {
             valAccount.password = null;
             valAccount.private = true;
             valAccount.save((err) => {
+              removeLoadingInstance(savingInstance);
               if (err) {
                 message.reply(COMMAND_ERRORS.error_saving_val_account);
               } else {
@@ -60,6 +75,7 @@ const update_command = async (message, command, argsAsString) => {
           valAccount.password = password;
           valAccount.private = false;
           valAccount.save((err) => {
+            removeLoadingInstance(savingInstance);
             if (err) {
               message.reply(COMMAND_ERRORS.error_saving_val_account);
             } else {
@@ -69,6 +85,7 @@ const update_command = async (message, command, argsAsString) => {
         }
       }
     } catch (error) {
+      removeLoadingInstance(savingInstance);
       const errorResponses = {
         notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurf_invalidAccount}`,
         forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurf_forbidden}`,

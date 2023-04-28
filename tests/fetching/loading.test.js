@@ -16,7 +16,7 @@ describe("Tests for loading.js", () => {
 
   describe("generateLoadingTime", () => {
     test("Should reply after 1 second", () => {
-      generateLoadingTime(mockMessage);
+      generateLoadingTime(mockMessage, {});
 
       expect(setTimeout).toHaveBeenCalledTimes(1);
       expect(mockMessage.reply).not.toBeCalled();
@@ -28,7 +28,10 @@ describe("Tests for loading.js", () => {
     });
 
     test("Should reply after 3 seconds", () => {
-      generateLoadingTime(mockMessage, 3000);
+      generateLoadingTime(mockMessage, {
+        loadingMessage: "test message",
+        waitTime: 3000,
+      });
 
       expect(setTimeout).toHaveBeenCalledTimes(1);
       expect(mockMessage.reply).not.toBeCalled();
@@ -60,7 +63,10 @@ describe("Tests for loading.js", () => {
     });
 
     test("removeLoadingInstance missed, should reply after 3 seconds", () => {
-      const dataLoading = generateLoadingTime(mockMessage, 3000);
+      const dataLoading = generateLoadingTime(mockMessage, {
+        loadingMessage: "test message",
+        waitTime: 3000,
+      });
 
       expect(setTimeout).toHaveBeenCalledTimes(1);
 

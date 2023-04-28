@@ -1,11 +1,18 @@
-const { LOADING_MESSAGE } = require("../constants/status_codes");
+const {
+  DEFAULT_LOADING_MESSAGE,
+  DEFAULT_WAIT_TIME,
+} = require("../constants/fetching_consts");
 
-const DEFAULT_WAIT_TIME = 1000;
-
-const generateLoadingTime = (message, waitTime) => {
+const generateLoadingTime = (
+  message,
+  config = {
+    loadingMessage: DEFAULT_LOADING_MESSAGE,
+    waitTime: DEFAULT_WAIT_TIME,
+  }
+) => {
   return setTimeout(() => {
-    message.reply(LOADING_MESSAGE);
-  }, waitTime || DEFAULT_WAIT_TIME);
+    message.reply(config.loadingMessage || DEFAULT_LOADING_MESSAGE);
+  }, config.waitTime || DEFAULT_WAIT_TIME);
 };
 
 const removeLoadingInstance = (loadingInstance) => {
