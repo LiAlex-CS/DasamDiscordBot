@@ -1,16 +1,15 @@
 const {
   REGION_INDICATOR_SYMBOLS,
   COMMAND_ERRORS,
-} = require("../constants/commands");
+  MAX_ACCOUNTS_PER_PAGE,
+  REACTION_COLLECTION_TIME,
+} = require("../../constants/commands");
 
-const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
-  const MAX_REACTION_LIMIT = 20;
-  const REACTION_COLLECTION_TIME = 300000;
-
+const ranksReaction_command = (ranksMessage, ranksAccountDataOnPage) => {
   const numReactions =
-    ranksAccountData.length > MAX_REACTION_LIMIT
-      ? MAX_REACTION_LIMIT
-      : ranksAccountData.length;
+    ranksAccountDataOnPage.length > MAX_ACCOUNTS_PER_PAGE
+      ? MAX_ACCOUNTS_PER_PAGE
+      : ranksAccountDataOnPage.length;
 
   const REGIONAL_INDICATOR_SYMBOLS_ARR = Object.keys(
     REGION_INDICATOR_SYMBOLS
@@ -33,14 +32,14 @@ const ranksReaction_command = (ranksMessage, message, ranksAccountData) => {
   collector.on("collect", (reaction, user) => {
     if (filter(reaction, user)) {
       const userInfo =
-        ranksAccountData[REGION_INDICATOR_SYMBOLS[reaction.emoji.name]];
+        ranksAccountDataOnPage[REGION_INDICATOR_SYMBOLS[reaction.emoji.name]];
 
       if (userInfo.private) {
-        message.reply(
+        ranksMessage.reply(
           `<@${user.id}>. User: **${userInfo.name} #${userInfo.tag}** ${COMMAND_ERRORS.getSmurfCred_privateAccount}`
         );
       } else {
-        message.reply(
+        ranksMessage.reply(
           `<@${user.id}>. For account: **${userInfo.name} #${userInfo.tag}**, Username: ${userInfo.username} Password: ${userInfo.password}`
         );
       }

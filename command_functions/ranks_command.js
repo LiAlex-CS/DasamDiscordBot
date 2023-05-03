@@ -1,30 +1,29 @@
 const {
   COMMAND_ERRORS,
-  RANKS_INTRO,
-  REACTIONS_DESCRIPTION,
   RANK_EMOJIS,
+  MAX_ACCOUNTS_PER_PAGE,
 } = require("../constants/commands");
 
 const { getAccountsByGuild } = require("../data/mongoDb");
 
-const { ranksReaction_command } = require("./ranks_reaction_command");
+const { sendRanksMessage } = require("./ranks/send_ranks_message");
 
 const { getRankedDataByPUUIDs } = require("../fetching/fetching");
+
 const {
   generateLoadingTime,
   removeLoadingInstance,
 } = require("../fetching/loading");
+
 const { handleAPIError } = require("../fetching/errorHandling");
 
 const { STATUS_CODES_API } = require("../constants/status_codes");
-const { REGION_INDICATOR_SYMBOLS } = require("../constants/commands");
 
 const {
   stringArrToString,
   updateNameAndTag,
   JSONHasKey,
   checkValidTierNum,
-  mmrDataToString,
   checkArrayRespStatusMatch,
   filterByRankAndTier,
   fixRank,
@@ -33,7 +32,6 @@ const {
 const ranks_command = async (message, command, args) => {
   let dataLoading = null;
   if (args.length <= 2) {
-    let reply = RANKS_INTRO;
     const rank = fixRank(args[0]);
     const tier = args.length === 2 ? args[1] : null;
     dataLoading = generateLoadingTime(message);
@@ -97,23 +95,17 @@ const ranks_command = async (message, command, args) => {
             (data) => data.rankedData
           );
 
-          reply =
-            reply +
-            mmrDataToString(
-              sortedFilteredRankedData,
-              sortedFilteredAccountData,
-              Object.keys(REGION_INDICATOR_SYMBOLS)
-            );
+          const totalPages = Math.ceil(
+            sortedFilteredAccountData.length / MAX_ACCOUNTS_PER_PAGE
+          );
 
-          reply += REACTIONS_DESCRIPTION;
-
-          if (filteredData.length === 0) {
-            reply = COMMAND_ERRORS.getAllRanks_noAccounts;
-          }
-
-          message.reply(reply).then((reaction) => {
-            ranksReaction_command(reaction, message, sortedFilteredAccountData);
-          });
+          sendRanksMessage(
+            message,
+            0,
+            totalPages,
+            sortedFilteredRankedData,
+            sortedFilteredAccountData
+          );
 
           if (!hasError) {
             updateNameAndTag(message.guildId, rankedData, (err) => {
