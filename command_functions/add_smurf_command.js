@@ -15,7 +15,7 @@ const {
 
 const { getUserData } = require("../fetching/fetching");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   parseArgsFromArgsAsString,

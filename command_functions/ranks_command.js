@@ -15,7 +15,7 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const { STATUS_CODES_API } = require("../constants/status_codes");
 

@@ -10,7 +10,7 @@ const {
   deleteFromCollection,
 } = require("../data/mongoDb");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   generateLoadingTime,

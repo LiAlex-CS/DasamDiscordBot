@@ -1,6 +1,6 @@
 const { ServerApiVersion } = require("mongodb");
-const { SmurfAccounts } = require("./schemas/accountSchema");
-const { DiscordUsers } = require("./schemas/discordUserSchema");
+const { SmurfAccounts } = require("./schemas/account_schema");
+const { DiscordUsers } = require("./schemas/discord_user_schema");
 const { getUserData } = require("../fetching/fetching");
 const { STATUS_CODES_API } = require("../constants/status_codes");
 

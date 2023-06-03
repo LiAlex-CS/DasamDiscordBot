@@ -2,7 +2,7 @@ const { COMMAND_ERRORS } = require("../constants/commands");
 
 const { getAccountByNameAndTag } = require("../data/mongoDb");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   parseArgsFromArgsAsString,
