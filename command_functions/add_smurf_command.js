@@ -22,7 +22,7 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const addSmurf_command = async (message, command, argsAsString) => {
+const addSmurfCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 4 || parsedArgs.length === 2) {
     const name = parsedArgs[0];
@@ -93,4 +93,4 @@ const addSmurf_command = async (message, command, argsAsString) => {
   }
 };
 
-module.exports = { addSmurf_command };
+module.exports = { addSmurfCommand };

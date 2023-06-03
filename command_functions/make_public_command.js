@@ -23,11 +23,13 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const makePrivate_command = async (message, command, argsAsString) => {
+const makePublicCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
-  if (parsedArgs.length === 2) {
+  if (parsedArgs.length === 4) {
     const name = parsedArgs[0];
     const tag = removeHashtagFromTag(parsedArgs[1]);
+    const username = parsedArgs[2];
+    const password = parsedArgs[3];
 
     const savingInstance = generateLoadingTime(message, {
       loadingMessage: SAVING_MESSAGE,
@@ -47,13 +49,15 @@ const makePrivate_command = async (message, command, argsAsString) => {
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
         removeLoadingInstance(savingInstance);
         message.reply(COMMAND_ERRORS.unauthorizedModification);
-      } else if (valAccount.private) {
+      } else if (!valAccount.private) {
         removeLoadingInstance(savingInstance);
-        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.alreadyPrivate}`);
+        message.reply(
+          `**${name} #${tag}** ${COMMAND_ERRORS.makePublicAlreadyPublic}`
+        );
       } else {
-        valAccount.username = null;
-        valAccount.password = null;
-        valAccount.private = true;
+        valAccount.username = username;
+        valAccount.password = password;
+        valAccount.private = false;
         valAccount.save((err) => {
           removeLoadingInstance(savingInstance);
           if (err) {
@@ -66,17 +70,17 @@ const makePrivate_command = async (message, command, argsAsString) => {
     } catch (error) {
       removeLoadingInstance(savingInstance);
       const errorResponses = {
-        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePrivateInvalidAccount}`,
-        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePrivateForbidden}`,
+        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublicInvalidAccount}`,
+        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublicForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.makePrivateInvalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.makePublicInvalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }
 };
 
-module.exports = { makePrivate_command };
+module.exports = { makePublicCommand };

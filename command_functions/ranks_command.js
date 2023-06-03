@@ -29,7 +29,7 @@ const {
   fixRank,
 } = require("../services");
 
-const ranks_command = async (message, command, args) => {
+const ranksCommand = async (message, command, args) => {
   let dataLoading = null;
   if (args.length <= 2) {
     const rank = fixRank(args[0]);
@@ -127,4 +127,4 @@ const ranks_command = async (message, command, args) => {
   }
 };
 
-module.exports = { ranks_command };
+module.exports = { ranksCommand };

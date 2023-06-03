@@ -9,7 +9,7 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const credentials_command = async (message, command, argsAsString) => {
+const credentialsCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 2) {
     const name = parsedArgs[0];
@@ -56,4 +56,4 @@ const credentials_command = async (message, command, argsAsString) => {
   }
 };
 
-module.exports = { credentials_command };
+module.exports = { credentialsCommand };

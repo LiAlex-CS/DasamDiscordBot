@@ -10,18 +10,18 @@ const mongoose = require("mongoose");
 const Discord = require("discord.js");
 
 const {
-  help_command,
-  ranks_command,
-  rank_command,
-  credentials_command,
-  addSmurf_command,
-  makePublic_command,
-  makePrivate_command,
-  update_command,
-  delete_command,
-  unknown_command,
-  test_command,
-  no_command,
+  helpCommand,
+  ranksCommand,
+  rankCommand,
+  credentialsCommand,
+  addSmurfCommand,
+  makePublicCommand,
+  makePrivateCommand,
+  updateCommand,
+  deleteCommand,
+  unknownCommand,
+  testCommand,
+  noCommand,
 } = require("./command_functions/index");
 
 const { formatMessage } = require("./services");
@@ -62,53 +62,53 @@ client.on("messageCreate", (message) => {
   switch (command) {
     // Help Command - $smurf help
     case COMMANDS.getCommands:
-      help_command(message, command, args);
+      helpCommand(message, command, args);
       break;
     // Ranks Command - $smurf ranks
     case COMMANDS.getAllRanks:
-      ranks_command(message, command, args);
+      ranksCommand(message, command, args);
       break;
     // Rank Command - $smurf rank
     case COMMANDS.getRankPlayer:
-      rank_command(message, command, argsAsString);
+      rankCommand(message, command, argsAsString);
       break;
     // Credentials Command - $smurf credentials
     case COMMANDS.getSmurfCred:
-      credentials_command(message, command, argsAsString);
+      credentialsCommand(message, command, argsAsString);
       break;
     // Set Smurf Command - $smurf addSmurf
     case COMMANDS.addSmurf:
-      addSmurf_command(message, command, argsAsString);
+      addSmurfCommand(message, command, argsAsString);
       break;
     // Make Public Command - $smurf makePublic
     case COMMANDS.makePublic:
-      makePublic_command(message, command, argsAsString);
+      makePublicCommand(message, command, argsAsString);
       break;
     // Make Private Command - $smurf makePrivate
     case COMMANDS.makePrivate:
-      makePrivate_command(message, command, argsAsString);
+      makePrivateCommand(message, command, argsAsString);
       break;
     // Update Command - $smurf update
     case COMMANDS.update:
-      update_command(message, command, argsAsString);
+      updateCommand(message, command, argsAsString);
       break;
     // Delete Command - $smurf delete
     case COMMANDS.delete:
-      delete_command(message, command, argsAsString);
+      deleteCommand(message, command, argsAsString);
       break;
     // Test Command - $smurf test
     case COMMANDS.test:
       if (process.env.BOT_ENV === "DEV")
-        test_command(message, command, commandBody, args, argsAsString);
-      else unknown_command(message, command);
+        testCommand(message, command, commandBody, args, argsAsString);
+      else unknownCommand(message, command);
       break;
     // No Command - $smurf
     case undefined:
-      no_command(message);
+      noCommand(message);
       break;
     // Unkown Command
     default:
-      unknown_command(message, command);
+      unknownCommand(message, command);
   }
 });
 

@@ -1,27 +1,27 @@
-const { help_command } = require("./help_command");
-const { ranks_command } = require("./ranks_command");
-const { rank_command } = require("./rank_command");
-const { credentials_command } = require("./credentials_command");
-const { addSmurf_command } = require("./addSmurf_command");
-const { makePublic_command } = require("./makePublic_command");
-const { makePrivate_command } = require("./makePrivate_command");
-const { update_command } = require("./update_command");
-const { delete_command } = require("./delete_command");
-const { unknown_command } = require("./unknown_command");
-const { test_command } = require("./test_command");
-const { no_command } = require("./no_command");
+const { helpCommand } = require("./help_command");
+const { ranksCommand } = require("./ranks_command");
+const { rankCommand } = require("./rank_command");
+const { credentialsCommand } = require("./credentials_command");
+const { addSmurfCommand } = require("./add_smurf_command");
+const { makePublicCommand } = require("./make_public_command");
+const { makePrivateCommand } = require("./make_private_command");
+const { updateCommand } = require("./update_command");
+const { deleteCommand } = require("./delete_command");
+const { unknownCommand } = require("./unknown_command");
+const { testCommand } = require("./test_command");
+const { noCommand } = require("./no_command");
 
 module.exports = {
-  help_command,
-  ranks_command,
-  rank_command,
-  credentials_command,
-  addSmurf_command,
-  makePublic_command,
-  makePrivate_command,
-  update_command,
-  delete_command,
-  unknown_command,
-  test_command,
-  no_command,
+  helpCommand,
+  ranksCommand,
+  rankCommand,
+  credentialsCommand,
+  addSmurfCommand,
+  makePublicCommand,
+  makePrivateCommand,
+  updateCommand,
+  deleteCommand,
+  unknownCommand,
+  testCommand,
+  noCommand,
 };

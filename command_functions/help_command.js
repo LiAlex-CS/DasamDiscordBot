@@ -7,7 +7,7 @@ const {
 
 const { stringArrToString, JSONHasValue } = require("../services");
 
-const help_command = (message, command, args) => {
+const helpCommand = (message, command, args) => {
   if (!args.length) {
     message.reply(ALL_COMMANDS);
   } else if (args.length === 1 && JSONHasValue(args[0], COMMANDS)) {
@@ -20,4 +20,4 @@ const help_command = (message, command, args) => {
   }
 };
 
-module.exports = { help_command };
+module.exports = { helpCommand };

@@ -18,7 +18,7 @@ const {
   parseArgsFromArgsAsString,
 } = require("../services");
 
-const rank_command = async (message, command, argsAsString) => {
+const rankCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 2) {
     const dataLoading = generateLoadingTime(message);
@@ -51,4 +51,4 @@ const rank_command = async (message, command, argsAsString) => {
   }
 };
 
-module.exports = { rank_command };
+module.exports = { rankCommand };
