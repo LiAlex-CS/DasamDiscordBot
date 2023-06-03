@@ -45,14 +45,14 @@ const makePublic_command = async (message, command, argsAsString) => {
 
       if (!valAccount) {
         removeLoadingInstance(savingInstance);
-        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
+        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.notInDatabase}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
         removeLoadingInstance(savingInstance);
-        message.reply(COMMAND_ERRORS.unauthorized_modification);
+        message.reply(COMMAND_ERRORS.unauthorizedModification);
       } else if (!valAccount.private) {
         removeLoadingInstance(savingInstance);
         message.reply(
-          `**${name} #${tag}** ${COMMAND_ERRORS.makePublic_already_public}`
+          `**${name} #${tag}** ${COMMAND_ERRORS.makePublicAlreadyPublic}`
         );
       } else {
         valAccount.username = username;
@@ -61,7 +61,7 @@ const makePublic_command = async (message, command, argsAsString) => {
         valAccount.save((err) => {
           removeLoadingInstance(savingInstance);
           if (err) {
-            message.reply(COMMAND_ERRORS.error_saving_val_account);
+            message.reply(COMMAND_ERRORS.errorSavingValorantAccount);
           } else {
             message.reply(ACCOUNT_UPDATE_SUCCESS);
           }
@@ -70,14 +70,14 @@ const makePublic_command = async (message, command, argsAsString) => {
     } catch (error) {
       removeLoadingInstance(savingInstance);
       const errorResponses = {
-        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublic_invalidAccount}`,
-        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublic_forbidden}`,
+        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublicInvalidAccount}`,
+        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.makePublicForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.makePublic_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.makePublicInvalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }

@@ -51,7 +51,7 @@ const sendRanksMessage = (
   reply += REACTIONS_DESCRIPTION;
 
   if (rankedDataOnPage.length === 0) {
-    reply = COMMAND_ERRORS.getAllRanks_noAccounts;
+    reply = COMMAND_ERRORS.getAllRanksNoAccounts;
   }
 
   message.reply(reply).then((ranksMessage) => {

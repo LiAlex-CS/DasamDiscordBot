@@ -46,7 +46,7 @@ const rank_command = async (message, command, argsAsString) => {
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getRankPlayer_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getRankPlayerInvalidArgs}`
     );
   }
 };

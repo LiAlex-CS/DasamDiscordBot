@@ -30,7 +30,7 @@ const credentials_command = async (message, command, argsAsString) => {
         if (accountData.private) {
           message.reply(
             `Account: **${name} #${tag}** ` +
-              COMMAND_ERRORS.getSmurfCred_privateAccount
+              COMMAND_ERRORS.getSmurfCredPrivateAccount
           );
         } else {
           message.reply(
@@ -44,14 +44,14 @@ const credentials_command = async (message, command, argsAsString) => {
       }
     } catch (error) {
       const errorResponses = {
-        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCred_invalidAccount}`,
-        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCred_forbidden}`,
+        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCredInvalidAccount}`,
+        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.getSmurfCredForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getSmurfCred_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getSmurfCredInvalidArgs}`
     );
   }
 };

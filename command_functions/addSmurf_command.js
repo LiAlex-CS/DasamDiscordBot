@@ -55,7 +55,7 @@ const addSmurf_command = async (message, command, argsAsString) => {
             },
             (err) => {
               if (err) {
-                message.reply(COMMAND_ERRORS.error_saving_val_account);
+                message.reply(COMMAND_ERRORS.errorSavingValorantAccount);
               } else {
                 message.reply(
                   `**${name} #${tag}** ${
@@ -66,7 +66,7 @@ const addSmurf_command = async (message, command, argsAsString) => {
                 );
                 addDiscordUser(message.author.id, (err) => {
                   if (err) {
-                    message.reply(COMMAND_ERRORS.error_saving_discord_account);
+                    message.reply(COMMAND_ERRORS.errorSavingDiscordAccount);
                   }
                 });
               }
@@ -74,20 +74,20 @@ const addSmurf_command = async (message, command, argsAsString) => {
           );
         } else {
           message.reply(
-            `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_nonUnique_account}`
+            `**${name} #${tag}** ${COMMAND_ERRORS.addSmurfNonUniqueAccount}`
           );
         }
       }
     } catch (error) {
       const errorResponses = {
         notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
-        forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurf_forbidden}`,
+        forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurfForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getSmurfCred_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getSmurfCredInvalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }
