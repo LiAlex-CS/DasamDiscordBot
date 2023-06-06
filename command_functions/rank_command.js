@@ -9,7 +9,7 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   mmrDataSingleToString,
@@ -18,7 +18,7 @@ const {
   parseArgsFromArgsAsString,
 } = require("../services");
 
-const rank_command = async (message, command, argsAsString) => {
+const rankCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 2) {
     const dataLoading = generateLoadingTime(message);
@@ -46,9 +46,9 @@ const rank_command = async (message, command, argsAsString) => {
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getRankPlayer_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.getRankPlayerInvalidArgs}`
     );
   }
 };
 
-module.exports = { rank_command };
+module.exports = { rankCommand };

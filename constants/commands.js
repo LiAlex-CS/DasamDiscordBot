@@ -26,72 +26,72 @@ const UNKNOWN_COMMAND =
 const COMMAND_ERRORS = {
   getCommands:
     'is not a valid command, for all commands "type: $smurf help", for explanation on a command type: "$smurf help `<command>`".',
-  getAllRanks_invalidRankOrTier: "has either invalid rank or tier.",
-  getAllRanks_invalidRank: "is an invalid rank.",
-  getAllRanks_invalidTierRadiant: "The Radiant rank has no tiers.",
-  getAllRanks_noAccounts:
+  getAllRanksInvalidRankOrTier: "has either invalid rank or tier.",
+  getAllRanksInvalidRank: "is an invalid rank.",
+  getAllRanksInvalidTierRadiant: "The Radiant rank has no tiers.",
+  getAllRanksNoAccounts:
     "There are no acounts with the desired criteria. :x: :mag:",
-  getAllRanks_errorFetching:
+  getAllRanksErrorFetching:
     "```fix\nThere was an error fetching some accounts, all available accounts are shown below:\n```",
   getRankPlayer:
     'is not a valid Valorant account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getSmurfCred:
     'is not in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ensure that you have already added this acount with "$smurf addSmurf" in this server.',
-  getSmurfCred_invalidAccount:
+  getSmurfCredInvalidAccount:
     'is not a valid Valorant account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
-  updateSmurf_invalidAccount:
+  updateSmurfInvalidAccount:
     'is not a valid Valorant account, type: "$smurf update `<player name>` `<tagline>`", or "$smurf update `<player name>` `<tagline>` `<username>` `<password>`" to update your account.',
-  updateSmurf_forbidden:
+  updateSmurfForbidden:
     "could not be updated because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  updateSmurf_invalidArgs:
+  updateSmurfInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
-  getSmurfCred_forbidden:
+  getSmurfCredForbidden:
     "credentials could not be fetched because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  getSmurfCred_privateAccount:
+  getSmurfCredPrivateAccount:
     "is a private account, you cannot access the credentials of this account. Public accounts are labeled in blue, while private accounts are labeled in white.",
   addSmurf:
     'are not valid player name and tagline, to set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
-  addSmurf_nonUnique_account:
+  addSmurfNonUniqueAccount:
     'is already stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-  addSmurf_forbidden:
+  addSmurfForbidden:
     "account data is forbidden and could not be added to the database. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  getAllRanks_invalidArgs:
+  getAllRanksInvalidArgs:
     'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
-  getRankPlayer_invalidArgs:
+  getRankPlayerInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  getSmurfCred_invalidArgs:
+  getSmurfCredInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  addSmurf_invalidArgs:
+  addSmurfInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
-  makePublic_invalidArgs:
+  makePublicInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
-  makePublic_already_public:
+  makePublicAlreadyPublic:
     'is already a public account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
-  makePublic_invalidAccount:
+  makePublicInvalidAccount:
     'is not a valid Valorant account, type: "$smurf makePublic `<player name>` `<tagline>` `<username>` `<password>`", to publicize your account.',
-  makePublic_forbidden:
+  makePublicForbidden:
     "could not be made public because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  makePrivate_invalidArgs:
+  makePrivateInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  makePrivate_invalidAccount:
+  makePrivateInvalidAccount:
     'is not a valid Valorant account, type: "$smurf makePrivate `<player name>` `<tagline>`", to privatize your account.',
-  makePrivate_forbidden:
+  makePrivateForbidden:
     "could not be made private because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  delete_forbidden:
+  deleteForbidden:
     "could not be deleted because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
-  delete_invalidAccount:
+  deleteInvalidAccount:
     'is not a valid Valorant account, type: "$smurf makePrivate `<player name>` `<tagline>`", to delete your account.',
-  delete_invalidArgs:
+  deleteInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  not_in_db:
+  notInDatabase:
     'is not stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-  already_private:
+  alreadyPrivate:
     'is already a private account, type: "$smurf ranks" to get all the accounts in the database. Public accounts are labeled in blue, while private accounts are labeled in white.',
-  unauthorized_modification:
+  unauthorizedModification:
     "This is not your smurf account, you cannot change the status of this account.",
-  error_saving_val_account:
+  errorSavingValorantAccount:
     ":x: There was an error saving these account updates.",
-  error_saving_discord_account:
+  errorSavingDiscordAccount:
     ":x: There was an error saving discord information to the database.",
 };
 

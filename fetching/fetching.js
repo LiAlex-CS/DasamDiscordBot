@@ -1,5 +1,5 @@
 const fetch = require("node-fetch-commonjs");
-const { API_key } = require("./APIKey");
+const { API_key } = require("./API_key");
 
 const rootURL = "https://api.henrikdev.xyz/valorant/v1";
 const headers = { Authorization: API_key };

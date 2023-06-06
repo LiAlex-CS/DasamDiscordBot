@@ -15,7 +15,7 @@ const {
   removeLoadingInstance,
 } = require("../fetching/loading");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const { STATUS_CODES_API } = require("../constants/status_codes");
 
@@ -29,7 +29,7 @@ const {
   fixRank,
 } = require("../services");
 
-const ranks_command = async (message, command, args) => {
+const ranksCommand = async (message, command, args) => {
   let dataLoading = null;
   if (args.length <= 2) {
     const rank = fixRank(args[0]);
@@ -43,24 +43,24 @@ const ranks_command = async (message, command, args) => {
       );
 
       if (!checkArrayRespStatusMatch(rankedData, STATUS_CODES_API.ok)) {
-        message.reply(COMMAND_ERRORS.getAllRanks_errorFetching);
+        message.reply(COMMAND_ERRORS.getAllRanksErrorFetching);
       }
 
       if (args.length === 1 && !JSONHasKey(rank, RANK_EMOJIS)) {
         removeLoadingInstance(dataLoading);
-        message.reply(`${rank} ${COMMAND_ERRORS.getAllRanks_invalidRank}`);
+        message.reply(`${rank} ${COMMAND_ERRORS.getAllRanksInvalidRank}`);
       } else if (
         args.length === 2 &&
         (!JSONHasKey(rank, RANK_EMOJIS) || !checkValidTierNum(tier))
       ) {
         removeLoadingInstance(dataLoading);
         message.reply(
-          `${rank} ${tier} ${COMMAND_ERRORS.getAllRanks_invalidRankOrTier}`
+          `${rank} ${tier} ${COMMAND_ERRORS.getAllRanksInvalidRankOrTier}`
         );
       } else {
         removeLoadingInstance(dataLoading);
         if (rank === "Radiant" && args.length !== 1) {
-          message.reply(COMMAND_ERRORS.getAllRanks_invalidTierRadiant);
+          message.reply(COMMAND_ERRORS.getAllRanksInvalidTierRadiant);
         } else {
           let hasError = false;
           rankedData.forEach((data, index) => {
@@ -121,10 +121,10 @@ const ranks_command = async (message, command, args) => {
   } else {
     message.reply(
       `*${command} ${stringArrToString(args)}* ${
-        COMMAND_ERRORS.getAllRanks_invalidArgs
+        COMMAND_ERRORS.getAllRanksInvalidArgs
       }`
     );
   }
 };
 
-module.exports = { ranks_command };
+module.exports = { ranksCommand };

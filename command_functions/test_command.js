@@ -1,4 +1,4 @@
-const test_command = (message, command, commandBody, args, argsAsString) => {
+const testCommand = (message, command, commandBody, args, argsAsString) => {
   message.reply(
     `commandBody: ${commandBody}\nargs: ${args}\ncommand: ${command}\nargsAsString: ${argsAsString}`
   );
@@ -10,4 +10,4 @@ const test_command = (message, command, commandBody, args, argsAsString) => {
   );
 };
 
-module.exports = { test_command };
+module.exports = { testCommand };

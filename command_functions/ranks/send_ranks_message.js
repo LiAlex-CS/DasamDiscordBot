@@ -12,7 +12,7 @@ const {
 
 const { mmrDataToString } = require("../../services");
 
-const { ranksReaction_command } = require("./ranks_reaction_command");
+const { ranksReactionCommand } = require("./ranks_reaction_command");
 
 const getAccountsOnPage = (accounts, page, accountsPerPage) => {
   return accounts.filter((_, index) => {
@@ -51,11 +51,11 @@ const sendRanksMessage = (
   reply += REACTIONS_DESCRIPTION;
 
   if (rankedDataOnPage.length === 0) {
-    reply = COMMAND_ERRORS.getAllRanks_noAccounts;
+    reply = COMMAND_ERRORS.getAllRanksNoAccounts;
   }
 
   message.reply(reply).then((ranksMessage) => {
-    ranksReaction_command(ranksMessage, accountDataOnPage);
+    ranksReactionCommand(ranksMessage, accountDataOnPage);
   });
   sendPageControllerMessage(message, page, totalPages, rankedData, accountData);
 };

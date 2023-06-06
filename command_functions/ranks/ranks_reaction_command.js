@@ -5,7 +5,7 @@ const {
   REACTION_COLLECTION_TIME,
 } = require("../../constants/commands");
 
-const ranksReaction_command = (ranksMessage, ranksAccountDataOnPage) => {
+const ranksReactionCommand = (ranksMessage, ranksAccountDataOnPage) => {
   const numReactions =
     ranksAccountDataOnPage.length > MAX_ACCOUNTS_PER_PAGE
       ? MAX_ACCOUNTS_PER_PAGE
@@ -36,7 +36,7 @@ const ranksReaction_command = (ranksMessage, ranksAccountDataOnPage) => {
 
       if (userInfo.private) {
         ranksMessage.reply(
-          `<@${user.id}>. User: **${userInfo.name} #${userInfo.tag}** ${COMMAND_ERRORS.getSmurfCred_privateAccount}`
+          `<@${user.id}>. User: **${userInfo.name} #${userInfo.tag}** ${COMMAND_ERRORS.getSmurfCredPrivateAccount}`
         );
       } else {
         ranksMessage.reply(
@@ -47,4 +47,4 @@ const ranksReaction_command = (ranksMessage, ranksAccountDataOnPage) => {
   });
 };
 
-module.exports = { ranksReaction_command };
+module.exports = { ranksReactionCommand };

@@ -1,7 +1,7 @@
 const { BOT_DESCRIPTION } = require("../constants/commands");
 
-const no_command = (message) => {
+const noCommand = (message) => {
   message.reply(BOT_DESCRIPTION);
 };
 
-module.exports = { no_command };
+module.exports = { noCommand };

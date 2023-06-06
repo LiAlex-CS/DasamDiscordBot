@@ -10,7 +10,7 @@ const {
   deleteFromCollection,
 } = require("../data/mongoDb");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   generateLoadingTime,
@@ -24,7 +24,7 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const delete_command = async (message, command, argsAsString) => {
+const deleteCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 2) {
     const name = parsedArgs[0];
@@ -44,10 +44,10 @@ const delete_command = async (message, command, argsAsString) => {
 
       if (!valAccount) {
         removeLoadingInstance(savingInstance);
-        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
+        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.notInDatabase}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
         removeLoadingInstance(savingInstance);
-        message.reply(COMMAND_ERRORS.unauthorized_modification);
+        message.reply(COMMAND_ERRORS.unauthorizedModification);
       } else {
         await deleteFromCollection(valAccount.puuid, message.guildId);
         removeLoadingInstance(savingInstance);
@@ -55,18 +55,18 @@ const delete_command = async (message, command, argsAsString) => {
       }
     } catch (error) {
       const errorResponses = {
-        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.delete_invalidAccount}`,
-        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.delete_forbidden}`,
+        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.deleteInvalidAccount}`,
+        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.deleteForbidden}`,
       };
       removeLoadingInstance(savingInstance);
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.delete_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.deleteInvalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }
 };
 
-module.exports = { delete_command };
+module.exports = { deleteCommand };

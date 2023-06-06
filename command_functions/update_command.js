@@ -9,7 +9,7 @@ const {
   isDiscordUserAdmin,
 } = require("../data/mongoDb");
 
-const { handleAPIError } = require("../fetching/errorHandling");
+const { handleAPIError } = require("../fetching/error_handling");
 
 const {
   generateLoadingTime,
@@ -23,7 +23,7 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const update_command = async (message, command, argsAsString) => {
+const updateCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 4 || parsedArgs.length === 2) {
     const name = parsedArgs[0];
@@ -46,16 +46,16 @@ const update_command = async (message, command, argsAsString) => {
 
       if (!valAccount) {
         removeLoadingInstance(savingInstance);
-        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.not_in_db}`);
+        message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.notInDatabase}`);
       } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
         removeLoadingInstance(savingInstance);
-        message.reply(COMMAND_ERRORS.unauthorized_modification);
+        message.reply(COMMAND_ERRORS.unauthorizedModification);
       } else {
         if (setPrivate) {
           if (valAccount.private) {
             removeLoadingInstance(savingInstance);
             message.reply(
-              `**${name} #${tag}** ${COMMAND_ERRORS.already_private}`
+              `**${name} #${tag}** ${COMMAND_ERRORS.alreadyPrivate}`
             );
           } else {
             valAccount.username = null;
@@ -64,7 +64,7 @@ const update_command = async (message, command, argsAsString) => {
             valAccount.save((err) => {
               removeLoadingInstance(savingInstance);
               if (err) {
-                message.reply(COMMAND_ERRORS.error_saving_val_account);
+                message.reply(COMMAND_ERRORS.errorSavingValorantAccount);
               } else {
                 message.reply(ACCOUNT_UPDATE_SUCCESS);
               }
@@ -77,7 +77,7 @@ const update_command = async (message, command, argsAsString) => {
           valAccount.save((err) => {
             removeLoadingInstance(savingInstance);
             if (err) {
-              message.reply(COMMAND_ERRORS.error_saving_val_account);
+              message.reply(COMMAND_ERRORS.errorSavingValorantAccount);
             } else {
               message.reply(ACCOUNT_UPDATE_SUCCESS);
             }
@@ -87,17 +87,17 @@ const update_command = async (message, command, argsAsString) => {
     } catch (error) {
       removeLoadingInstance(savingInstance);
       const errorResponses = {
-        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurf_invalidAccount}`,
-        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurf_forbidden}`,
+        notFound: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurfInvalidAccount}`,
+        forbidden: `"**${name} #${tag}**" ${COMMAND_ERRORS.updateSmurfForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
   } else {
     message.reply(
-      `*${command} ${argsAsString}* ${COMMAND_ERRORS.updateSmurf_invalidArgs}`
+      `*${command} ${argsAsString}* ${COMMAND_ERRORS.updateSmurfInvalidArgs}`
     );
     message.reply(HAS_SPACES_REMINDER);
   }
 };
 
-module.exports = { update_command };
+module.exports = { updateCommand };
