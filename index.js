@@ -7,7 +7,7 @@ const { PREFIX, COMMANDS, PREFIX_DEV } = require("./constants/commands");
 const { uri } = require("./constants/mongodb_consts");
 
 const mongoose = require("mongoose");
-const { Client, GatewayIntentBits } = require("discord.js");
+const { Client, GatewayIntentBits, Events } = require("discord.js");
 
 const {
   helpCommand,
@@ -45,7 +45,7 @@ mongoose.connect(uri, {
 const database = mongoose.connection;
 database.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-client.on("messageCreate", (message) => {
+client.on(Events.MessageCreate, (message) => {
   if (message.author.bot) return;
   const commandAsArray = formatMessage(message.content);
 
