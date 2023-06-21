@@ -7,7 +7,7 @@ const { PREFIX, COMMANDS, PREFIX_DEV } = require("./constants/commands");
 const { uri } = require("./constants/mongodb_consts");
 
 const mongoose = require("mongoose");
-const Discord = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 
 const {
   helpCommand,
@@ -26,8 +26,13 @@ const {
 
 const { formatMessage } = require("./services");
 
-const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessageReactions,
+  ],
 });
 
 mongoose.set("strictQuery", false);
@@ -50,8 +55,9 @@ client.on("messageCreate", (message) => {
       commandAsArray[0] !== PREFIX_DEV ||
       (message.author.id !== process.env.DISCORD_ID &&
         process.env.ALLOW_PUBLIC_ACCESS === "FALSE")
-    )
+    ) {
       return;
+    }
   } else if (!commandAsArray.length || commandAsArray[0] !== PREFIX) return;
 
   const args = commandAsArray.slice(1);
@@ -114,7 +120,7 @@ client.on("messageCreate", (message) => {
 
 client.login(config.BOT_TOKEN);
 
-const server = http.createServer((req, res) => {
+const server = http.createServer((_, res) => {
   res.end("Dasam Discord Bot");
 });
 const PORT = process.env.PORT || 8080;
