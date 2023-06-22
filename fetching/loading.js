@@ -16,7 +16,9 @@ const generateLoadingTime = (
 };
 
 const removeLoadingInstance = (loadingInstance) => {
-  loadingInstance ? clearTimeout(loadingInstance) : null;
+  if (loadingInstance) {
+    clearTimeout(loadingInstance);
+  }
 };
 
 module.exports = { generateLoadingTime, removeLoadingInstance };
