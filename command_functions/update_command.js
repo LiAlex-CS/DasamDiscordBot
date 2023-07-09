@@ -47,7 +47,7 @@ const updateCommand = async (message, command, argsAsString) => {
       if (!valAccount) {
         removeLoadingInstance(savingInstance);
         message.reply(`**${name} #${tag}** ${COMMAND_ERRORS.notInDatabase}`);
-      } else if (message.author.id !== valAccount.creator_disc_id || !isAdmin) {
+      } else if (message.author.id !== valAccount.creator_disc_id && !isAdmin) {
         removeLoadingInstance(savingInstance);
         message.reply(COMMAND_ERRORS.unauthorizedModification);
       } else {
