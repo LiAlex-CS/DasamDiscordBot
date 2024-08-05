@@ -147,6 +147,7 @@ const RANK_EMOJIS = {
   Bronze: ":third_place:",
   Iron: ":gear:",
   Error: ":x:",
+  Unrated: ":grey_question:",
 };
 
 const REGION_INDICATOR_SYMBOLS = {
