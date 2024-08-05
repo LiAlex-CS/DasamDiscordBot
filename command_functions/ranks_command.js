@@ -70,7 +70,7 @@ const ranksCommand = async (message, command, args) => {
                 currenttierpatched: "Error",
                 name: accountData[index].name,
                 tag: accountData[index].tag,
-                elo: 0,
+                elo: -1,
                 errors: data.errors,
               };
             }
