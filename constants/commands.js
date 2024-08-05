@@ -173,6 +173,10 @@ const REGION_INDICATOR_SYMBOLS = {
   "🇹": 19,
 };
 
+const ERROR_CODES_TO_MESSAGES = {
+  24: "Play a game to get account data.",
+};
+
 const MAX_ACCOUNTS_PER_PAGE = 12;
 const REACTION_COLLECTION_TIME = 300000;
 
@@ -196,4 +200,5 @@ module.exports = {
   MAX_ACCOUNTS_PER_PAGE,
   REACTION_COLLECTION_TIME,
   BOT_DESCRIPTION,
+  ERROR_CODES_TO_MESSAGES,
 };
