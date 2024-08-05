@@ -4,7 +4,10 @@ const {
   updateAccountTagByPuuid,
 } = require("./data/mongoDb");
 
-const { RANK_EMOJIS } = require("./constants/commands");
+const {
+  RANK_EMOJIS,
+  ERROR_CODES_TO_MESSAGES,
+} = require("./constants/commands");
 
 const JSONHasValue = (value, json) => {
   return Object.values(json).includes(value);
@@ -64,13 +67,23 @@ const mmrDataToString = (dataArr, accountData, regionalIndicatorEmojis) => {
   const endingPublicText = "\n```";
 
   dataArr.forEach((newData, index) => {
-    const rankData =
-      "Account Name: " +
-      newData.data.name +
-      ", Tagline: " +
-      newData.data.tag +
-      ", Rank: " +
-      newData.data.currenttierpatched;
+    const errorCodes = newData.errors ? errorsToErrorCodes(newData.errors) : [];
+    const errorMessages = errorCodesToErrorMessages(
+      errorCodes,
+      ERROR_CODES_TO_MESSAGES
+    );
+
+    let rankData =
+      "Account Name: " + newData.data.name + ", Tagline: " + newData.data.tag;
+
+    if (errorMessages.length > 0) {
+      rankData += ", Error: ";
+      errorMessages.forEach((message) => {
+        rankData += `${message} `;
+      });
+    } else {
+      rankData += ", Rank: " + newData.data.currenttierpatched;
+    }
 
     const rank = getRankFromRankAndTier(newData.data.currenttierpatched);
 
@@ -221,6 +234,19 @@ const formatMessage = (command) => {
   return command.split(" ").filter((str) => str !== "");
 };
 
+const errorsToErrorCodes = (errors) => {
+  return errors.map((error) => error.code);
+};
+
+const errorCodesToErrorMessages = (errorCodes, errorCodeMessageMap) => {
+  return errorCodes.map((code) => {
+    if (errorCodeMessageMap[code] === undefined) {
+      return "";
+    }
+    return errorCodeMessageMap[code];
+  });
+};
+
 module.exports = {
   JSONHasValue,
   JSONHasKey,
@@ -238,4 +264,6 @@ module.exports = {
   removeHashtagFromTag,
   fixRank,
   formatMessage,
+  errorsToErrorCodes,
+  errorCodesToErrorMessages,
 };

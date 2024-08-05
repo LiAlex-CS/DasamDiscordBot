@@ -71,6 +71,7 @@ const ranksCommand = async (message, command, args) => {
                 name: accountData[index].name,
                 tag: accountData[index].tag,
                 elo: 0,
+                errors: data.errors,
               };
             }
           });
