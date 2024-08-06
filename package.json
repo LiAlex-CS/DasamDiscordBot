@@ -15,7 +15,7 @@
     "discord.js": "^14.11.0",
     "dotenv": "^16.0.3",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.3.5",
+    "mongoose": "^6.11.3",
     "node-fetch-commonjs": "^3.1.1"
   },
   "engines": {
