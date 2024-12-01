@@ -23,7 +23,6 @@ jobs:
 
       - name: Login to docker user group
         run: |
-          echo $USER
           newgrp docker
 
       - name: Build and push Docker image
