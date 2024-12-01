@@ -2,7 +2,7 @@ const { helpCommand } = require("./help_command");
 const { ranksCommand } = require("./ranks_command");
 const { rankCommand } = require("./rank_command");
 const { credentialsCommand } = require("./credentials_command");
-const { addSmurfCommand } = require("./add_smurf_command");
+const { addCommand } = require("./add_command");
 const { makePublicCommand } = require("./make_public_command");
 const { makePrivateCommand } = require("./make_private_command");
 const { updateCommand } = require("./update_command");
@@ -16,7 +16,7 @@ module.exports = {
   ranksCommand,
   rankCommand,
   credentialsCommand,
-  addSmurfCommand,
+  addCommand,
   makePublicCommand,
   makePrivateCommand,
   updateCommand,

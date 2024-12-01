@@ -22,7 +22,7 @@ const {
   removeHashtagFromTag,
 } = require("../services");
 
-const addSmurfCommand = async (message, command, argsAsString) => {
+const addCommand = async (message, command, argsAsString) => {
   const parsedArgs = parseArgsFromArgsAsString(argsAsString);
   if (parsedArgs.length === 4 || parsedArgs.length === 2) {
     const name = parsedArgs[0];
@@ -74,14 +74,14 @@ const addSmurfCommand = async (message, command, argsAsString) => {
           );
         } else {
           message.reply(
-            `**${name} #${tag}** ${COMMAND_ERRORS.addSmurfNonUniqueAccount}`
+            `**${name} #${tag}** ${COMMAND_ERRORS.addNonUniqueAccount}`
           );
         }
       }
     } catch (error) {
       const errorResponses = {
-        notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.addSmurf}`,
-        forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addSmurfForbidden}`,
+        notFound: `**${name}** and **#${tag}** ${COMMAND_ERRORS.add}`,
+        forbidden: `**${name} #${tag}** ${COMMAND_ERRORS.addForbidden}`,
       };
       handleAPIError(message, error, errorResponses);
     }
@@ -93,4 +93,4 @@ const addSmurfCommand = async (message, command, argsAsString) => {
   }
 };
 
-module.exports = { addSmurfCommand };
+module.exports = { addCommand };
