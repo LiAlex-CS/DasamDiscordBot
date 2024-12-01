@@ -45,5 +45,6 @@ jobs:
           docker run -d \
             --name dasam-discord-bot \
             --env-file ~/.env \
+            --restart=always \
             -p 3000:3000 \
             ${{ secrets.DOCKER_USERNAME }}/dasam-discord-bot:latest
