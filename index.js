@@ -14,7 +14,7 @@ const {
   ranksCommand,
   rankCommand,
   credentialsCommand,
-  addSmurfCommand,
+  addCommand,
   makePublicCommand,
   makePrivateCommand,
   updateCommand,
@@ -82,9 +82,9 @@ client.on(Events.MessageCreate, (message) => {
     case COMMANDS.getSmurfCred:
       credentialsCommand(message, command, argsAsString);
       break;
-    // Set Smurf Command - $smurf addSmurf
-    case COMMANDS.addSmurf:
-      addSmurfCommand(message, command, argsAsString);
+    // Set Smurf Command - $smurf add
+    case COMMANDS.add:
+      addCommand(message, command, argsAsString);
       break;
     // Make Public Command - $smurf makePublic
     case COMMANDS.makePublic:

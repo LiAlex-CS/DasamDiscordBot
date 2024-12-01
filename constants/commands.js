@@ -6,7 +6,7 @@ const COMMANDS = {
   getAllRanks: "ranks",
   getRankPlayer: "rank",
   getSmurfCred: "credentials",
-  addSmurf: "addSmurf",
+  add: "add",
   makePublic: "makePublic",
   makePrivate: "makePrivate",
   update: "update",
@@ -18,7 +18,7 @@ const BOT_DESCRIPTION =
   ":wave:   Hi, Do you need a Valorant smurf? The **DasamRankBot** gives you access to all the Dasam smurf accounts and tracks their ranks. To get started, type:\n ```$smurf ranks```\n to get all the ranks of the Dasam accounts, and find an account for you to use. Type:\n ```$smurf help```\n to checkout all the other functions of the bot such as setting your own personal smurfs, and finding the rank of any Valorant account.";
 
 const ALL_COMMANDS =
-  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>`\n:pencil2: **addSmurf** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:soap: **delete** `"<player name>"` `<tagline>`';
+  'Here is a list of all commands:\n:question: **help**\n:question: **help** `<command>`\n:trophy: **ranks**\n:medal: **rank** `<player name>` `<tagline>`\n:page_facing_up: **credentials** `<player name>` `<tagline>`\n:pencil2: **add** `"<player name>"` `<tagline>`\n:pencil2: **add** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:unlock: **makePublic** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:lock: **makePrivate** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>`\n:wrench: **update** `"<player name>"` `<tagline>` `<username>` `"<password>"`\n:soap: **delete** `"<player name>"` `<tagline>`';
 
 const UNKNOWN_COMMAND =
   'is a unknown command.\nType: "*$smurf help*" for a list of all commands or type: "*$smurf help `<command>`*" for a description of the command.';
@@ -36,7 +36,7 @@ const COMMAND_ERRORS = {
   getRankPlayer:
     'is not a valid Valorant account, type: "$smurf rank `<player name>` `<tagline>`" to get the rank of your account.',
   getSmurfCred:
-    'is not in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ensure that you have already added this acount with "$smurf addSmurf" in this server.',
+    'is not in the database, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account. Ensure that you have already added this acount with "$smurf add" in this server.',
   getSmurfCredInvalidAccount:
     'is not a valid Valorant account, type: "$smurf credentials `<player name>` `<tagline>`" to get the credentials to your account.',
   updateSmurfInvalidAccount:
@@ -49,11 +49,10 @@ const COMMAND_ERRORS = {
     "credentials could not be fetched because this account data is forbidden. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
   getSmurfCredPrivateAccount:
     "is a private account, you cannot access the credentials of this account. Public accounts are labeled in blue, while private accounts are labeled in white.",
-  addSmurf:
-    'are not valid player name and tagline, to set a smurf in the database type: "$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf addSmurf `"<player name>"` `<tagline>`".',
-  addSmurfNonUniqueAccount:
+  add: 'are not valid player name and tagline, to set a smurf in the database type: "$smurf add `"<player name>"` `<tagline>` `<username>` `"<password>"`", or type: "$smurf add `"<player name>"` `<tagline>`".',
+  addNonUniqueAccount:
     'is already stored within the database, type: "$smurf ranks" to get all the accounts in the database.',
-  addSmurfForbidden:
+  addForbidden:
     "account data is forbidden and could not be added to the database. This might be a result of the account owner not publicizing account data or temporary Riot patches, please try again later.",
   getAllRanksInvalidArgs:
     'has invalid arguments, type: "$smurf ranks" to get all accounts. Type: "$smurf ranks `<rank>`" to get all accounts in a specific rank. Type: "$smurf ranks `<rank>` `<tier>`" to get all accounts in a specific tier.',
@@ -61,7 +60,7 @@ const COMMAND_ERRORS = {
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
   getSmurfCredInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>`.',
-  addSmurfInvalidArgs:
+  addInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` or the argmuents `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
   makePublicInvalidArgs:
     'has invalid arguments, this command takes the arguments `"<player name>"` `<tagline>` `<username>` `"<password>"`.',
@@ -104,8 +103,7 @@ const COMMAND_DESCRIPTIONS = {
     ':medal: **rank**: This command gives the rank of the player requested.\nType: "*$smurf rank `<player name>` `<tagline>`*" to get the rank of your account.\n\n__Example:__```$smurf rank nugnug 6135```',
   getSmurfCred:
     ':page_facing_up: **credentials**: This command gives the credentials to the requested account.\nType: "*$smurf credentials `<player name>` `<tagline>`*" to get the credentials to your account.\n\n__Example:__ ```$smurf credentials nugnug 6135```',
-  addSmurf:
-    ':pencil2: **addSmurf**: This command sets a new smurf account into the database.\nType: "*$smurf addSmurf `"<player name>"` `<tagline>`*" to set a private account.\n\n__Example:__ ```$smurf addSmurf "nugnug" 6135```\nType: "*$smurf addSmurf `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to set a public account.\n\n__Example:__```$smurf addSmurf nugnug 6135 AlexUsername "Alex Password123"```\n:bangbang:  **Please only add valid accounts with valid account credentials.**  :bangbang:',
+  add: ':pencil2: **add**: This command sets a new smurf account into the database.\nType: "*$smurf add `"<player name>"` `<tagline>`*" to set a private account.\n\n__Example:__ ```$smurf add "nugnug" 6135```\nType: "*$smurf add `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to set a public account.\n\n__Example:__```$smurf add nugnug 6135 AlexUsername "Alex Password123"```\n:bangbang:  **Please only add valid accounts with valid account credentials.**  :bangbang:',
   makePublic:
     ':unlock: **makePublic**: This command sets a private account in the database into a public account.\nType: "*$smurf makePublic `"<player name>"` `<tagline>` `<username>` `"<password>"`*" to make a private account public.\n\n__Example:__```$smurf makePublic nugnug 6135 AlexUsername "Alex Password123"```',
   makePrivate:
