@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on:
       - self-hosted
-      - dasam-discord-bot-deploy
+      - discord-bot
 
     steps:
       - name: Checkout repository
